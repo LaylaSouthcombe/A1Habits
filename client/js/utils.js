@@ -29,15 +29,15 @@ function renderSelectedPage(e) {
   switch (btnClicked) {
     case 'selection-1':
       // console.log('btnClicked: ', btnClicked)
-      // console.log('clicked the home button', pageDict[btnClicked])
+      console.log('clicked the home button', pageDict[btnClicked])
       displayPage(pageDict[btnClicked])
       break
     case 'selection-2':
-      // console.log('clicked the metrics button')
+      console.log('clicked the metrics button')
       displayPage(pageDict[btnClicked])
       break
     case 'selection-3':
-      // console.log('clicked the habits button')
+      console.log('clicked the habits button')
       displayPage(pageDict[btnClicked])
       break
     case 'selection-4':
@@ -49,12 +49,20 @@ function renderSelectedPage(e) {
 // every page apart from the homepage should start with a class of 'disabled'
 function displayPage(requestedPage) {
   console.log('requested page ***** ', requestedPage)
-  const availablePages = ['selection-1', 'selection-2', 'selection-3']
+
+  const availablePages = [homepage, metricspage, habitspage]
+
   availablePages.forEach((page) => {
-    if (page === requestedPage) {
+    if (page.id === requestedPage.id) {
+      console.log(`page is`, page)
+      console.log(` and requestedpage is`, requestedPage)
       page.classList.remove('disabled')
+      console.log(` (after) and requestedpage is`, requestedPage)
     } else {
       page.classList.add('disabled')
+      console.log(` other page 1 :`, homepage)
+      console.log(` other page 2 :`, metricspage)
+      console.log(` other page 3 :`, habitspage)
     }
   })
 }
