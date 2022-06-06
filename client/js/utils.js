@@ -35,7 +35,7 @@ function displayHabits(e) {
   e.preventDefault()
   // const availableHabits = ['sleep', 'exercise', 'smoking', 'water', 'money']
   const checkboxes = document.querySelectorAll('.habitCheckbox')
-  createHabitsCards(availableHabits, checkboxes)
+  createHabitsCards(checkboxes)
 }
 
 function createHabitsCards(habits) {
