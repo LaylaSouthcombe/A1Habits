@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     id serial PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(30) NOT NULL,
+    password_digest VARCHAR(30) NOT NULL,
     email VARCHAR(50)NOT NULL UNIQUE
 
 );
@@ -37,15 +37,15 @@ CREATE TABLE tracking (
     sleep_goal INT,
     exercise BOOLEAN,
     exercise_goal INT,
-    exercise_freq INT,
+    exercise_freq VARCHAR(30),
     water BOOLEAN,
     water_goal INT,
     smoking BOOLEAN,
     smoking_goal INT,
     money BOOLEAN,
     money_goal INT,
-    begin_date date DEFAULT CURRENT_DATE NOT NULL,
-    end_date date DEFAULT '2022-07-06' NOT NULL,
+    money_begin_date date DEFAULT CURRENT_DATE,
+    money_end_date date DEFAULT '2022-07-06'
 
 );
 
