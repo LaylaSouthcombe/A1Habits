@@ -4,8 +4,9 @@ const router = express.Router();
 const User = require('../models/user');
 
 router.get('/', async (req, res) => {
-    const users = await User.all
-    res.json(users)
+    // const users = await User.all
+    // res.json(users)
+    res.send('hi')
 })
 
 module.exports = router
