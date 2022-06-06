@@ -38,14 +38,14 @@ CREATE TABLE tracking (
     exercise BOOLEAN,
     exercise_goal INT,
     exercise_freq INT,
-    water INT,
+    water BOOLEAN,
     water_goal INT,
-    smoking INT,
-    smoking_goal INT
-    money INT,
+    smoking BOOLEAN,
+    smoking_goal INT,
+    money BOOLEAN,
     money_goal INT,
     begin_date date DEFAULT CURRENT_DATE NOT NULL,
-    end_date date DEFAULT '2099-01-01' NOT NULL,
+    end_date date DEFAULT '2022-07-06' NOT NULL,
 
 );
 

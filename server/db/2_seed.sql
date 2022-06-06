@@ -10,18 +10,19 @@ VALUES
 
 INSERT INTO entries  (user_id, sleep, exercise, water, smoking, money, date) 
 VALUES
-    (1, true, true, 2, 5, 1, '2022-06-06'),
-    (2, false, true, 0, 1, 3, '2022-06-06'),
-    (3, false, false, 4, 0, 5, '2022-06-06');
+    (1, true, true, 8, 8, 1, '2022-06-06'),
+    (2, false, true, 8, 8, 3, '2022-06-06'),
+    (3, false, false, 1, 21, 5, '2022-06-06');
     
 
 
 -- TRACKING
-INSERT INTO entries1  ( user_id, habit_id, begin_date,
-    end_date, frequency ) 
+
+INSERT INTO tracking  ( user_id, sleep, sleep_goal, exercise exercise_goal, exercise_freq, water, water_goal, smoking, smoking_goal, money, money_goal, begin_date, end_date) 
 VALUES
-    (1, 1, '2022-06-06','2099-01-01', 1),
-    (1, 3, '2022-06-06','2099-01-01', 1),
-    (2, 4, '2022-06-06','2099-01-01', 2),
-    (2, 5, '2022-06-06','2099-01-01', 1),
-    (3, 1, '2022-06-06','2099-01-01', 3);
+    (1, true, 8, true, 4, 4, true, 6, true, 8, true, 4, '2022-06-06','2099-01-01'),
+    (2, false, 7, true, 3, 3,  true, 6, true, 8, true, 4, '2022-06-06','2099-01-01'),
+    (3, false, 6, false, 2, 2, true, 6, false, 1, false, 4, '2022-06-06','2099-01-01');
+    
+
+
