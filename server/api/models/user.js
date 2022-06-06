@@ -18,5 +18,16 @@ class User {
             }
         })
     }
+    static create({ username, email, password }){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await db.query('INSERT INTO users (username, email, password_digest) VALUES ($1, $2, $3) RETURNING *;', [ username, email, password ]);
+                const user = new User(result.rows[0]);
+                resolve(user)
+            } catch (err) {
+                reject(`Error creating user: ${err}`)
+            }
+        })
+    }
 }
 module.exports = User
