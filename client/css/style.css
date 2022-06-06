@@ -127,7 +127,7 @@
     cursor: pointer;
   }
   
-  // MODAL STARTING HERE ***********************
+  /* MODAL STARTING HERE *********************** */
   
   .modal {
     position: fixed;
@@ -145,12 +145,12 @@
   
     width: 400px;
     height: 600px;
-    // border: 2px solid black;
+    /* border: 2px solid black; */
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     overflow: scroll;
-    z-axis: 10;
+    z-index: 10;
     transition: all 0.6s ease;
     transform-style: preserve-3d;
     box-shadow: 0px 0px 10px gray;
@@ -171,7 +171,7 @@
   }
   
   .modal-title {
-    // background-color: var(--teal);
+    /* background-color: var(--teal); */
     color: var(--light);
     height: 180px;
     text-align: center;
@@ -180,26 +180,26 @@
   }
   
   .modal-form {
-    // background-color: var(--light-warm);
+    /* background-color: var(--light-warm); */
     color: var(--sapphire);
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    // border-top: 2px solid black;
+    /* border-top: 2px solid black; */
     padding: 60px 0;
   }
   
   .modal-form-signup {
-    // background-color: var(--light-warm);
+    /* background-color: var(--light-warm); */
     color: var(--sapphire);
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    // border-top: 2px solid black;
+    /* border-top: 2px solid black; */
     padding: 60px 0;
   }
   

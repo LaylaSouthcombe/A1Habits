@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('../models/user');
+const Track = require('../models/track');
 
 router.get('/', async (req, res) => {
     // const users = await User.all
