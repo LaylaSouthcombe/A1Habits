@@ -1,87 +1,92 @@
-const emailInput = document.querySelector("#form-email-input");
-const emailLabel = document.querySelector(".form-email-label");
-const passwordInput = document.querySelector("#form-password-input");
-const passwordLabel = document.querySelector(".form-password-label");
+const emailInput = document.querySelector('#form-email-input')
+const emailLabel = document.querySelector('.form-email-label')
+const passwordInput = document.querySelector('#form-password-input')
+const passwordLabel = document.querySelector('.form-password-label')
 
-const nameInput = document.querySelector("#form-name-input-signup");
-const nameLabel = document.querySelector(".form-name-label-signup");
-const emailInputSignup = document.querySelector("#form-email-input-signup");
-const emailLabelSignup = document.querySelector(".form-email-label-signup");
+const nameInput = document.querySelector('#form-name-input-signup')
+const nameLabel = document.querySelector('.form-name-label-signup')
+const emailInputSignup = document.querySelector('#form-email-input-signup')
+const emailLabelSignup = document.querySelector('.form-email-label-signup')
 const passwordInputSignup = document.querySelector(
-  "#form-password-input-signup"
-);
+  '#form-password-input-signup'
+)
 const passwordLabelSignup = document.querySelector(
-  ".form-password-label-signup"
-);
+  '.form-password-label-signup'
+)
 
-const regBtn = document.querySelector("#form-reg-btn");
-const logBtn = document.querySelector("#form-log-btn");
+const regBtn = document.querySelector('#form-reg-btn')
+const logBtn = document.querySelector('#form-log-btn')
 
-const modal = document.querySelector(".modal");
-const modalLogin = document.querySelector(".modal-login");
-const modalSignup = document.querySelector(".modal-signup");
+const modal = document.querySelector('.modal')
+const modalLogin = document.querySelector('.modal-login')
+const modalSignup = document.querySelector('.modal-signup')
 
-const authBtn = document.querySelector("#auth");
-const wrapper = document.querySelector("#wrapper");
+const authBtn = document.querySelector('#auth')
+const wrapper = document.querySelector('#wrapper')
 
-toggleLabelShift(emailInput, emailLabel, "move-up");
-toggleLabelShift(passwordInput, passwordLabel, "move-up");
-toggleLabelShift(nameInput, nameLabel, "move-up");
-toggleLabelShift(emailInputSignup, emailLabelSignup, "move-up");
-toggleLabelShift(passwordInputSignup, passwordLabelSignup, "move-up");
+toggleLabelShift(emailInput, emailLabel, 'move-up')
+toggleLabelShift(passwordInput, passwordLabel, 'move-up')
+toggleLabelShift(nameInput, nameLabel, 'move-up')
+toggleLabelShift(emailInputSignup, emailLabelSignup, 'move-up')
+toggleLabelShift(passwordInputSignup, passwordLabelSignup, 'move-up')
 
 function toggleLabelShift(input, label, classRef) {
-  input.addEventListener("input", () => {
+  input.addEventListener('input', () => {
     // console.log(emailInput.value);
     if (input.value) {
-      label.classList.add(classRef);
+      label.classList.add(classRef)
     } else {
-      label.classList.remove(classRef);
+      label.classList.remove(classRef)
     }
-  });
+  })
 }
 
-regBtn.addEventListener("click", () => {
-  modalSignup.classList.add("rotate-signup");
-  modalLogin.classList.add("rotate-login");
-});
+regBtn.addEventListener('click', () => {
+  modalSignup.classList.add('rotate-signup')
+  modalLogin.classList.add('rotate-login')
+})
 
-logBtn.addEventListener("click", () => {
-  modalSignup.classList.remove("rotate-signup");
-  modalLogin.classList.remove("rotate-login");
-});
+logBtn.addEventListener('click', () => {
+  modalSignup.classList.remove('rotate-signup')
+  modalLogin.classList.remove('rotate-login')
+})
 
-authBtn.addEventListener("click", () => {
-  if (modal.classList.contains("disabled")) {
-    modal.classList.remove("disabled");
+authBtn.addEventListener('click', () => {
+  if (modal.classList.contains('disabled')) {
+    modal.classList.remove('disabled')
   }
-});
+})
 
-window.addEventListener("click", (e) => {
+window.addEventListener('click', (e) => {
   if (e.target === modal) {
-    modal.classList.add("disabled");
+    modal.classList.add('disabled')
   }
-});
+})
 
 // ------------ selection actions ------------------- //
 
-const section1 = document.querySelector(".section1");
-const sel1 = document.querySelector("#selection-1");
-const sel2 = document.querySelector("#selection-2");
-const sel3 = document.querySelector("#selection-3");
-const sel4 = document.querySelector("#selection-4");
-sel1.addEventListener("click", () => {
-  section1.innerHTML = "list of Cards with smoking related data ";
-});
+const section1 = document.querySelector('.section1')
+const sel1 = document.querySelector('#selection-1')
+const sel2 = document.querySelector('#selection-2')
+const sel3 = document.querySelector('#selection-3')
+const sel4 = document.querySelector('#selection-4')
+// sel1.addEventListener('click', () => {
+//   section1.innerHTML = 'list of Cards with smoking related data '
+// })
 
-sel2.addEventListener("click", () => {
-  section1.innerHTML = "list of Cards with water related data ";
-});
+// sel2.addEventListener('click', () => {
+//   section1.innerHTML = 'list of Cards with water related data '
+// })
 
-sel3.addEventListener("click", () => {
-  section1.innerHTML = "list of Cards with sleeping related data ";
-});
+// sel3.addEventListener('click', () => {
+//   section1.innerHTML = 'list of Cards with sleeping related data '
+// })
 
-sel4.addEventListener("click", () => {
-  section1.innerHTML = "charts with weekly and monthly charts and money saved";
-});
+// sel4.addEventListener('click', () => {
+//   section1.innerHTML = 'charts with weekly and monthly charts and money saved'
+// })
+
+function displayInitialHomepage() {
+  section1.innetHTML =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porta posuere convallis. Aenean luctus velit in urna dictum sodales. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut porttitor eu ligula posuere sollicitudin. Donec posuere urna odio, id tempus risus bibendum in. Pellentesque non metus maximus, suscipit nisl vitae, condimentum lorem. Ut pellentesque accumsan turpis at euismod. Integer auctor, nunc id vulputate mollis, libero massa lobortis urna, nec mollis tortor massa ut dolor. Curabitur iaculis suscipit sapien, at suscipit est tempus in. Donec consequat et nisl sed sodales. Duis egestas sapien eget nulla porta pellentesque. Fusce tincidunt tortor elit, et eleifend nisi tincidunt quis. Praesent ipsum sem, ornare eget rutrum et, lobortis vel nisi. Donec tempus viverra libero et condimentum. Donec lobortis scelerisque aliquet. Cras at iaculis diam, quis venenatis nisi.'
+}
