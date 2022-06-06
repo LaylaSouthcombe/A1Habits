@@ -9,36 +9,16 @@ CREATE TABLE users (
 
 );
 
--- HABITS
-DROP TABLE IF EXISTS habits;
-
-CREATE TABLE habits (
-    id serial PRIMARY KEY,
-    habitName varchar(100) NOT NULL
-    );
 
 
--- ENTRIES 1
-DROP TABLE IF EXISTS entries1;
-
-CREATE TABLE entries1 (
-    id serial PRIMARY KEY,
-    user_id INT REFERENCES users(id) NOT NULL,
-    habit_id INT REFERENCES habits(id) NOT NULL,
-    begin_date date DEFAULT CURRENT_DATE NOT NULL,
-    end_date date DEFAULT '2099-01-01' NOT NULL,
-    frequency int
-);
-
-
--- ENTRIES 2
+-- ENTRIES 
 DROP TABLE IF EXISTS entries;
 
 CREATE TABLE entries (
     id serial PRIMARY KEY,
     user_id INT REFERENCES users(id) NOT NULL,
-    sleep NUMBER(1), 
-    exercise NUMBER(1), 
+    sleep BOOLEAN,
+    exercise BOOLEAN, 
     water INT,
     smoking INT,
     money INT,
@@ -46,13 +26,26 @@ CREATE TABLE entries (
 );
 
 
+
 --TRACKING
 DROP TABLE IF EXISTS tracking;
 
 CREATE TABLE tracking (
     id serial PRIMARY KEY,
-    user_id INT REFERENCES users (id) NOT NULL,
-    sleep NUMBER(1), 
+    user_id INT REFERENCES users(id) NOT NULL,
+    sleep BOOLEAN,
+    sleep_goal INT,
+    exercise BOOLEAN,
+    exercise_goal INT,
+    exercise_freq INT,
+    water INT,
+    water_goal INT,
+    smoking INT,
+    smoking_goal INT
+    money INT,
+    money_goal INT,
+    begin_date date DEFAULT CURRENT_DATE NOT NULL,
+    end_date date DEFAULT '2099-01-01' NOT NULL,
 
 );
 

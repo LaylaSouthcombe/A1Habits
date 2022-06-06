@@ -6,18 +6,17 @@ VALUES
 ('pati123',xxxxx, randomemail2@gmail.com);
 
 
--- HABITS
+-- ENTRIES
 
-INSERT INTO habits  (habitName) 
+INSERT INTO entries  (user_id, sleep, exercise, water, smoking, money, date) 
 VALUES
-    ('sleep'),
-    ('exercise'),
-    ('water'),
-    ('smoking'),
-    ('money');
+    (1, true, true, 2, 5, 1, '2022-06-06'),
+    (2, false, true, 0, 1, 3, '2022-06-06'),
+    (3, false, false, 4, 0, 5, '2022-06-06');
+    
 
 
--- ENTRIES 1
+-- TRACKING
 INSERT INTO entries1  ( user_id, habit_id, begin_date,
     end_date, frequency ) 
 VALUES
