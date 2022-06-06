@@ -1,34 +1,16 @@
 version: '3'
 services:
   api:
-    image: 'node:16.14.2'
+    image: node:12.18.4
     working_dir: /code
-    ports:
-      - 3000:3000
-    environment: 
-      - PORT=3000
-      - PGUSER=team1
-      - PGHOST=db
-      - PGPASSWORD=team1_password
-      - PGDATABASE=habits
-      - PGPORT=5432
-    depends_on: 
-      - db
     volumes:
       - type: bind
         source: ./api
         target: /code
-    command: bash -c "npm install && npm start"
+
   db:
-    image: 'postgres:11.1'
-    expose:
-      - "5432"
-    volumes:
-      - "dbdata:/var/lib/postgresql/data"
-      - "./db/setup/:/docker-entrypoint-initdb.d/:ro"
+    image: postgres:12.4
     environment: 
-      - POSTGRES_DB=habits
       - POSTGRES_USER=team1
-      - POSTGRES_PASSWORD=team1_password
-volumes:
-  dbdata:
+    volumes:
+      - "./db:/docker-entrypoint-initdb.d/:ro"
