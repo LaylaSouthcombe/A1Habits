@@ -1,4 +1,4 @@
-const db = require('../deConfig');
+const db = require('../dbConfig');
 
 class User {
     constructor(data){
