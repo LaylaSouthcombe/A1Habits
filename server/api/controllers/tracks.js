@@ -9,8 +9,13 @@ router.get('/', async (req, res) => {
     res.json(trackings)
 })
 
-router.get('/:username', async (req, res) => {
+router.get('/username/:username', async (req, res) => {
     const trackings = await Tracking.findTrackingByUsername(req.params.username)
+    res.json(trackings)
+})
+
+router.get('/user_id/:user_id', async (req, res) => {
+    const trackings = await Tracking.findTrackingByUserId(req.params.user_id)
     res.json(trackings)
 })
 

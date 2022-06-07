@@ -42,6 +42,20 @@ class Tracking {
             };
         });
     };
+    static findTrackingByUserId(user_id){
+        return new Promise (async (resolve, reject) => {
+            try {
+                let user = await User.findById(user_id);
+                let result = await db.query('SELECT * FROM tracking WHERE user_id = $1;', [ user.id ]);
+                resolve (result.rows[0]);
+            } catch (err) {
+                reject('User not found');
+            };
+        });
+    };
+    
+
+
     //need to change logic so creates preferences if not exist, but updates if they do
     static async create({ username, sleep, sleep_goal, exercise, exercise_goal, exercise_freq, water, water_goal, smoking, smoking_goal, money, money_goal, money_begin_date, money_end_date } ){
         return new Promise (async (resolve, reject) => {
