@@ -1,0 +1,38 @@
+#metrics {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-wrapper {
+  width: 100%;
+  
+}
+
+.calendar-month {
+  font-size: 2.0rem;
+}
+
+.calendar-days-wrapper {
+  margin-top: 1rem;
+  display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-day {
+  width: 50px;
+  height: 40px;
+  border: 1px solid black;
+}
+
+.calendar-day-name {
+
+}
+
+.calendar-day-number {
+  
+}

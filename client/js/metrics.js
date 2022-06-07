@@ -7,9 +7,10 @@ function createMetricsWrapper() {
 
 function createCalendar(targetElement) {
   const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-  const { numberOfDays, lastMonthFromToday } = getNumberOfDaysLastMonth()
+  const { numberOfDays, dayOfLastMonth, dayOfWeekLastMonthNumber } =
+    getNumberOfDaysLastMonth()
   console.log(numberOfDays)
-  console.log(lastMonthFromToday)
+  console.log(dayOfLastMonth)
   const now = new Date()
   const today = now.getDate()
   const thisMonth = getMonthString()
@@ -31,14 +32,15 @@ function createCalendar(targetElement) {
     calendarDaysWrapper.append(day)
   })
 
-  let j = lastMonthFromToday
-  console.log('lastMonthFromToday ', lastMonthFromToday)
+  let j = dayOfLastMonth
+  console.log('dayOfLastMonth ', dayOfLastMonth)
   for (let i = 1; i <= 35; i++) {
     console.log('j ', j)
     const day = document.createElement('div')
     day.classList.add('calendar-day-number', 'calendar-day')
     if (j > numberOfDays) j = 1
-    if (i <= 28) day.textContent = j++
+    if (i > dayOfWeekLastMonthNumber && i <= 28 + dayOfWeekLastMonthNumber)
+      day.textContent = j++
 
     calendarDaysWrapper.append(day)
   }
@@ -82,11 +84,12 @@ function getNumberOfDaysLastMonth() {
       console.log('Something went wrong getting the days of the month...')
   }
 
-  const lastMonthFromToday = getLastMonthDay()
+  const { dayOfLastMonth, dayOfWeekLastMonthNumber } = getLastMonthDay()
 
   return {
     numberOfDays,
-    lastMonthFromToday,
+    dayOfLastMonth,
+    dayOfWeekLastMonthNumber,
   }
 }
 
@@ -94,8 +97,8 @@ function getLastMonthDay(date = new Date()) {
   const lastMonth = new Date(date.getTime())
   lastMonth.setDate(date.getDate() - 28)
   const dayOfLastMonth = lastMonth.getDate() + 1
-
-  return dayOfLastMonth
+  const dayOfLastMonthNumber = lastMonth.getDay()
+  return { dayOfLastMonth, dayOfLastMonthNumber }
 }
 
 function getMonthString() {
