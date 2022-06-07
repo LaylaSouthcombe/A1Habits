@@ -33,7 +33,8 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: pink;
+  /* background-color: pink; */
+  
 }
 
 .habitsCard {
@@ -41,12 +42,15 @@
   justify-content: space-around;
   align-items: center;
   width: 80%;
-  height: 60px;
-  margin-bottom: 20px;
+  height: 100px;
+  
+  margin-top: 30px;
+  border-radius: 20px;
 
   font-size: 1.5rem;
 
-  background-color: yellow;
+  /* background-color: yellow; */
+  box-shadow: 0px 0px 5px gray;
 }
 
 
@@ -62,5 +66,22 @@
 
 
 .habitsCardBtn {
+  cursor: pointer;
+}
+
+.habitsBtnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 2px solid black; */
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px; gray;;
   
 }
+
+.habitsMinusBtn, .habitsPlusBtn {
+  padding: 8px 14px;
+  cursor: pointer;
+  
+}
+

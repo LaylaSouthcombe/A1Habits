@@ -35,7 +35,7 @@ function createHabitsWrapper() {
   // create the container for the list of tacked habits
   const habitsTrackedList = document.createElement('div')
   habitsTrackedList.classList.add('habitsTrackedList')
-  habitsTrackedList.textContent = 'Habits in here'
+  habitsTrackedList.textContent = ''
   frame.append(habitsTrackedList)
 
   // fetch Data
@@ -139,6 +139,126 @@ function createAndAppendCards(data, targetElem) {
     exerciseCard.append(exerciseCardBtn)
 
     targetElem.append(exerciseCard)
+  }
+
+  if (data.water) {
+    const waterCard = document.createElement('div')
+    waterCard.classList.add('habitsCard', 'habitsWaterCard')
+
+    const waterCardTitle = document.createElement('div')
+    waterCardTitle.classList.add('habitsCardTitle', 'habitsWaterCardTitle')
+    waterCardTitle.textContent = 'Water'
+    waterCard.append(waterCardTitle)
+
+    const waterCardTarget = document.createElement('div')
+    waterCardTarget.classList.add('habitsCardTarget', 'habitsWaterCardTarget')
+    waterCardTarget.textContent = data.water_goal
+    waterCard.append(waterCardTarget)
+
+    const waterCardBtn = document.createElement('div')
+    waterCardBtn.classList.add('habitsCardBtn', 'habitsWaterCardBtn')
+
+    const waterBtnContainer = document.createElement('div')
+    waterBtnContainer.classList.add('habitsBtnContainer')
+    const waterMinusBtn = document.createElement('div')
+    waterMinusBtn.classList.add('habitsMinusBtn')
+    waterMinusBtn.textContent = '-'
+    waterBtnContainer.append(waterMinusBtn)
+
+    const waterCurrentBtn = document.createElement('div')
+    waterCurrentBtn.classList.add('habitsCurrentBtn')
+    // serverside: need the current water intake, need a JOIN with another table
+    waterCurrentBtn.textContent = data.water_current || 0
+    waterBtnContainer.append(waterCurrentBtn)
+
+    const waterPlusBtn = document.createElement('div')
+    waterPlusBtn.classList.add('habitsPlusBtn')
+    waterPlusBtn.textContent = '+'
+    waterBtnContainer.append(waterPlusBtn)
+
+    waterCard.append(waterBtnContainer)
+    targetElem.append(waterCard)
+  }
+
+  if (data.smoking) {
+    const smokingCard = document.createElement('div')
+    smokingCard.classList.add('habitsCard', 'habitsSmokingCard')
+
+    const smokingCardTitle = document.createElement('div')
+    smokingCardTitle.classList.add('habitsCardTitle', 'habitsSmokingCardTitle')
+    smokingCardTitle.textContent = 'Smoking'
+    smokingCard.append(smokingCardTitle)
+
+    const smokingCardTarget = document.createElement('div')
+    smokingCardTarget.classList.add(
+      'habitsCardTarget',
+      'habitsSmokingCardTarget'
+    )
+    smokingCardTarget.textContent = data.smoking_goal
+    smokingCard.append(smokingCardTarget)
+
+    const smokingCardBtn = document.createElement('div')
+    smokingCardBtn.classList.add('habitsCardBtn', 'habitsSmokingCardBtn')
+
+    const smokingBtnContainer = document.createElement('div')
+    smokingBtnContainer.classList.add('habitsBtnContainer')
+    const smokingMinusBtn = document.createElement('div')
+    smokingMinusBtn.classList.add('habitsMinusBtn')
+    smokingMinusBtn.textContent = '-'
+    smokingBtnContainer.append(smokingMinusBtn)
+
+    const smokingCurrentBtn = document.createElement('div')
+    smokingCurrentBtn.classList.add('habitsCurrentBtn')
+    // serverside: need the current water intake, need a JOIN with another table
+    smokingCurrentBtn.textContent = data.smoking_current || 0
+    smokingBtnContainer.append(smokingCurrentBtn)
+
+    const smokingPlusBtn = document.createElement('div')
+    smokingPlusBtn.classList.add('habitsPlusBtn')
+    smokingPlusBtn.textContent = '+'
+    smokingBtnContainer.append(smokingPlusBtn)
+
+    smokingCard.append(smokingBtnContainer)
+    targetElem.append(smokingCard)
+  }
+
+  if (data.money) {
+    const moneyCard = document.createElement('div')
+    moneyCard.classList.add('habitsCard', 'habitsMoneyCard')
+
+    const moneyCardTitle = document.createElement('div')
+    moneyCardTitle.classList.add('habitsCardTitle', 'habitsMoneyCardTitle')
+    moneyCardTitle.textContent = 'Money'
+    moneyCard.append(moneyCardTitle)
+
+    const moneyCardTarget = document.createElement('div')
+    moneyCardTarget.classList.add('habitsCardTarget', 'habitsMoneyCardTarget')
+    moneyCardTarget.textContent = data.money_goal
+    moneyCard.append(moneyCardTarget)
+
+    const moneyCardBtn = document.createElement('div')
+    moneyCardBtn.classList.add('habitsCardBtn', 'habitsMoneyCardBtn')
+
+    const moneyBtnContainer = document.createElement('div')
+    moneyBtnContainer.classList.add('habitsBtnContainer')
+    const moneyMinusBtn = document.createElement('div')
+    moneyMinusBtn.classList.add('habitsMinusBtn')
+    moneyMinusBtn.textContent = '-'
+    moneyBtnContainer.append(moneyMinusBtn)
+
+    const moneyCurrentBtn = document.createElement('div')
+    moneyCurrentBtn.classList.add('habitsCurrentBtn')
+    // serverside: need the current water intake, need a JOIN with another table
+    moneyCurrentBtn.textContent = data.money_current || 0
+    moneyBtnContainer.append(moneyCurrentBtn)
+
+    const moneyPlusBtn = document.createElement('div')
+    moneyPlusBtn.classList.add('habitsPlusBtn')
+    moneyPlusBtn.textContent = '+'
+    moneyBtnContainer.append(moneyPlusBtn)
+
+    moneyCard.append(moneyBtnContainer)
+    targetElem.append(moneyCard)
   }
 }
 
