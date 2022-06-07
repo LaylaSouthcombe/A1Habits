@@ -19,10 +19,10 @@ class User {
             }
         })
     }
-    static create({ username, email, password }){
+    static create({ username, email, passwordDigest }){
         return new Promise(async (resolve, reject) => {
             try {
-                const result = await db.query('INSERT INTO users (username, email, password_digest) VALUES ($1, $2, $3) RETURNING *;', [ username, email, password ]);
+                const result = await db.query('INSERT INTO users (username, email, password_digest) VALUES ($1, $2, $3) RETURNING *;', [ username, email, passwordDigest ]);
                 const user = new User(result.rows[0]);
                 resolve(user)
             } catch (err) {
@@ -30,5 +30,16 @@ class User {
             }
         })
     }
+    static findByUsername(username){
+        return new Promise (async (resolve, reject) => {
+            try {
+                let userData = await db.query('SELECT * FROM users WHERE username = $1;', [ username ]);
+                let user = new User(userData.rows[0]);
+                resolve(user);
+            } catch (err) {
+                reject('User not found');
+            };
+        });
+    };
 }
 module.exports = User
