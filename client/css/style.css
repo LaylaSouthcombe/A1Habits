@@ -18,9 +18,12 @@
   }
   
   body {
+    margin: 0 auto;
+    max-width: 1100px;
     min-height: 780px;
     color: var(--light);
     font-family: "Nunito", sans-serif;
+    background-color: darkslategray;
   }
   
   .wrapper {
