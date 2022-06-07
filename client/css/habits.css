@@ -1,0 +1,28 @@
+.habitsWrapper {
+  width:100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.habitsTopContainer {
+  width: 100%;
+  height: 32px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.habitsDate, .habitsManageBtn {
+  font-size: 1.5rem;
+}
+
+.habitsDate {
+  text-align: end;
+  font-weight: bold;
+  
+}
+
