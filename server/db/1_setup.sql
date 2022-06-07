@@ -3,10 +3,9 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id serial PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password_digest VARCHAR(30) NOT NULL,
-    email VARCHAR(50)NOT NULL UNIQUE
-
+    username VARCHAR(250) NOT NULL UNIQUE,
+    password_digest VARCHAR(500) NOT NULL,
+    email VARCHAR(100)NOT NULL UNIQUE
 );
 
 
@@ -16,7 +15,7 @@ DROP TABLE IF EXISTS entries;
 
 CREATE TABLE entries (
     id serial PRIMARY KEY,
-    user_id INT REFERENCES users(id) NOT NULL,
+    user_id INT NOT NULL,
     sleep BOOLEAN,
     exercise BOOLEAN, 
     water INT,
@@ -32,7 +31,7 @@ DROP TABLE IF EXISTS tracking;
 
 CREATE TABLE tracking (
     id serial PRIMARY KEY,
-    user_id INT REFERENCES users(id) NOT NULL,
+    user_id INT NOT NULL,
     sleep BOOLEAN,
     sleep_goal INT,
     exercise BOOLEAN,
@@ -44,16 +43,6 @@ CREATE TABLE tracking (
     smoking_goal INT,
     money BOOLEAN,
     money_goal INT,
-    money_begin_date date DEFAULT CURRENT_DATE,
-    money_end_date date DEFAULT '2022-07-06'
-
+    money_begin_date date,
+    money_end_date date
 );
-
-
-
-
-
-
-
-
-
