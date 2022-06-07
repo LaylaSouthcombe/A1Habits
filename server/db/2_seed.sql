@@ -20,9 +20,6 @@ VALUES
 
 INSERT INTO tracking  ( user_id, sleep, sleep_goal, exercise, exercise_goal, exercise_freq, water, water_goal, smoking, smoking_goal, money, money_goal, money_begin_date, money_end_date) 
 VALUES
-    (1, true, 8, true, 4, 4, true, 6, true, 8, true, 4, '2022-06-06','2022-07-06'),
-    (2, false, 7, true, 3, 3,  true, 6, true, 8, true, 4, '2022-06-06','2022-07-06'),
-    (3, false, 6, false, 2, 2, true, 6, false, 1, false, 4, '2022-06-06','2022-07-06');
-    
-
-
+    (1, true, 8, true, 4, "week", true, 6, true, 8, true, 4, '2022-06-06','2022-07-06'),
+    (2, false, 7, true, 3, "week",  true, 6, true, 8, true, 4, '2022-06-06','2022-07-06'),
+    (3, false, 6, false, 2, "day", true, 6, false, 1, false, 4, '2022-06-06','2022-07-06');

@@ -36,7 +36,7 @@ CREATE TABLE tracking (
     sleep_goal INT,
     exercise BOOLEAN,
     exercise_goal INT,
-    exercise_freq INT,
+    exercise_freq VARCHAR(30),
     water BOOLEAN,
     water_goal INT,
     smoking BOOLEAN,
