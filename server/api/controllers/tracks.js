@@ -46,6 +46,13 @@ router.get('/current/:username', async (req, res) => {
         res.status(422).json({err})
     }
 })
-
+router.get('/current/:id', async (req, res) => {
+    try {
+        const trackings = await Tracking.getCurrentTrackingData(req.params.id)
+        res.json(trackings)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
 
 module.exports = router

@@ -21,7 +21,7 @@ CREATE TABLE entries (
     water_entry INT,
     smoking_entry INT,
     money_entry INT,
-    date_entry TIMESTAMP DEFAULT NOW()
+    date_entry DATE DEFAULT NOW()
 );
 
 
