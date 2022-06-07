@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const Entry = require('../models/entry');
+const { verifyToken } = require('../middleware/auth');
+//add verifyToken to all routes once finished
 
 router.get('/', async (req, res) => {
     try {
