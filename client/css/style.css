@@ -19,6 +19,7 @@
   
   body {
     margin: 0 auto;
+    min-width: 480px;
     max-width: 1100px;
     min-height: 780px;
     color: var(--light);
