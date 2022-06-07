@@ -26,14 +26,29 @@ class Entry {
     }
 
 
+    //FIND BY USER ID 
 
-    //create
+    static findById(user_id){
+        return new Promise (async (resolve, reject) => {
+            try {
+                let entryData = await db.query(`SELECT * FROM entries WHERE user_id = $1;`, [ user_id ]);
+                let entry = new Event(entryData.rows[0]);
+                resolve (entry);
+            } catch (err) {
+                reject('Entry not found');
+                console.log(err);
+            }
+        })
+    }
+
+    // CREATE
+
     static async create(entry){
         return new Promise (async (resolve, reject) => {
             try {
-                const { plant_name, nickname, frequency, count } = entry;
+                const { sleep_entry, exercise_entry, water_entry, smoking_entry, money_entry, date_entry } = entryData;
                 console.log(entry);
-                let createdEntry = await db.query(`INSERT INTO entry (sleep, exercise, water, smoking, money, date ) VALUES ($1, $2, $3, $4) RETURNING *;`, [sleep, exercise, water, smoking, money, date]);
+                let createdEntry = await db.query(`INSERT INTO entries (sleep_entry, exercise_entry, water_entry, smoking_entry, money_entry, date_entry ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`, [sleep_entry, exercise_entry, water_entry, smoking_entry, money_entry, date_entry]);
                 let newEntry = new Entry(createdEntry.rows[0]);
                 console.log(newEntry);
                 resolve  (newEntry);
@@ -44,31 +59,58 @@ class Entry {
         })
     }
 
+    // //ANOTHER COPY OF CREATE DRAFT
 
-//Find by user_ID
 
-    static findById(id){
+    // static async create(entry) {
+    //     return new Promise(async (resolve, reject) => {
+    //       try {
+    //         const { sleep, exercise, water, smoking, money, date } = entryData;
+    
+    //         let result = await db.query(
+    //           `INSERT INTO entries (sleep, exercise, water, smoking, money, date) VALUES($1, $2, $3, $4, $5, $6) RETURNING * ;`,
+    //           [ sleep, exercise, water, smoking, money, date ]
+    //         );
+    //         let newEntry = new Entry(result.rows[0]);
+    //         console.log(newEntry);
+    //         resolve(newEntry);
+    //       } catch (err) {
+    //         reject(`Entry could not be created, error: ${err}`);
+    //       }
+    //     });
+    //   }
+
+
+
+    //UPDATE  
+
+
+    static update(entry) {
         return new Promise (async (resolve, reject) => {
             try {
-                let entryData = await db.query(`SELECT * FROM entry WHERE user_id = $1;`, [ id ]);
-                let entry = new Event(entryData.rows[0]);
-                resolve (entry);
+                const { sleep_entry, exercise_entry, water_entry, smoking_entry, money_entry, date_entry } = entry;
+                
+                let updatedEntryData = await db.query(`UPDATE entires 
+                                                       SET 
+                                                       sleep_entry = $2, exercise_entry = $3, water_entry = $4, smoking_entry = $5, money_entry = $6, date_entry = $7
+                                                       WHERE user_id = $1
+                                                       RETURNING *;`, [ sleep_entry, exercise_entry, water_entry, smoking_entry, money_entry, date_entry ]);
+                let updatedEntry = new Entry(updatedEntryData.rows[0]);
+                resolve (updatedEntry);
             } catch (err) {
-                reject('Entry not found');
                 console.log(err);
+                reject('Error updating Entry');
             }
-        })
-    }
+        });
+    };
 
 
-
-
-    //Destroy
+    //DELETE
 
     static deleteEntry(id) {
         return new Promise(async(resolve, reject) => {
             try {
-                const result = await db.query('DELETE FROM entry WHERE id = $1 RETURNING *;', [ id ]);
+                const result = await db.query('DELETE FROM entries WHERE id = $1 RETURNING *;', [ id ]);
                 resolve('Entry was deleted')
             } catch (err) {
                 reject('Entry could not be deleted')
