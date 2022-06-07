@@ -24,7 +24,7 @@ class Entry {
             }
         })
     }
-}
+
 
 
     //create
@@ -76,7 +76,7 @@ class Entry {
             }
         })
     };
-
+}
 module.exports = Entry
 
 

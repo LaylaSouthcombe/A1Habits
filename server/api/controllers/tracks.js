@@ -9,8 +9,13 @@ router.get('/', async (req, res) => {
     res.json(trackings)
 })
 
-router.get('/:username', async (req, res) => {
+router.get('/username/:username', async (req, res) => {
     const trackings = await Tracking.findTrackingByUsername(req.params.username)
+    res.json(trackings)
+})
+
+router.get('/user_id/:user_id', async (req, res) => {
+    const trackings = await Tracking.findTrackingByUserId(req.params.user_id)
     res.json(trackings)
 })
 
@@ -18,13 +23,26 @@ router.get('/:username', async (req, res) => {
 router.put('/', async (req, res) => {
     try {
         if(User.findByUsername(req.params.username) === -1){
-            
-        } else {
-
-        }
-        const tracking = await Tracking.create(req.body);
+            throw new Error
+            //look for tracking using user email, if exist update
+        } if(Tracking.findTrackingByUsername(req.params.username) === -1) {
+            const tracking = await Tracking.create(req.body);
         res.status(200).json(tracking)
+//look for tracking using user email, if not exist create
+        }if(Tracking.findTrackingByUsername(req.params.username) !== -1){
+        const tracking = await Tracking.update(req.body);
+        res.status(200).json(tracking)
+        }
     } catch (err) {
+        res.status(422).json({err})
+    }
+})
+
+router.get('/current/:username', async (req, res) => {
+    try {
+        const trackings = await Tracking.getCurrentTrackingData(req.params.username)
+        res.json(trackings)
+    }catch(err){
         res.status(422).json({err})
     }
 })
