@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const Track = require('../models/track');
+const Tracking = require('../models/track');
 
 router.get('/', async (req, res) => {
-    // const users = await User.all
-    // res.json(users)
-    res.send('hi')
+    const trackings = await Tracking.all
+    res.json(trackings)
 })
 
 module.exports = router

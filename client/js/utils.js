@@ -52,6 +52,8 @@ function displayPage(requestedPage) {
 
   const availablePages = [homepage, metricspage, habitspage]
 
+  populatePage(requestedPage)
+
   availablePages.forEach((page) => {
     if (page.id === requestedPage.id) {
       // console.log(`page is`, page)
@@ -67,28 +69,47 @@ function displayPage(requestedPage) {
   })
 }
 
+function populatePage(requestedPage) {
+  // const availablePages = [homepage, metricspage, habitspage]
+  console.log('populatePage - requestedPage -> ', requestedPage.id)
+  switch (requestedPage.id) {
+    case 'home':
+      console.log('Populating the Homepage')
+      break
+    case 'metrics':
+      console.log('Populating the Metricspage')
+      break
+    case 'habits':
+      console.log('Populating the Habitspage')
+      createHabitsWrapper()
+      break
+    default:
+      console.log('Not sure what page I should populate')
+  }
+}
+
 // Habits Page
 
 // Called from within the habits-related modal
-function displayHabits(e) {
-  e.preventDefault()
-  // const availableHabits = ['sleep', 'exercise', 'smoking', 'water', 'money']
-  const checkboxes = document.querySelectorAll('.habitCheckbox')
-  createHabitsCards(checkboxes)
-}
+// function displayHabits(e) {
+//   e.preventDefault()
+//   // const availableHabits = ['sleep', 'exercise', 'smoking', 'water', 'money']
+//   const checkboxes = document.querySelectorAll('.habitCheckbox')
+//   createHabitsCards(checkboxes)
+// }
 
-function createHabitsCards(habits) {
-  elements.forEach((habit) => {
-    createAndAddCard(habit)
-  })
-}
+// function createHabitsCards(habits) {
+//   elements.forEach((habit) => {
+//     createAndAddCard(habit)
+//   })
+// }
 
-function createAndAddCard(habit) {
-  console.log('creating habit here')
-  const habitCard = document.createElement('div')
-  habitCard.classList.add('habitCard')
-  habitCard.textContent = 'text in here'
+// function createAndAddCard(habit) {
+//   console.log('creating habit here')
+//   const habitCard = document.createElement('div')
+//   habitCard.classList.add('habitCard')
+//   habitCard.textContent = 'text in here'
 
-  // need to add the  '-' and '+' buttons depending on the habit
-  console.log('habit -> ', habit)
-}
+//   // need to add the  '-' and '+' buttons depending on the habit
+//   console.log('habit -> ', habit)
+// }
