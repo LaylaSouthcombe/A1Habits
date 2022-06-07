@@ -1,5 +1,6 @@
 const db = require('../dbConfig');
 const User = require('./user');
+const Tracking = require('./track');
 class Entry {
     constructor(data){
         this.id = data.id
@@ -122,11 +123,7 @@ class Entry {
 
 
 
-
-
-
-
-
+//streak functions
     static async getCurrentSleepStreak(username){
         return new Promise(async (resolve, reject) => {
             try {
@@ -134,18 +131,89 @@ class Entry {
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 const entries = result.rows.map(r => new Entry(r))
-                console.log(entries)
                 for( let i = 0; i < entries.length; i++) {
                     if(entries[i].sleep_entry === false) { break; }
                     counter += 1
                 }
-                console.log(counter)
-                resolve (result.rows[0]);
+                resolve (counter);
             } catch (err) {
                 reject(`Error retrieving trackings: ${err}`)
             }
         })
     }
+    static async getCurrentExerciseStreak(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let counter = 0;
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                for( let i = 0; i < entries.length; i++) {
+                    if(entries[i].exercise_entry === false) { break; }
+                    counter += 1
+                }
+                resolve (counter);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async getCurrentMoneyStreak(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let counter = 0;
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                for( let i = 0; i < entries.length; i++) {
+                    if(entries[i].money_entry <= 0) { break; }
+                    counter += 1
+                }
+                resolve (counter);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async getCurrentWaterStreak(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let counter = 0;
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                const goal = await db.query('SELECT water_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
+                console.log(goal.rows[0].water_goal)
+                for( let i = 0; i < entries.length; i++) {
+                    if(entries[i].water_entry < goal.rows[0].water_goal) { break; }
+                    counter += 1
+                }
+                resolve (counter);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async getCurrentSmokingStreak(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let counter = 0;
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                const goal = await db.query('SELECT smoking_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
+                console.log(goal.rows[0].smoking_goal)
+                for( let i = 0; i < entries.length; i++) {
+                    if(entries[i].smoking_entry > goal.rows[0].smoking_goal) { break; }
+                    counter += 1
+                }
+                resolve (counter);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+
 }
 module.exports = Entry
 
