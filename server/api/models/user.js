@@ -31,6 +31,7 @@ class User {
             }
         })
     }
+
     static create({ username, email, passwordDigest }){
         return new Promise(async (resolve, reject) => {
             try {
@@ -65,4 +66,6 @@ class User {
         });
     };
 }
+
+
 module.exports = User
