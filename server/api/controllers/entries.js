@@ -13,4 +13,22 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/users/:user_id', async (req, res) => {
+    try {
+       
+        res.status(200).json(entryData)
+    } catch (err) {
+        res.status(500).send({ err })
+    }
+})
+
+
 module.exports = router
+
+
+
+
+
+
+
+
