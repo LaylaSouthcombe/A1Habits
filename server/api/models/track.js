@@ -73,8 +73,8 @@ class Tracking {
         return new Promise (async (resolve, reject) => {
             try {
                 let user = await User.findByUsername(username);
-                console.log(user)
                 let result = await db.query(`UPDATE tracking SET sleep = $2, sleep_goal = $3, exercise = $4, exercise_goal = $5, exercise_freq = $6, water = $7, water_goal = $8, smoking = $9, smoking_goal = $10, money = $11, money_goal = $12, money_begin_date = $13, money_end_date = $14 WHERE user_id = $1 RETURNING *;`, [ user.id, sleep, sleep_goal, exercise, exercise_goal, exercise_freq, water, water_goal, smoking, smoking_goal, money, money_goal, money_begin_date, money_end_date ])
+                console.log(result)
                 resolve (result.rows[0]);
             } catch (err) {
                 reject('Tracking could not be created');
