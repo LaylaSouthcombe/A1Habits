@@ -13,22 +13,14 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/users/:user_id', async (req, res) => {
+
+
+router.get('/streak/:username', async (req, res) => {
     try {
-       
-        res.status(200).json(entryData)
-    } catch (err) {
-        res.status(500).send({ err })
+        const entries = await Entry.getCurrentSleepStreak(req.params.username)
+        res.json(entries)
+    }catch(err){
+        res.status(422).json({err})
     }
 })
-
-
 module.exports = router
-
-
-
-
-
-
-
-

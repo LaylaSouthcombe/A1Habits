@@ -1,15 +1,15 @@
 const db = require('../dbConfig');
-
+const User = require('./user');
 class Entry {
     constructor(data){
         this.id = data.id
         this.user_id = data.user_id
-        this.sleep = data.sleep
-        this.exercise = data.exercise
-        this.water = data.water
-        this.smoking = data.smoking
-        this.money = data.money
-        this.date = data.date
+        this.sleep_entry = data.sleep_entry
+        this.exercise_entry = data.exercise_entry
+        this.water_entry = data.water_entry
+        this.smoking_entry = data.smoking_entry
+        this.money_entry = data.money_entry
+        this.date_entry = data.date_entry
     }
     
     // Get All
@@ -76,6 +76,34 @@ class Entry {
             }
         })
     };
+
+
+
+
+
+
+
+
+
+    static async getCurrentSleepStreak(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let counter = 0;
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                console.log(entries)
+                for( let i = 0; i < entries.length; i++) {
+                    if(entries[i].sleep_entry === false) { break; }
+                    counter += 1
+                }
+                console.log(counter)
+                resolve (result.rows[0]);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
 }
 module.exports = Entry
 

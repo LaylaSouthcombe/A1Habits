@@ -98,13 +98,13 @@ module.exports = Tracking
 
 
 //each day a new entry needs to be created automatically and be at 0
-//get tracking info for that day
-//get tracking and latest entry for that user
+//get tracking info for that day =
+//get tracking and latest entry for that user =
 
-//set tracking preferences
-//update tracking preferences
+//create tracking preferences =
+//update tracking preferences =
 
-//get most recent entries
+//get most recent entries =
 
 //new entry everyday
 //update entry
