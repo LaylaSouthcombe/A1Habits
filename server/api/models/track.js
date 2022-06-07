@@ -1,4 +1,5 @@
 const db = require('../dbConfig');
+const User = require('./user');
 
 class Tracking {
     constructor(data){
@@ -30,5 +31,17 @@ class Tracking {
             }
         })
     }
+    static async create({ username, sleep, sleep_goal, exercise, exercise_goal, exercise_freq, water, water_goal, smoking, smoking_goal, money, money_goal, money_begin_date, money_end_date } ){
+        return new Promise (async (resolve, reject) => {
+            try {
+                let user = await User.findByUsername(username);
+                console.log(user)
+                let result = await db.query(`INSERT INTO tracking (user_id, sleep, sleep_goal, exercise, exercise_goal, exercise_freq, water, water_goal, smoking, smoking_goal, money, money_goal, money_begin_date, money_end_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *;`, [ user.id, sleep, sleep_goal, exercise, exercise_goal, exercise_freq, water, water_goal, smoking, smoking_goal, money, money_goal, money_begin_date, money_end_date ])
+                resolve (result.rows[0]);
+            } catch (err) {
+                reject('Tracking could not be created');
+            }
+        });
+    };
 }
 module.exports = Tracking
