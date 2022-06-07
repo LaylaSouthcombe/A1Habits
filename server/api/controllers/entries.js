@@ -82,7 +82,15 @@ router.delete('/:id', async (req, res) => {
 //         res.status(404).json({ err });
 //     }
 // })
-
+//allhabit streak - returns number
+router.get('/streak/all/:username', async (req, res) => {
+    try {
+        const streakNum = await Entry.getCurrentAllHabitStreak(req.params.username)
+        res.json(streakNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
 //sleep streak - returns number
 router.get('/streak/sleep/:username', async (req, res) => {
     try {
