@@ -19,16 +19,13 @@ router.get('/user_id/:user_id', async (req, res) => {
     res.json(trackings)
 })
 
-//need to change logic so creates preferences if not exist, but updates if they do
 router.put('/', async (req, res) => {
     try {
         if(User.findByUsername(req.params.username) === -1){
             throw new Error
-            //look for tracking using user email, if exist update
         } if(Tracking.findTrackingByUsername(req.params.username) === -1) {
             const tracking = await Tracking.create(req.body);
         res.status(200).json(tracking)
-//look for tracking using user email, if not exist create
         }if(Tracking.findTrackingByUsername(req.params.username) !== -1){
         const tracking = await Tracking.update(req.body);
         res.status(200).json(tracking)
@@ -46,6 +43,15 @@ router.get('/current/:username', async (req, res) => {
         res.status(422).json({err})
     }
 })
+router.get('/current/:id', async (req, res) => {
+    try {
+        const trackings = await Tracking.getCurrentTrackingData(req.params.id)
+        res.json(trackings)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
 
 
 module.exports = router
