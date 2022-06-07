@@ -14,7 +14,7 @@ class Tracking {
         this.smoking_goal = data.smoking_goal
         this.money = data.money
         this.money_goal = data.money_goal
-        this.money_start_date = data.money_start_date
+        this.money_begin_date = data.money_begin_date
         this.money_end_date = data.money_end_date
     }
     
