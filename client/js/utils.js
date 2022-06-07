@@ -78,6 +78,7 @@ function populatePage(requestedPage) {
       break
     case 'metrics':
       console.log('Populating the Metricspage')
+      createMetricsWrapper()
       break
     case 'habits':
       console.log('Populating the Habitspage')
