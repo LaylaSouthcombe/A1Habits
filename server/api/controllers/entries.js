@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const entries = await Entry.findById(req.params.id);
-        res.status(200).json(book)
+        res.status(200).json(entries)
     } catch (err) {
         res.status(404).json({ err })
     }
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-//UPDATE
+//UPDATE (To double check)
 
 router.put('/:id', async (req, res) => {
     try {
