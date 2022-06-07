@@ -91,25 +91,54 @@ async function getTrackingData() {
 function createAndAppendCards(data, targetElem) {
   if (data.sleep) {
     const sleepCard = document.createElement('div')
-    sleepCard.classList.add('habitsSleepCard')
+    sleepCard.classList.add('habitsCard', 'habitsSleepCard')
 
     const sleepCardTitle = document.createElement('div')
-    sleepCardTitle.classList.add('habitsSleepCardTitle')
+    sleepCardTitle.classList.add('habitsCardTitle', 'habitsSleepCardTitle')
     sleepCardTitle.textContent = 'Sleep'
     sleepCard.append(sleepCardTitle)
 
     const sleepCardTarget = document.createElement('div')
-    sleepCardTarget.classList.add('habitsSleepCardTarget')
+    sleepCardTarget.classList.add('habitsCardTarget', 'habitsSleepCardTarget')
     sleepCardTarget.textContent = data.sleep_goal
     sleepCard.append(sleepCardTarget)
 
     const sleepCardBtn = document.createElement('div')
-    sleepCardBtn.classList.add('habitsSleepCardBtn')
+    sleepCardBtn.classList.add('habitsCardBtn', 'habitsSleepCardBtn')
     sleepCardBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>'
     sleepCardBtn.addEventListener('click', toggleBtn)
     sleepCard.append(sleepCardBtn)
 
     targetElem.append(sleepCard)
+  }
+
+  if (data.exercise) {
+    const exerciseCard = document.createElement('div')
+    exerciseCard.classList.add('habitsCard', 'habitsExerciseCard')
+
+    const exerciseCardTitle = document.createElement('div')
+    exerciseCardTitle.classList.add(
+      'habitsCardTitle',
+      'habitsExerciseCardTitle'
+    )
+    exerciseCardTitle.textContent = 'Exercise'
+    exerciseCard.append(exerciseCardTitle)
+
+    const exerciseCardTarget = document.createElement('div')
+    exerciseCardTarget.classList.add(
+      'habitsCardTarget',
+      'habitsExerciseCardTarget'
+    )
+    exerciseCardTarget.textContent = data.exercise_goal
+    exerciseCard.append(exerciseCardTarget)
+
+    const exerciseCardBtn = document.createElement('div')
+    exerciseCardBtn.classList.add('habitsCardBtn', 'habitsExerciseCardBtn')
+    exerciseCardBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>'
+    exerciseCardBtn.addEventListener('click', toggleBtn)
+    exerciseCard.append(exerciseCardBtn)
+
+    targetElem.append(exerciseCard)
   }
 }
 
