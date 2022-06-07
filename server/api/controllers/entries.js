@@ -13,7 +13,6 @@ router.get('/', async (req, res) => {
     }
 })
 
-
 //// 
 router.get('/', async (req, res) => {
     try {
@@ -82,14 +81,13 @@ router.delete('/:id', async (req, res) => {
 //     }
 // })
 
-
+router.get('/streak/:username', async (req, res) => {
+    try {
+        const entries = await Entry.getCurrentSleepStreak(req.params.username)
+        res.json(entries)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
 
 module.exports = router
-
-
-
-
-
-
-
-
