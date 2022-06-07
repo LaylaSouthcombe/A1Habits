@@ -39,9 +39,30 @@ function createHabitsWrapper() {
   frame.append(habitsTrackedList)
 
   // fetch Data
-  const userOneData = getTrackingData()
-  console.log('Tracking - userOneData -> ', userOneData)
+
+  // currently not working serverside, using hardcoded data
+  // const userOneData = getTrackingData()
+  // console.log('Tracking - userOneData -> ', userOneData)
+  const hardcodedData = {
+    user_id: 1,
+    sleep: true,
+    sleep_goal: 8,
+    exercise: true,
+    exercise_goal: 4,
+    exercise_freq: 'week',
+    water: true,
+    water_goal: 6,
+    smoking: true,
+    smoking_goal: 8,
+    money: true,
+    money_goal: 4,
+    money_begin_date: '2022-06-06',
+    money_end_date: '2022-07-06',
+  }
+  console.log('Hardcoded data -> ', hardcodedData)
+
   // create the habits cards
+  createAndAppendCards(hardcodedData, habitsTrackedList)
 
   // FETCH the data from '/trackings' (atm get the first element of the array)
 
@@ -57,11 +78,54 @@ function openHabitsModal() {
 // fetch the data for the habits
 async function getTrackingData() {
   const url = `http://localhost:3000/trackings`
+
   const response = await fetch(url)
   const data = response.json()
-
   // during testing, get the first user's data
   const dataFirstUser = data[0]
 
   return dataFirstUser
+}
+
+// create and append the cards to the Habits List element
+function createAndAppendCards(data, targetElem) {
+  if (data.sleep) {
+    const sleepCard = document.createElement('div')
+    sleepCard.classList.add('habitsSleepCard')
+
+    const sleepCardTitle = document.createElement('div')
+    sleepCardTitle.classList.add('habitsSleepCardTitle')
+    sleepCardTitle.textContent = 'Sleep'
+    sleepCard.append(sleepCardTitle)
+
+    const sleepCardTarget = document.createElement('div')
+    sleepCardTarget.classList.add('habitsSleepCardTarget')
+    sleepCardTarget.textContent = data.sleep_goal
+    sleepCard.append(sleepCardTarget)
+
+    const sleepCardBtn = document.createElement('div')
+    sleepCardBtn.classList.add('habitsSleepCardBtn')
+    sleepCardBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>'
+    sleepCardBtn.addEventListener('click', toggleBtn)
+    sleepCard.append(sleepCardBtn)
+
+    targetElem.append(sleepCard)
+  }
+}
+
+// Utility functions ///////////////////
+
+function toggleBtn(btnRef) {
+  console.log('btnRef -> ', btnRef)
+  if (this.innerHTML.match(/xmark/i)) {
+    this.innerHTML = '<i class="fa-solid fa-check"></i>'
+    // send update to the server
+
+    // createHabitsWrapper()
+  } else {
+    this.innerHTML = '<i class="fa-solid fa-xmark"></i>'
+    // send update to the server
+
+    // createHabitsWrapper()
+  }
 }

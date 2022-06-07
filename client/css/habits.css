@@ -35,3 +35,28 @@
   align-items: center;
   background-color: pink;
 }
+
+.habitsSleepCard {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+  height: 60px;
+  gap: 10px;
+
+  font-size: 1.5rem;
+
+  background-color: yellow;
+}
+
+.habitsSleepCardTitle {
+
+}
+
+.habitsSleepCardTarget {
+
+}
+
+.habitsSleepCardBtn {
+
+}
