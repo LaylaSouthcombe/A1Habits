@@ -1,4 +1,4 @@
-function createHabitsWrapper() {
+async function createHabitsWrapper() {
   // wipe the habits page
   habitspage.innerHTML = ''
 
@@ -40,31 +40,12 @@ function createHabitsWrapper() {
 
   // fetch Data
 
-  // currently not working serverside, using hardcoded data
-  // const userOneData = getTrackingData()
+  const username = 'igormirowski'
+  const userOneData = await getTrackingData(username)
   // console.log('Tracking - userOneData -> ', userOneData)
-  const hardcodedData = {
-    user_id: 1,
-    sleep: true,
-    sleep_goal: 8,
-    exercise: true,
-    exercise_goal: 4,
-    exercise_freq: 'week',
-    water: true,
-    water_goal: 6,
-    smoking: true,
-    smoking_goal: 8,
-    money: true,
-    money_goal: 4,
-    money_begin_date: '2022-06-06',
-    money_end_date: '2022-07-06',
-  }
-  console.log('Hardcoded data -> ', hardcodedData)
 
   // create the habits cards
-  createAndAppendCards(hardcodedData, habitsTrackedList)
-
-  // FETCH the data from '/trackings' (atm get the first element of the array)
+  createAndAppendCards(userOneData, habitsTrackedList)
 
   // append the frame to the habits section (id=habits, habitspage)
   habitspage.append(frame)
@@ -76,20 +57,20 @@ function openHabitsModal() {
 }
 
 // fetch the data for the habits
-async function getTrackingData() {
-  const url = `http://localhost:3000/trackings`
+async function getTrackingData(username) {
+  const url = `http://localhost:3000/trackings/current/` + username
 
   const response = await fetch(url)
-  const data = response.json()
+  const data = await response.json()
   // during testing, get the first user's data
-  const dataFirstUser = data[0]
-
+  const dataFirstUser = data
+  console.log('************** ', dataFirstUser)
   return dataFirstUser
 }
 
 // create and append the cards to the Habits List element
 function createAndAppendCards(data, targetElem) {
-  if (data.sleep) {
+  if (data.sleep_track) {
     const sleepCard = document.createElement('div')
     sleepCard.classList.add('habitsCard', 'habitsSleepCard')
 
@@ -106,13 +87,15 @@ function createAndAppendCards(data, targetElem) {
     const sleepCardBtn = document.createElement('div')
     sleepCardBtn.classList.add('habitsCardBtn', 'habitsSleepCardBtn')
     sleepCardBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>'
-    sleepCardBtn.addEventListener('click', toggleBtn)
+    sleepCardBtn.addEventListener('click', () =>
+      toggleBtn(sleepCardBtn, 'sleep')
+    )
     sleepCard.append(sleepCardBtn)
 
     targetElem.append(sleepCard)
   }
 
-  if (data.exercise) {
+  if (data.exercise_track) {
     const exerciseCard = document.createElement('div')
     exerciseCard.classList.add('habitsCard', 'habitsExerciseCard')
 
@@ -135,13 +118,15 @@ function createAndAppendCards(data, targetElem) {
     const exerciseCardBtn = document.createElement('div')
     exerciseCardBtn.classList.add('habitsCardBtn', 'habitsExerciseCardBtn')
     exerciseCardBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>'
-    exerciseCardBtn.addEventListener('click', toggleBtn)
+    exerciseCardBtn.addEventListener('click', () =>
+      toggleBtn(exerciseCardBtn, 'exercise')
+    )
     exerciseCard.append(exerciseCardBtn)
 
     targetElem.append(exerciseCard)
   }
 
-  if (data.water) {
+  if (data.water_track) {
     const waterCard = document.createElement('div')
     waterCard.classList.add('habitsCard', 'habitsWaterCard')
 
@@ -163,24 +148,30 @@ function createAndAppendCards(data, targetElem) {
     const waterMinusBtn = document.createElement('div')
     waterMinusBtn.classList.add('habitsMinusBtn')
     waterMinusBtn.textContent = '-'
+    waterMinusBtn.addEventListener('click', () =>
+      adjustCounter('water', 'decrease')
+    )
     waterBtnContainer.append(waterMinusBtn)
 
     const waterCurrentBtn = document.createElement('div')
     waterCurrentBtn.classList.add('habitsCurrentBtn')
     // serverside: need the current water intake, need a JOIN with another table
-    waterCurrentBtn.textContent = data.water_current || 0
+    waterCurrentBtn.textContent = data.water_entry || 0
     waterBtnContainer.append(waterCurrentBtn)
 
     const waterPlusBtn = document.createElement('div')
     waterPlusBtn.classList.add('habitsPlusBtn')
     waterPlusBtn.textContent = '+'
+    waterPlusBtn.addEventListener('click', () =>
+      adjustCounter('water', 'increase')
+    )
     waterBtnContainer.append(waterPlusBtn)
 
     waterCard.append(waterBtnContainer)
     targetElem.append(waterCard)
   }
 
-  if (data.smoking) {
+  if (data.smoking_track) {
     const smokingCard = document.createElement('div')
     smokingCard.classList.add('habitsCard', 'habitsSmokingCard')
 
@@ -205,24 +196,30 @@ function createAndAppendCards(data, targetElem) {
     const smokingMinusBtn = document.createElement('div')
     smokingMinusBtn.classList.add('habitsMinusBtn')
     smokingMinusBtn.textContent = '-'
+    smokingMinusBtn.addEventListener('click', () =>
+      adjustCounter('smoking', 'decrease')
+    )
     smokingBtnContainer.append(smokingMinusBtn)
 
     const smokingCurrentBtn = document.createElement('div')
     smokingCurrentBtn.classList.add('habitsCurrentBtn')
     // serverside: need the current water intake, need a JOIN with another table
-    smokingCurrentBtn.textContent = data.smoking_current || 0
+    smokingCurrentBtn.textContent = data.smoking_entry || 0
     smokingBtnContainer.append(smokingCurrentBtn)
 
     const smokingPlusBtn = document.createElement('div')
     smokingPlusBtn.classList.add('habitsPlusBtn')
     smokingPlusBtn.textContent = '+'
+    smokingPlusBtn.addEventListener('click', () =>
+      adjustCounter('smoking', 'increase')
+    )
     smokingBtnContainer.append(smokingPlusBtn)
 
     smokingCard.append(smokingBtnContainer)
     targetElem.append(smokingCard)
   }
 
-  if (data.money) {
+  if (data.money_track) {
     const moneyCard = document.createElement('div')
     moneyCard.classList.add('habitsCard', 'habitsMoneyCard')
 
@@ -244,17 +241,23 @@ function createAndAppendCards(data, targetElem) {
     const moneyMinusBtn = document.createElement('div')
     moneyMinusBtn.classList.add('habitsMinusBtn')
     moneyMinusBtn.textContent = '-'
+    moneyMinusBtn.addEventListener('click', () =>
+      adjustCounter('money', 'decrease')
+    )
     moneyBtnContainer.append(moneyMinusBtn)
 
     const moneyCurrentBtn = document.createElement('div')
     moneyCurrentBtn.classList.add('habitsCurrentBtn')
     // serverside: need the current water intake, need a JOIN with another table
-    moneyCurrentBtn.textContent = data.money_current || 0
+    moneyCurrentBtn.textContent = data.money_entry || 0
     moneyBtnContainer.append(moneyCurrentBtn)
 
     const moneyPlusBtn = document.createElement('div')
     moneyPlusBtn.classList.add('habitsPlusBtn')
     moneyPlusBtn.textContent = '+'
+    moneyPlusBtn.addEventListener('click', () =>
+      adjustCounter('money', 'increase')
+    )
     moneyBtnContainer.append(moneyPlusBtn)
 
     moneyCard.append(moneyBtnContainer)
@@ -264,17 +267,26 @@ function createAndAppendCards(data, targetElem) {
 
 // Utility functions ///////////////////
 
-function toggleBtn(btnRef) {
+function toggleBtn(btnRef, activity) {
   console.log('btnRef -> ', btnRef)
-  if (this.innerHTML.match(/xmark/i)) {
-    this.innerHTML = '<i class="fa-solid fa-check"></i>'
+  if (btnRef.innerHTML.match(/xmark/i)) {
+    btnRef.innerHTML = '<i class="fa-solid fa-check"></i>'
     // send update to the server
+    console.log(`do a fetch POST:  ${activity} has been marked as DONE`)
 
     // createHabitsWrapper()
   } else {
-    this.innerHTML = '<i class="fa-solid fa-xmark"></i>'
+    btnRef.innerHTML = '<i class="fa-solid fa-xmark"></i>'
     // send update to the server
+    console.log(`do a fetch POST: ${activity} has been marked as UNDONE`)
 
     // createHabitsWrapper()
   }
+}
+
+function adjustCounter(activity, operation) {
+  console.log('fetch POST ')
+  console.log(`activity: ${activity}, operation: ${operation}`)
+  // call createHabitsWrapper to update the view and maintain
+  // one Source of Truth
 }
