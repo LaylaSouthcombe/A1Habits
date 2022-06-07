@@ -87,29 +87,3 @@ function populatePage(requestedPage) {
       console.log('Not sure what page I should populate')
   }
 }
-
-// Habits Page
-
-// Called from within the habits-related modal
-// function displayHabits(e) {
-//   e.preventDefault()
-//   // const availableHabits = ['sleep', 'exercise', 'smoking', 'water', 'money']
-//   const checkboxes = document.querySelectorAll('.habitCheckbox')
-//   createHabitsCards(checkboxes)
-// }
-
-// function createHabitsCards(habits) {
-//   elements.forEach((habit) => {
-//     createAndAddCard(habit)
-//   })
-// }
-
-// function createAndAddCard(habit) {
-//   console.log('creating habit here')
-//   const habitCard = document.createElement('div')
-//   habitCard.classList.add('habitCard')
-//   habitCard.textContent = 'text in here'
-
-//   // need to add the  '-' and '+' buttons depending on the habit
-//   console.log('habit -> ', habit)
-// }

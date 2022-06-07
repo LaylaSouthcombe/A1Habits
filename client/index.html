@@ -18,7 +18,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
-  
+  <!-- modal called from within the Habits page to select activities to track -->
+    <div class="habits-modal disabled">
+      <div class="habits-modal-content">
+        <div class="habits-modal-title">Tracked</div>
+        <div class="habits-modal-form">
+          <div class="habits-entry-wrapper">
+            <label for="checkbox-sleep" class="habits-form-label">Sleep</label>
+            <input id="checkbox-sleep" type="checkbox" checked="checked">
+          </div>
+          
+          <div class="habits-entry-wrapper">
+            <label for="checkbox-exercise" class="habits-form-label">Exercise</label>
+            <input  id="checkbox-exercise" type="checkbox">
+          </div> 
+          <div class="habits-entry-wrapper">
+            <label for="checkbox-water" class="habits-form-label">Water Intake</label>
+            <input  id="checkbox-water" type="checkbox">
+          </div>
+          
+          <div class="habits-entry-wrapper">
+            <label for="checkbox-smoking" class="habits-form-label">Smoking</label>
+            <input  id="checkbox-smoking" type="checkbox">
+          </div>
+          
+          <div class="habits-entry-wrapper">
+            <label for="checkbox-savings" class="habits-form-label">Savings</label>
+            <input  id="checkbox-savings" type="checkbox">
+          </div>
+          
+          <div class="habits-entry-wrapper">
+            <label for="habits-submit-button" class="habits-form-label"></label>
+            <input id="habits-submit-button" type="submit" value="Save">
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- modal called when the login button is pressed -->
     <div class="modal disabled">
         <div class="modal-content">
       

@@ -54,6 +54,19 @@ async function createHabitsWrapper() {
 // call the modal for managing the Habits
 function openHabitsModal() {
   console.log('Inside openHabitsModal!')
+  const habitsModal = document.querySelector('.habits-modal')
+  if (habitsModal.classList.contains('disabled')) {
+    habitsModal.classList.remove('disabled')
+  }
+
+  const habitsModalSubmitBtn = document.querySelector('#habits-submit-button')
+  habitsModalSubmitBtn.addEventListener('click', () => {
+    // dismiss modal
+    habitsModal.classList.add('disabled')
+
+    console.log('use fetch to send POST request to the DB to save the data')
+    // POST REQUEST then UPDATE PAGE calling createHabitsWrapper()
+  })
 }
 
 // fetch the data for the habits
