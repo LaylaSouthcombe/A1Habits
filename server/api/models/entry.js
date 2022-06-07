@@ -4,12 +4,12 @@ class Entry {
     constructor(data){
         this.id = data.id
         this.user_id = data.user_id
-        this.sleep = data.sleep
-        this.exercise = data.exercise
-        this.water = data.water
-        this.smoking = data.smoking
-        this.money = data.money
-        this.date = data.date
+        this.sleep_entry = data.sleep_entry
+        this.exercise_entry = data.exercise_entry
+        this.water_entry = data.water_entry
+        this.smoking_entry = data.smoking_entry
+        this.money_entry = data.money_entry
+        this.date_entry = data.date_entry
     }
     
     // Get All
@@ -46,9 +46,9 @@ class Entry {
     static async create(entry){
         return new Promise (async (resolve, reject) => {
             try {
-                const { sleep, exercise, water, smoking, money, date } = entryData;
+                const { sleep_entry, exercise_entry, water_entry, smoking_entry, money_entry, date_entry } = entryData;
                 console.log(entry);
-                let createdEntry = await db.query(`INSERT INTO entries (sleep, exercise, water, smoking, money, date ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`, [sleep, exercise, water, smoking, money, date]);
+                let createdEntry = await db.query(`INSERT INTO entries (sleep_entry, exercise_entry, water_entry, smoking_entry, money_entry, date_entry ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`, [sleep_entry, exercise_entry, water_entry, smoking_entry, money_entry, date_entry]);
                 let newEntry = new Entry(createdEntry.rows[0]);
                 console.log(newEntry);
                 resolve  (newEntry);
@@ -88,13 +88,13 @@ class Entry {
     static update(entry) {
         return new Promise (async (resolve, reject) => {
             try {
-                const { sleep, exercise, water, smoking, money, date } = entry;
+                const { sleep_entry, exercise_entry, water_entry, smoking_entry, money_entry, date_entry } = entry;
                 
                 let updatedEntryData = await db.query(`UPDATE entires 
                                                        SET 
-                                                       sleep = $2, exercise = $3, water = $4, smoking = $5, money = $6, date = $7
+                                                       sleep_entry = $2, exercise_entry = $3, water_entry = $4, smoking_entry = $5, money_entry = $6, date_entry = $7
                                                        WHERE user_id = $1
-                                                       RETURNING *;`, [ sleep, exercise, water, smoking, money, date]);
+                                                       RETURNING *;`, [ sleep_entry, exercise_entry, water_entry, smoking_entry, money_entry, date_entry ]);
                 let updatedEntry = new Entry(updatedEntryData.rows[0]);
                 resolve (updatedEntry);
             } catch (err) {
