@@ -7,6 +7,7 @@
     --colOne: coral;
     --colTwo: purple;
     --linen: #faf0e6;
+    --lightBG: #e2e2e2;
   }
   
   *,
@@ -24,8 +25,10 @@
     min-height: 780px;
     color: var(--light);
     font-family: "Nunito", sans-serif;
-    background-color: darkslategray;
+    background: linear-gradient(90deg, gray, var(--lightBG), var(--lightBG), gray);
+    
   }
+  
   
   .wrapper {
     height: 100vh;
@@ -86,7 +89,8 @@
   
   .main {
     height: calc(100% - 12rem);
-    background-color: var(--light);
+    /* background-color: var(--light); */
+    background-color: var(--lightBG);
     margin-top: -96px;
   }
   
