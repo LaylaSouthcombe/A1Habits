@@ -1,4 +1,7 @@
 function createHabitsWrapper() {
+  // wipe the habits page
+  habitspage.innerHTML = ''
+
   // create the wrapper to be added to the page section
   const frame = document.createElement('div')
   frame.classList.add('habitsWrapper')
@@ -30,8 +33,17 @@ function createHabitsWrapper() {
 
   //
   // create the container for the list of tacked habits
+  const habitsTrackedList = document.createElement('div')
+  habitsTrackedList.classList.add('habitsTrackedList')
+  habitsTrackedList.textContent = 'Habits in here'
+  frame.append(habitsTrackedList)
 
+  // fetch Data
+  const userOneData = getTrackingData()
+  console.log('Tracking - userOneData -> ', userOneData)
   // create the habits cards
+
+  // FETCH the data from '/trackings' (atm get the first element of the array)
 
   // append the frame to the habits section (id=habits, habitspage)
   habitspage.append(frame)
@@ -39,5 +51,17 @@ function createHabitsWrapper() {
 
 // call the modal for managing the Habits
 function openHabitsModal() {
-  console.log('Insode openHabitsModal!')
+  console.log('Inside openHabitsModal!')
+}
+
+// fetch the data for the habits
+async function getTrackingData() {
+  const url = `http://localhost:3000/trackings`
+  const response = await fetch(url)
+  const data = response.json()
+
+  // during testing, get the first user's data
+  const dataFirstUser = data[0]
+
+  return dataFirstUser
 }
