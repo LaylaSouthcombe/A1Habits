@@ -82,11 +82,56 @@ router.delete('/:id', async (req, res) => {
 //         res.status(404).json({ err });
 //     }
 // })
-
-router.get('/streak/:username', async (req, res) => {
+//allhabit streak - returns number
+router.get('/streak/all/:username', async (req, res) => {
     try {
-        const entries = await Entry.getCurrentSleepStreak(req.params.username)
-        res.json(entries)
+        const streakNum = await Entry.getCurrentAllHabitStreak(req.params.username)
+        res.json(streakNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+//sleep streak - returns number
+router.get('/streak/sleep/:username', async (req, res) => {
+    try {
+        const streakNum = await Entry.getCurrentSleepStreak(req.params.username)
+        res.json(streakNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+//exercise streak - returns number
+router.get('/streak/exercise/:username', async (req, res) => {
+    try {
+        const streakNum = await Entry.getCurrentExerciseStreak(req.params.username)
+        res.json(streakNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+//water streak - returns number
+router.get('/streak/water/:username', async (req, res) => {
+    try {
+        const streakNum = await Entry.getCurrentWaterStreak(req.params.username)
+        res.json(streakNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+//smoking streak - returns number
+router.get('/streak/smoking/:username', async (req, res) => {
+    try {
+        const streakNum = await Entry.getCurrentSmokingStreak(req.params.username)
+        res.json(streakNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+//money streak - returns number
+router.get('/streak/money/:username', async (req, res) => {
+    try {
+        const streakNum = await Entry.getCurrentMoneyStreak(req.params.username)
+        res.json(streakNum)
     }catch(err){
         res.status(422).json({err})
     }
