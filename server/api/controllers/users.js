@@ -8,9 +8,18 @@ router.get('/', async (req, res) => {
     res.json(users)
 })
 
-router.get('/:username', async (req, res) => {
+router.get('/username/:username', async (req, res) => {
     const users = await User.findByUsername(req.params.username)
     res.json(users)
+})
+
+router.get('/:id', async (req, res) => {
+    try {
+        const users = await User.findById(req.params.id)
+        res.json(users)
+    } catch (err) {
+        res.status(204).json({err})
+    }
 })
 
 router.post('/', async (req, res) => {
@@ -18,7 +27,7 @@ router.post('/', async (req, res) => {
         const user = await User.create(req.body);
         res.status(200).json(user)
     } catch (err) {
-        res.status(422).json({err})
+        
     }
 })
 module.exports = router
