@@ -82,10 +82,14 @@
 .habitsMinusBtn, .habitsPlusBtn {
   padding: 8px 14px;
   cursor: pointer;
+  font-size: 1rem;
   
 }
 
 .habitsCurrentBtn {
-  padding: 8px 14px;
+  padding: 2px 14px;
+  width: 70px;
+  font-size: 1.5rem;
+  
 }
 

@@ -240,23 +240,23 @@ function createAndAppendCards(data, targetElem) {
     moneyBtnContainer.classList.add('habitsBtnContainer')
     const moneyMinusBtn = document.createElement('div')
     moneyMinusBtn.classList.add('habitsMinusBtn')
-    moneyMinusBtn.textContent = '-'
+    moneyMinusBtn.textContent = 'REMOVE'
     moneyMinusBtn.addEventListener('click', () =>
-      adjustCounter('money', 'decrease')
+      adjustCounter('money', 'decrease', moneyCurrentBtn.value)
     )
     moneyBtnContainer.append(moneyMinusBtn)
 
-    const moneyCurrentBtn = document.createElement('div')
+    const moneyCurrentBtn = document.createElement('input')
     moneyCurrentBtn.classList.add('habitsCurrentBtn')
     // serverside: need the current water intake, need a JOIN with another table
-    moneyCurrentBtn.textContent = data.money_entry || 0
+    moneyCurrentBtn.value = 0
     moneyBtnContainer.append(moneyCurrentBtn)
 
     const moneyPlusBtn = document.createElement('div')
     moneyPlusBtn.classList.add('habitsPlusBtn')
-    moneyPlusBtn.textContent = '+'
+    moneyPlusBtn.textContent = 'ADD'
     moneyPlusBtn.addEventListener('click', () =>
-      adjustCounter('money', 'increase')
+      adjustCounter('money', 'increase', moneyCurrentBtn.value)
     )
     moneyBtnContainer.append(moneyPlusBtn)
 
@@ -284,9 +284,11 @@ function toggleBtn(btnRef, activity) {
   }
 }
 
-function adjustCounter(activity, operation) {
+function adjustCounter(activity, operation, amount = 1) {
   console.log('fetch POST ')
-  console.log(`activity: ${activity}, operation: ${operation}`)
+  console.log(
+    `activity: ${activity}, operation: ${operation}, amount: ${amount}`
+  )
   // call createHabitsWrapper to update the view and maintain
   // one Source of Truth
 }
