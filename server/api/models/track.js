@@ -2,6 +2,7 @@ const db = require('../dbConfig');
 
 class Tracking {
     constructor(data){
+        this.id = data.id
         this.user_id = data.user_id
         this.sleep = data.sleep
         this.sleep_goal = data.sleep_goal
