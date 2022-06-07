@@ -49,8 +49,8 @@
   }
   
   .logo {
-    margin-left: 2rem;
-    font-size: 4rem;
+    margin-left: 3rem;
+    font-size: 4.7rem;
     color: var(--light);
     font-family: "Neonderthaw", cursive;
     transform: skewY(-5deg);
