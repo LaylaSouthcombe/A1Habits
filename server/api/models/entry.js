@@ -62,7 +62,7 @@ class Entry {
 
 
 
-    //Destroy
+    //Delete
 
     static deleteEntry(id) {
         return new Promise(async(resolve, reject) => {
@@ -77,24 +77,6 @@ class Entry {
     };
 
 
-    //Filter Entry by Date 
-    
-    // static filterHabitsByDate(data) {
-    //     return new Promise(async (res, rej) => {
-    //       try {
-    //         const { date } = data;
-    //         let result = await db.query(
-    //           `SELECT * FROM entry WHERE date = $1 ORDER BY id DESC;`,
-    //           [date]
-    //         );
-    //         let entry = result.rows;
-    //         res(entry);
-    //       } catch (err) {
-    //         rej("Could not receive this entry ");
-    //       }
-    //     });
-    //   }
-    
 module.exports = Entry
 
 
