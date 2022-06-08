@@ -324,6 +324,8 @@ async function createHabitsSelectionBar(targetElement, user) {
 
   targetElement.append(selectionBarWrapper)
   targetElement.append(chartWrapper)
+  metricsUpdateStreak(streakWrapperValue, 'all', user)
+  metricsUpdateChart('.chartFrame', 'all', user)
 }
 
 // Fetching Functions
