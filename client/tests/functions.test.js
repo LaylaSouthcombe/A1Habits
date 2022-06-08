@@ -9,25 +9,4 @@ const renderDOM = async (index.html) => {
         runScripts: 'dangerously',
         resources: 'usable'
     })
-
-
-// }
-
-describe('index.html', () => {
-    beforeEach(() => {
-        require ('../js/app.js')
-        require('../js/utils.js')
-        document.documentElement.innerHTML = html.toString();
-    })
-
-
-    // describe('head', () => {
-    //     test('it has a title', () => {
-    //       const title = document.querySelector('title')
-    //       expect(title.textContent).toContain('Atomic Addicts')
-    //     })
-
-    //   })
-
-
-})
+}
