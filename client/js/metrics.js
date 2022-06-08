@@ -247,44 +247,50 @@ async function createHabitsSelectionBar(targetElement, user) {
   const metricsAllBtn = document.createElement('div')
   metricsAllBtn.classList.add('metricsBtn', 'metricsAllBtn')
   metricsAllBtn.innerHTML = `<i class="fa-solid fa-globe"></i>`
-  metricsAllBtn.addEventListener('click', () =>
+  metricsAllBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'all', user)
-  )
+    metricsUpdateChart('.chartFrame', 'all', user)
+  })
 
   const metricsSleepBtn = document.createElement('div')
   metricsSleepBtn.classList.add('metricsBtn', 'metricsSleepBtn')
   metricsSleepBtn.innerHTML = `<i class="fa-solid fa-bed"></i>`
-  metricsSleepBtn.addEventListener('click', () =>
+  metricsSleepBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'sleep', user)
-  )
+    metricsUpdateChart('.chartFrame', 'sleep', user)
+  })
 
   const metricsExerciseBtn = document.createElement('div')
   metricsExerciseBtn.classList.add('metricsBtn', 'metricsExerciseBtn')
   metricsExerciseBtn.innerHTML = `<i class="fa-solid fa-football"></i>`
-  metricsExerciseBtn.addEventListener('click', () =>
+  metricsExerciseBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'exercise', user)
-  )
+    metricsUpdateChart('.chartFrame', 'exercise', user)
+  })
 
   const metricsWaterBtn = document.createElement('div')
   metricsWaterBtn.classList.add('metricsBtn', 'metricsWaterBtn')
   metricsWaterBtn.innerHTML = `<i class="fa-solid fa-faucet-drip"></i>`
-  metricsWaterBtn.addEventListener('click', () =>
+  metricsWaterBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'water', user)
-  )
+    metricsUpdateChart('.chartFrame', 'water', user)
+  })
 
   const metricsSmokingBtn = document.createElement('div')
   metricsSmokingBtn.classList.add('metricsBtn', 'metricsSmokingBtn')
   metricsSmokingBtn.innerHTML = `<i class="fa-solid fa-smoking"></i>`
-  metricsSmokingBtn.addEventListener('click', () =>
+  metricsSmokingBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'smoking', user)
-  )
+    metricsUpdateChart('.chartFrame', 'smoking', user)
+  })
 
   const metricsMoneyBtn = document.createElement('div')
   metricsMoneyBtn.classList.add('metricsBtn', 'metricsMoneyBtn')
   metricsMoneyBtn.innerHTML = `<i class="fa-solid fa-coins"></i>`
-  metricsMoneyBtn.addEventListener('click', () =>
+  metricsMoneyBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'money', user)
-  )
+    metricsUpdateChart('.chartFrame', 'money', user)
+  })
 
   const trackingData = await getTrackingData(user)
   console.log('trackingData -> ', trackingData)
@@ -330,4 +336,67 @@ async function metricsUpdateStreak(targetElement, endpoint, username) {
 
   console.log('data', data)
   targetElement.textContent = data
+}
+
+async function metricsUpdateChart(targetElement, endpoint, username) {
+  let ctx = document.querySelector(targetElement).getContext('2d')
+
+  let myChart
+  const url = `http://localhost:3000/entries/calendar/${endpoint}/${username}`
+
+  // routes not working
+  // const response = await fetch(url)
+  // const data = await response.json()
+
+  // console.log('data for the chart', data)
+
+  // fetch data
+  const hardcodedArrayWater = [4, 6, 5, 2, 7, 4, 6]
+  const hardcodedArraySmoking = [12, 5, 3, 7, 4, 16, 7]
+  const hardcodedArrayExercise = [0, 1, 0, 1, 0, 1, 1]
+  const hardcodedArrayMoney = [20, 10, 15, 10, 5, 0, 10]
+  const hardcodedArrayGlobal = [1, 1, 2, 3, 3, 2, 3]
+
+  if (myChart) myChart.destroy()
+  myChart = populateChart(hardcodedArrayWater, ctx)
+}
+
+// Chart related functions and data
+
+function populateChart(data, targetElemCtx) {
+  var data = {
+    labels: ['Day1', 'Day2', 'Day3', 'T', 'F', 'S', 'S'],
+    datasets: [
+      {
+        label: 'Amount',
+        data: data,
+        backgroundColor: 'rgba(153,255,51,0.4)',
+      },
+    ],
+  }
+
+  var options = {
+    scales: {
+      yAxes: [
+        {
+          stacked: true,
+          gridLines: {
+            display: true,
+            color: 'rgba(255,99,132,0.2)',
+          },
+        },
+      ],
+      xAxes: [
+        {
+          gridLines: {
+            display: true,
+          },
+        },
+      ],
+    },
+  }
+
+  // let graph = new Chart(targetElemCtx, { data, options })
+  let graph = new Chart(targetElemCtx).Bar(data)
+  return graph
 }
