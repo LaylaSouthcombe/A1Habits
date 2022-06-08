@@ -42,7 +42,7 @@ function createCalendar(targetElement) {
     console.log('aaaaaa ', dayOfWeekLastMonthNumber)
     if (j > numberOfDays) j = 1
 
-    if (i > dayOfWeekLastMonthNumber && i <= dayOfLastMonth + 28) {
+    if (i > dayOfWeekLastMonthNumber + 1 && i <= dayOfLastMonth + 28) {
       console.log('****', 28 + dayOfWeekLastMonthNumber)
       if (j === today) day.style.fontWeight = 'bold'
       day.textContent = j++
