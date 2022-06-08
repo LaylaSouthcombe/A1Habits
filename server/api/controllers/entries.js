@@ -14,7 +14,7 @@ async function getAllEntries(req, res) {
 async function autoAddUserEntry(req, res) {
     try {
         const entries = await Entry.addUserEntryForEveryUser(req.params.username);
-        res.status(200).json(entries)
+        res.status(201).json(entries)
     } catch (err) {
         res.status(500).json({ err })
     }

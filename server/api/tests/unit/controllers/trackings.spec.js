@@ -11,9 +11,9 @@ describe('trackings controller', () => {
 
     afterAll(() => jest.resetAllMocks());
 
-    describe('index', () => {
+    describe('get all trackings', () => {
         test('it returns users with a 200 status code', async () => {
-            let testTracking = ['d1', 'd2']
+            let testTracking = ['t1', 't2']
             jest.spyOn(Tracking, 'all', 'get')
                  .mockResolvedValue(testTracking);
             await trackingsController.getAllTracking(null, mockRes);
