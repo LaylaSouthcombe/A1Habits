@@ -68,6 +68,7 @@ router.patch('/current/smoking/:username', async (req, res) => {
 })
 
 //add one to most recent water entry - returns number of updated entry
+
 router.patch('/current/water/:username', async (req, res) => {
     try {
         const waterNum = await Entry.addOneToCurrentWaterNum(req.params.username)

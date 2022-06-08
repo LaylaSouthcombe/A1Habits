@@ -176,20 +176,22 @@ static async removeOneFromCurrentSmokingNum(username){
 
 
     //adds one to the most recent water entry
+
+    //GOAL: Find latest entry-->add 1 to latest water entry(by pressing + button)-->update
     
     static async addOneToCurrentWaterNum(username){
         return new Promise(async (resolve, reject) => {
             try {
-                let user = await User.findByUsername(username);
+                let user = await User.findByUsername(username); // find user by taking username (from client side)
 
-                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]); //we order by date entry to make it easier 
 
-                const entries = result.rows.map(r => new Entry(r))
+                const entries = result.rows.map(r => new Entry(r)) // each row that comes as a result make it into a new entry (constructor data)
 
-                const recentEntry = entries[0].water_entry
-                const newEntry = recentEntry + 1
+                const recentEntry = entries[0].water_entry //we access first object (0 index) from recent entry (see query line 189) --> then we access key (water_entry) and get value from it
+                const newEntry = recentEntry + 1 // add 1 to value
 
-                const entryId = entries[0].id
+                const entryId = entries[0].id // we find entry id and we want to update it in below query
                 let updatedEntryData = await db.query(`UPDATE entries 
                                                        SET 
                                                        water_entry = $2
