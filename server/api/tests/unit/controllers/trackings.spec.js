@@ -16,7 +16,7 @@ describe('trackings controller', () => {
             let testTracking = ['d1', 'd2']
             jest.spyOn(Tracking, 'all', 'get')
                  .mockResolvedValue(testTracking);
-            await trackingsController.index(null, mockRes);
+            await trackingsController.getAllTracking(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(200);
             expect(mockJson).toHaveBeenCalledWith(testTracking);
         })

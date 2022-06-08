@@ -11,8 +11,8 @@ describe('users controller', () => {
 
     afterAll(() => jest.resetAllMocks());
 
-    describe('index', () => {
-        test('it returns users with a 200 status code', async () => {
+    describe('get all', () => {
+        test('it returns all users with a 200 status code', async () => {
             let testUsers = ['d1', 'd2']
             jest.spyOn(User, 'all', 'get')
                  .mockResolvedValue(testUsers);

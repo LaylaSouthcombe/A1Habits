@@ -29,7 +29,7 @@ class Entry {
 
     //FIND BY USER ID 
 
-    static findById(user_id){
+    static findByUserId(user_id){
         return new Promise (async (resolve, reject) => {
             try {
                 let entryData = await db.query(`SELECT * FROM entries WHERE user_id = $1;`, [ user_id ]);
