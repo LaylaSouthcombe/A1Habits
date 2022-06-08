@@ -2,18 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 const Entry = require('../models/entry');
+const { verifyToken } = require('../middleware/auth');
+//add verifyToken to all routes once finished
 
-router.get('/', async (req, res) => {
-    try {
-        // const entries = await Entry.all
-        // res.json(entries)
-        res.send('hi there')
-    } catch (err) {
-        res.status(500).send({ err })
-    }
-})
 
-//// 
+//get all entries in the entries db
 router.get('/', async (req, res) => {
     try {
         const entries = await Entry.all;
@@ -23,8 +16,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-//SHOW 
-
+//get all entries by specific entry id
 router.get('/:id', async (req, res) => {
     try {
         const entries = await Entry.findById(req.params.id);
@@ -34,8 +26,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-//CREATE
-
+//create a new entry
 router.post('/', async (req, res) => {
     try {
         const createEntry = await Entry.create(req.body);
@@ -46,7 +37,6 @@ router.post('/', async (req, res) => {
 })
 
 //UPDATE (To double check)
-
 router.put('/:id', async (req, res) => {
     try {
         const updateEntry = await Entry.update(req.body);
@@ -57,8 +47,7 @@ router.put('/:id', async (req, res) => {
 })
 
 
-//DESTROY
-
+//delete an entry (not sure we need this one as an entry needs to be generated/present everyday)
 router.delete('/:id', async (req, res) => {
     try {
         const entry = await Entry.findById(req.params.id);
@@ -81,10 +70,58 @@ router.delete('/:id', async (req, res) => {
 //     }
 // })
 
-router.get('/streak/:username', async (req, res) => {
+//finds the all habit streak by username - retruns a number
+router.get('/streak/all/:username', async (req, res) => {
     try {
-        const entries = await Entry.getCurrentSleepStreak(req.params.username)
-        res.json(entries)
+        const streakNum = await Entry.getCurrentAllHabitStreak(req.params.username)
+        res.json(streakNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
+//finds the all habit streak by username - retruns a number
+router.get('/streak/sleep/:username', async (req, res) => {
+    try {
+        const streakNum = await Entry.getCurrentSleepStreak(req.params.username)
+        res.json(streakNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
+//finds the exercise habit streak by username - retruns a number
+router.get('/streak/exercise/:username', async (req, res) => {
+    try {
+        const streakNum = await Entry.getCurrentExerciseStreak(req.params.username)
+        res.json(streakNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+//finds the water habit streak by username - retruns a number
+router.get('/streak/water/:username', async (req, res) => {
+    try {
+        const streakNum = await Entry.getCurrentWaterStreak(req.params.username)
+        res.json(streakNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+//finds the smoking habit streak by username - retruns a number
+router.get('/streak/smoking/:username', async (req, res) => {
+    try {
+        const streakNum = await Entry.getCurrentSmokingStreak(req.params.username)
+        res.json(streakNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+//finds the money habit streak by username - retruns a number
+router.get('/streak/money/:username', async (req, res) => {
+    try {
+        const streakNum = await Entry.getCurrentMoneyStreak(req.params.username)
+        res.json(streakNum)
     }catch(err){
         res.status(422).json({err})
     }
