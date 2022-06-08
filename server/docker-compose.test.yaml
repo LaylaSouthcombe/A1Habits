@@ -22,4 +22,4 @@ volumes:
   test_db:
 networks: 
   default:
-    name: habits_test
+    name: habits_test_test
