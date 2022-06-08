@@ -312,7 +312,79 @@ class Entry {
         })
     }
 
+//find what tracking
+//count how many
+//if set to true, add met target, add 1
+//divide number by number of tracking
+//push to array
 
+static async findAllHabitsEntries(username){
+    return new Promise(async (resolve, reject) => {
+        try {
+            function precise(x) {
+                return x.toPrecision(2);
+              }
+            //going to put all streak into this array and chose smallest
+            let recentAllEntries = [0,0,0,0,0,0,0];
+            let trackingNum = 0;
+            //finding user_id by username
+            let user = await User.findByUsername(username);
+            //finding tracking info by username
+            const trackingInfo = await db.query('SELECT * FROM tracking WHERE user_id = $1;', [user.id]);
+            //finding all entries for a user by user_id
+            const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+            const entries = result.rows.map(r => new Entry(r))
+
+            //if statements that get the number of tracked habits and how many completed each day
+            if(trackingInfo.rows[0].sleep_track === true){
+                trackingNum += 1;
+                for( let i = 0; i < 7; i++) {
+                    if(entries[i].sleep_entry === true) {
+                        recentAllEntries[i] += 1;
+                    }
+                }
+            }
+            if(trackingInfo.rows[0].exercise_track === true){
+                trackingNum += 1;
+                for( let i = 0; i < 7; i++) {
+                    if(entries[i].exercise_entry === true) {
+                        recentAllEntries[i] += 1;
+                    }
+                }
+            }
+            if(trackingInfo.rows[0].money_track === true){
+                trackingNum += 1;
+                for( let i = 0; i < 7; i++) {
+                    if(entries[i].money_entry >= 0) {
+                        recentAllEntries[i] += 1;
+                    }
+                }
+            }
+            if(trackingInfo.rows[0].water_track === true){
+                const waterGoal = await db.query('SELECT water_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
+                trackingNum += 1;
+                for( let i = 0; i < 7; i++) {
+                    if(entries[i].water_entry >= waterGoal.rows[0].water_goal) {
+                        recentAllEntries[i] += 1;
+                    }
+                }
+            }
+            if(trackingInfo.rows[0].smoking_track === true){
+                const smokingGoal = await db.query('SELECT smoking_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
+                trackingNum += 1;
+                for( let i = 0; i < 7; i++) {
+                    if(entries[i].smoking_entry <= smokingGoal.rows[0].smoking_goal) {
+                        recentAllEntries[i] += 1;
+                    }
+                }
+            }
+            const percentAchievedHabits = recentAllEntries.map(element => Math.round((element / trackingNum)*100));
+            resolve(percentAchievedHabits);
+        } catch (err) {
+            reject(`Error retrieving trackings: ${err}`)
+        }
+    })
+}
     static async findExerciseEntries(username){
         return new Promise(async (resolve, reject) => {
             try {

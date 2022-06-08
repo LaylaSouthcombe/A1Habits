@@ -9,6 +9,16 @@ async function getAllEntries(req, res) {
         res.status(500).json({ err })
     }
 }
+//7 DAY ENTRIES FUNCTIONS
+//get last 7 all habits entries - returns array of numbers that should convert to %
+async function getAllHabitsEntries(req, res) {
+    try {
+        const entries = await Entry.findAllHabitsEntries(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
 //get last 7 smoking entries - returns array of numbers
 async function getSmokingEntries(req, res) {
     try {
@@ -49,6 +59,61 @@ async function getMoneyEntries(req, res) {
 async function getSleepEntries(req, res) {
     try {
         const entries = await Entry.findSleepEntries(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+//CALENDAR FUNCTIONS
+//get calendar 28 all habit entries - returns array of 0, 1, or 2
+async function getAllCalendarEntries(req, res) {
+    try {
+        const entries = await Entry.findAllCalendarEntries(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+//get calendar 28 sleep entries - returns array of 0, 1, or 2
+async function getSleepCalendarEntries(req, res) {
+    try {
+        const entries = await Entry.findSleepCalendarEntries(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+//get calendar 28 water entries - returns array of 0, 1, or 2
+async function getWaterCalendarEntries(req, res) {
+    try {
+        const entries = await Entry.findWaterCalendarEntries(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+//get calendar 28 smoking entries - returns array of 0, 1, or 2
+async function getSmokingCalendarEntries(req, res) {
+    try {
+        const entries = await Entry.findSmokingCalendarEntries(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+//get calendar 28 exercise entries - returns array of 0, 1, or 2
+async function getExerciseCalendarEntries(req, res) {
+    try {
+        const entries = await Entry.findExerciseCalendarEntries(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+//get calendar 28 money entries - returns array of 0, 1, or 2
+async function getMoneyCalendarEntries(req, res) {
+    try {
+        const entries = await Entry.findMoneyCalendarEntries(req.params.username);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -210,7 +275,7 @@ async function getMoneyStreak(req, res) {
     }
 }
 
-module.exports = { getAllEntries, getEntriesByUserId, createNewEntry, updateEntryById, increaseSmokingNum, deleteEntryById, getAllHabitsStreak, getSleepStreak, getExerciseStreak, getWaterStreak, getSmokingStreak, getMoneyStreak, decreaseSmokingNum, increaseWaterNum, decreaseWaterNum, getExerciseEntries, getSleepEntries, getMoneyEntries, getWaterEntries, getSmokingEntries }
+module.exports = { getAllEntries, getEntriesByUserId, createNewEntry, updateEntryById, increaseSmokingNum, deleteEntryById, getAllHabitsStreak, getSleepStreak, getExerciseStreak, getWaterStreak, getSmokingStreak, getMoneyStreak, decreaseSmokingNum, increaseWaterNum, decreaseWaterNum, getExerciseEntries, getSleepEntries, getMoneyEntries, getWaterEntries, getSmokingEntries, getAllHabitsEntries, getAllCalendarEntries, getSleepCalendarEntries, getWaterCalendarEntries, getSmokingCalendarEntries, getExerciseCalendarEntries, getMoneyCalendarEntries }
 
 
 //pseudo code
