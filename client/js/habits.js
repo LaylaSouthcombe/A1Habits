@@ -53,7 +53,7 @@ async function createHabitsWrapper() {
 
 // call the modal for managing the Habits
 function openHabitsModal() {
-  console.log('Inside openHabitsModal!')
+  // console.log('Inside openHabitsModal!')
   const habitsModal = document.querySelector('.habits-modal')
   if (habitsModal.classList.contains('disabled')) {
     habitsModal.classList.remove('disabled')
@@ -70,10 +70,22 @@ function openHabitsModal() {
 
     const habitsData = {
       trackSleep: document.querySelector('#checkbox-sleep').checked,
+      trackSleepHours: document.querySelector('#habits-form-sleep-hours').value,
       trackExercise: document.querySelector('#checkbox-exercise').checked,
+      trackExerciseTimesPerWeek: document.querySelector(
+        '#habits-form-exercise-times'
+      ).value,
       trackWater: document.querySelector('#checkbox-water').checked,
+      trackWaterDailyGlasses: document.querySelector(
+        '#habits-form-water-glasses'
+      ).value,
       trackSmoking: document.querySelector('#checkbox-smoking').checked,
+      trackSmokingDailyCigarettes: document.querySelector(
+        '#habits-form-smoking-cigarettes'
+      ).value,
       trackSavings: document.querySelector('#checkbox-savings').checked,
+      trackSavingsDaily: document.querySelector('#habits-form-money-daily')
+        .value,
     }
 
     console.log(habitsData)
@@ -89,6 +101,6 @@ async function getTrackingData(username) {
   const data = await response.json()
   // during testing, get the first user's data
   const dataFirstUser = data
-  console.log('************** ', dataFirstUser)
+  // console.log('************** ', dataFirstUser)
   return dataFirstUser
 }

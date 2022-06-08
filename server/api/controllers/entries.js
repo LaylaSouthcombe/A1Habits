@@ -93,6 +93,37 @@ async function increaseSmokingNum(req, res) {
 //     }
 // })
 
+//remove one to from most recent smoking entry - returns number of updated entry
+router.patch('/current/smoking/:username', async (req, res) => {
+    try {
+        const smokingNum = await Entry.removeOneFromCurrentSmokingNum(req.params.username)
+        res.json(smokingNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
+//add one to most recent water entry - returns number of updated entry
+
+router.patch('/current/water/:username', async (req, res) => {
+    try {
+        const waterNum = await Entry.addOneToCurrentWaterNum(req.params.username)
+        res.json(waterNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
+//remove one from most recent water entry - returns number of updated entry
+router.patch('/current/water/:username', async (req, res) => {
+    try {
+        const waterNum = await Entry.removeOneFromCurrentWaterNum(req.params.username)
+        res.json(waterNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
 //delete an entry (not sure we need this one as an entry needs to be generated/present everyday)
 async function deleteEntryById(req, res) {
     try {

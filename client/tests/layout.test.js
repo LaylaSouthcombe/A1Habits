@@ -38,7 +38,7 @@ describe('index.html', () => {
 
 
 // Testing modal Section Starts
-describe('body', () => {
+    describe('body', () => {
     it('modal has a title', () => {
       let heading = document.getElementsByClassName('modal-title')
       expect(heading).toBeTruthy()
@@ -47,92 +47,88 @@ describe('body', () => {
     it('Login page is present', () => {
         const login = document.querySelector('.modal-login')
         expect(login.textContent).toContain('Login')
-      })
+    })
 
 
-      it('email login box', () => {
+    it('email login box', () => {
         const emailBox = document.querySelector('.form-email-label')
         expect(emailBox.textContent).toContain('email')
-      })
+    })
 
-      it('email login box', () => {
+    it('email login box', () => {
         const emailBox = document.querySelector('.form-password-label')
         expect(emailBox.textContent).toContain('password')
-      })
+    })
 
-      it('Register button exists on modal', () => {
+    it('Register button exists on modal', () => {
         let postButton = document.getElementsByClassName('#form-reg-btn');
         expect(postButton).toBeTruthy();
-      })
+    })
 
 // Testing Modal Section Ends | Add register code testing
 
     it('wrapper', () => {
         let wrapper = document.getElementsByClassName('#wrapper');
         expect(wrapper).toBeTruthy();
-      })
+    })
 
-      it('logo', () => {
+    it('logo', () => {
         let logoName = document.querySelector('.logo');
         expect(logoName.textContent).toContain('Atomic Addicts')
-      })
+    })
 
 
-      it('Signup button is present', () => {
+    it('Signup button is present', () => {
         let submit = document.querySelector('#form-button-signup')
         // let submit = document.getElementById('form-button-signup')
         expect(submit.value).toContain('Signup')
-      })
+    })
 
-      it('auth', () => {
+    it('auth', () => {
         let authId = document.querySelector('.fa-solid')
         expect(authId).toBeTruthy();
-      })
+    })
 
-      it('Home Section is present', () => {
+    it('Home Section is present', () => {
         let mainSection = document.querySelector('#home')
         expect(mainSection.textContent).toContain('HOME')
-      })
+    })
 
-      it('Metric Section exists', () => {
+    it('Metric Section exists', () => {
         let mmetricsSection = document.querySelector('#metrics')
         expect(mmetricsSection.textContent).toContain('METRICS')
-      })
+    })
 
-    //   it('Habit Section exists', () => {
-    //     let habitSection = document.querySelector('#habits')
-    //     expect(habitSection.textContent).toContain('HABITS')
-    //   })
-
-
-      it('Metric Section exists', () => {
+    it('Metric Section exists', () => {
         let mmetricsSection = document.querySelector('#metrics')
         expect(mmetricsSection.textContent).toContain('METRICS')
-      })
+    })
     
-      it('Smoking material icon exists', () => {
+    it('Smoking material icon exists', () => {
         let smokingIcon = document.querySelector('.fa-smoking')
         expect(smokingIcon).toBeTruthy();
-      })
+    })
 
-      
-      
+})
 
-
-
-
-  })
-
-  
-
-
-  // has footer section 
-        describe('html', () => {
-            test('it has a submit button', () => {
-                let postButton = document.getElementsByClassName('postButton');
+describe('index.html', () => {
+    test('it has a submit button', () => {
+        let postButton = document.getElementsByClassName('postButton');
                 expect(postButton).toBeTruthy();
             })
 
         })
-
 })
+
+// Testing Functions Start
+// describe('index.html', () => {
+//     beforeEach(() => {
+//         document.documentElement.innerHTML = html.toString();
+//     })
+
+//     //Testing AuthBtn
+//     it('displays model when top right button is clicked', () => {
+//         const authButton = document.querySelector('#selection-1')
+//         authBtn.dispatchEvent(new Event('click'))
+//     })
+// })
