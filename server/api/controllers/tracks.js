@@ -15,7 +15,7 @@ async function getAllTracking(req, res) {
 //get tracking preferences for specific username
 async function getUserTrackingsByUsername(req, res) {
     try {
-        const trackings = await Tracking.findTrackingByUsername(req.params.username)
+        const trackings = await Tracking.findTrackingByUsername(req.headers.authorization)
         res.status(200).json(trackings)
     } catch (err) {
         res.status(500).json({err})

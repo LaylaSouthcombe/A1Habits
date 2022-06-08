@@ -194,7 +194,6 @@ class Entry {
                                                        exercise_entry = $2
                                                        WHERE id = $1
                                                        RETURNING exercise_entry;`, [ entryId, true ]);
-                console.log(updatedEntryData.rows[0])
                 resolve (updatedEntryData);
             } catch (err) {
                 reject(`Error retrieving trackings: ${err}`)
@@ -367,7 +366,6 @@ class Entry {
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 const entries = result.rows.map(r => new Entry(r))
                 const goal = await db.query('SELECT water_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
-                console.log(goal.rows[0].water_goal)
                 for( let i = 0; i < entries.length; i++) {
                     if(entries[i].water_entry < goal.rows[0].water_goal) { break; }
                     counter += 1
@@ -636,11 +634,9 @@ class Entry {
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 const entries = result.rows.map(r => new Entry(r))
-                console.log(entries[0].sleep_entry)
                 for(let i = 0; i < 28; i++) {
                     if(entries[i].sleep_entry === false){
                         calendarSleepEntries[i] = 1;
-                        console.log(calendarSleepEntries[i])
                     }else if(entries[i].sleep_entry === true){
                         calendarSleepEntries[i] = 2;
                     }else{
@@ -664,7 +660,6 @@ class Entry {
                 for(let i = 0; i < 28; i++) {
                     if(entries[i].exercise_entry === false){
                         calendarExerciseEntries[i] = 1;
-                        console.log(calendarExerciseEntries[i])
                     }else if(entries[i].exercise_entry === true){
                         calendarExerciseEntries[i] = 2;
                     }else{
@@ -685,11 +680,9 @@ class Entry {
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 const entries = result.rows.map(r => new Entry(r))
                 const goal = await db.query('SELECT water_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
-                console.log(entries[0].water_entry)
                 for(let i = 0; i < 28; i++) {
                     if(entries[i].water_entry > 0 && entries[i].water_entry < goal.rows[0].water_goal){
                         calendarWaterEntries[i] = 1;
-                        console.log(calendarWaterEntries[i])
                     }else if(entries[i].water_entry >= goal.rows[0].water_goal){
                         calendarWaterEntries[i] = 2;
                     }else{
@@ -711,11 +704,9 @@ class Entry {
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 const entries = result.rows.map(r => new Entry(r))
                 const goal = await db.query('SELECT smoking_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
-                console.log(entries[0].smoking_entry)
                 for(let i = 0; i < 28; i++) {
                     if(entries[i].smoking_entry > goal.rows[0].smoking_goal){
                         calendarSmokingEntries[i] = 1;
-                        console.log(calendarSmokingEntries[i])
                     }else if(entries[i].smoking_entry > 0 && entries[i].smoking_entry <= goal.rows[0].smoking_goal){
                         calendarSmokingEntries[i] = 2;
                     }else{
@@ -803,7 +794,6 @@ class Entry {
                     }
                 }
                 const achievedHabits = recentAllEntries.map(element => Math.round((element / trackingNum)));
-                console.log(achievedHabits);
                 resolve(achievedHabits);
             } catch (err) {
                 reject(`Error retrieving trackings: ${err}`)

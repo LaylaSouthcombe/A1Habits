@@ -3,7 +3,8 @@ INSERT INTO users (id, username, password_digest, email)
 VALUES
     (1, 'igormirowski', 'xxxxx', 'igor@gmail.com'),
     (2, 'leo123', 'xxxxx', 'leo12@gmail.com'),
-    (3, 'pati123', 'xxxxx', 'pati123@gmail.com');
+    (3, 'pati123', 'xxxxx', 'pati123@gmail.com'),
+    (4, 'tinab123', '$2a$10$sosndSuA2qyqsvbV.BwjxucwERZSZsSbJtzmcHg2vJ8LR7o6xpK2e', 'tinab123@gmail.com');
 
 
 -- ENTRIES
@@ -42,7 +43,9 @@ VALUES
     (1, true, false, 8, 6, 0, '2022-07-05'),
     (1, true, true, 2, 10, 1, '2022-07-06'),
     (1, true, true, 6, 8, 1, '2022-07-07'),
-    (1, true, true, 8, 8, 1, '2022-07-08');
+    (1, true, true, 8, 8, 1, '2022-07-08'),
+    (4, true, false, 6, 1, 0, '2022-07-07'),
+    (4, true, true, 8, 8, 1, '2022-07-08');
     
 
 
@@ -52,4 +55,5 @@ INSERT INTO tracking  ( user_id, sleep_track, sleep_goal, exercise_track, exerci
 VALUES
     (1, true, 8, true, 4, 'week', true, 6, true, 8, true, 4, '2022-06-06','2022-07-06'),
     (2, false, 7, true, 3, 'week',  true, 6, true, 8, true, 4, '2022-06-06','2022-07-06'),
-    (3, false, 6, false, 2, 'day', true, 6, false, 1, false, 4, '2022-06-06','2022-07-06');
+    (3, false, 6, false, 2, 'day', true, 6, false, 1, false, 4, '2022-06-06','2022-07-06'),
+    (4, true, 6, true, 2, 'day', true, 6, true, 1, true, 4, '2022-06-06','2022-07-06');

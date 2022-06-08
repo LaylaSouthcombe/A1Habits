@@ -1,6 +1,7 @@
 const db = require('../dbConfig');
 const User = require('./user');
 const Entry = require('./entry')
+const jwt_decode = require('jwt-decode');
 
 class Tracking {
     constructor(data){
@@ -32,9 +33,14 @@ class Tracking {
             }
         })
     }
-    static findTrackingByUsername(username){
+    static findTrackingByUsername(token){
         return new Promise (async (resolve, reject) => {
             try {
+                console.log(token)
+                const decoded = jwt_decode(token)
+                console.log(decoded)
+                const username = decoded.username
+                console.log(username)
                 let user = await User.findByUsername(username);
                 let result = await db.query('SELECT * FROM tracking WHERE user_id = $1;', [ user.id ]);
                 resolve (result.rows[0]);
