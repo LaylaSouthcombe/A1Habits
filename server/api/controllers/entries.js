@@ -47,6 +47,47 @@ router.put('/:id', async (req, res) => {
 })
 
 
+//add one to most recent smoking entry - returns number of updated entry
+router.patch('/current/smoking/:username', async (req, res) => {
+    try {
+        const smokingNum = await Entry.addOneToCurrentSmokingNum(req.params.username)
+        res.json(smokingNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
+//remove one to from most recent smoking entry - returns number of updated entry
+router.patch('/current/smoking/:username', async (req, res) => {
+    try {
+        const smokingNum = await Entry.removeOneFromCurrentSmokingNum(req.params.username)
+        res.json(smokingNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
+//add one to most recent water entry - returns number of updated entry
+
+router.patch('/current/water/:username', async (req, res) => {
+    try {
+        const waterNum = await Entry.addOneToCurrentWaterNum(req.params.username)
+        res.json(waterNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
+//remove one from most recent water entry - returns number of updated entry
+router.patch('/current/water/:username', async (req, res) => {
+    try {
+        const waterNum = await Entry.removeOneFromCurrentWaterNum(req.params.username)
+        res.json(waterNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
 //delete an entry (not sure we need this one as an entry needs to be generated/present everyday)
 router.delete('/:id', async (req, res) => {
     try {
@@ -128,3 +169,35 @@ router.get('/streak/money/:username', async (req, res) => {
 })
 
 module.exports = router
+
+
+//pseudo code
+
+//bar charts
+
+//create route to get most recent 7 entries for a specific habit
+////order by date
+////only sent most recent 7
+
+
+//28 day calendar general points
+////0 = not tracked = white
+////1 = not met = red
+////2 = met = green
+////FE recieves an array of 28 numbers, which will be used to set the class of the date circles in the calendar
+
+//all habit 28 day calendar
+////Have array of 28 0s
+////go through last 28 entries for a user anc check if goal met
+////if not tracked, will remain as 0
+////if tracked but not met, add 1 to that [i]
+////if met, add 2 to that [i]
+////divide number by the number of trackings set to true
+////use floor to round down
+
+//single habit calendars
+////same as above just for one habit and don't divide by number of trackings true
+
+//money
+////
+
