@@ -235,8 +235,8 @@ async function createHabitsSelectionBar(targetElement, user) {
   streakWrapperValue.classList.add('streakWrapperValue')
   streakWrapper.append(streakWrapperValue)
 
-  const chartFrame = document.createElement('canvas')
-  chartFrame.classList.add('chartFrame')
+  const chartFrame = document.createElement('div')
+  chartFrame.classList.add('chartFrame', 'ct-chart')
   chartWrapper.append(chartFrame)
 
   // selectionBarWrapper will have the buttons to select which
@@ -339,9 +339,8 @@ async function metricsUpdateStreak(targetElement, endpoint, username) {
 }
 
 async function metricsUpdateChart(targetElement, endpoint, username) {
-  let ctx = document.querySelector(targetElement).getContext('2d')
+  let canvasChart = document.querySelector(targetElement)
 
-  let myChart
   const url = `http://localhost:3000/entries/calendar/${endpoint}/${username}`
 
   // routes not working
@@ -357,46 +356,18 @@ async function metricsUpdateChart(targetElement, endpoint, username) {
   const hardcodedArrayMoney = [20, 10, 15, 10, 5, 0, 10]
   const hardcodedArrayGlobal = [1, 1, 2, 3, 3, 2, 3]
 
-  if (myChart) myChart.destroy()
-  myChart = populateChart(hardcodedArrayWater, ctx)
+  populateChart(hardcodedArrayWater, canvasChart)
 }
 
 // Chart related functions and data
 
-function populateChart(data, targetElemCtx) {
-  var data = {
-    labels: ['Day1', 'Day2', 'Day3', 'T', 'F', 'S', 'S'],
-    datasets: [
-      {
-        label: 'Amount',
-        data: data,
-        backgroundColor: 'rgba(153,255,51,0.4)',
-      },
-    ],
+function populateChart(chartData, targetElemCtx) {
+  const labels = ['Day1', 'Day2', 'Day3', 'Day4', 'Day5', 'Day6', 'Day7']
+
+  const data = {
+    labels,
+    series: [chartData],
   }
 
-  var options = {
-    scales: {
-      yAxes: [
-        {
-          stacked: true,
-          gridLines: {
-            display: true,
-            color: 'rgba(255,99,132,0.2)',
-          },
-        },
-      ],
-      xAxes: [
-        {
-          gridLines: {
-            display: true,
-          },
-        },
-      ],
-    },
-  }
-
-  // let graph = new Chart(targetElemCtx, { data, options })
-  let graph = new Chart(targetElemCtx).Bar(data)
-  return graph
+  new Chartist.Bar(targetElemCtx, data)
 }
