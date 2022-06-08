@@ -20,7 +20,11 @@ router.get('/streak/exercise/:username', entriesController.getExerciseStreak);
 router.get('/streak/water/:username', entriesController.getWaterStreak);
 router.get('/streak/smoking/:username', entriesController.getSmokingStreak);
 router.get('/streak/money/:username', entriesController.getMoneyStreak);
-
+router.get('/exercise/:username', entriesController.getExerciseEntries);
+router.get('/smoking/:username', entriesController.getSmokingEntries);
+router.get('/water/:username', entriesController.getWaterEntries);
+router.get('/money/:username', entriesController.getMoneyEntries);
+router.get('/sleep/:username', entriesController.getSleepEntries);
 
 
 module.exports = router;
