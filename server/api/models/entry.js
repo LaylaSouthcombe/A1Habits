@@ -147,6 +147,33 @@ class Entry {
         })
     }
 
+    //removes one to the most recent smoking entry
+
+static async removeOneFromCurrentSmokingNum(username){
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await User.findByUsername(username);
+
+            const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+
+            const entries = result.rows.map(r => new Entry(r))
+
+            const recentEntry = entries[0].smoking_entry
+            const newEntry = recentEntry - 1
+
+            const entryId = entries[0].id
+            let updatedEntryData = await db.query(`UPDATE entries 
+                                                   SET 
+                                                   smoking_entry = $2
+                                                   WHERE id = $1
+                                                   RETURNING *;`, [ entryId, newEntry ]);
+            resolve (updatedEntryData);
+        } catch (err) {
+            reject(`Error retrieving trackings: ${err}`)
+        }
+    })
+}
+
 
     //adds one to the most recent water entry
     
@@ -176,6 +203,32 @@ class Entry {
     }
 
 
+      //removes one to the most recent water entry
+    
+      static async removeOneFromCurrentWaterNum(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let user = await User.findByUsername(username);
+
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+
+                const entries = result.rows.map(r => new Entry(r))
+
+                const recentEntry = entries[0].water_entry
+                const newEntry = recentEntry - 1
+
+                const entryId = entries[0].id
+                let updatedEntryData = await db.query(`UPDATE entries 
+                                                       SET 
+                                                       water_entry = $2
+                                                       WHERE id = $1
+                                                       RETURNING *;`, [ entryId, newEntry ]);
+                resolve (updatedEntryData);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
 
 
 
