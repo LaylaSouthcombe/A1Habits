@@ -161,56 +161,173 @@ function getMonthString() {
 
 // Create the bar at the top of the calendar that allows the user to
 // select which habits to show
+// async function createHabitsSelectionBar(targetElement, user) {
+//   // chartWrapper will have the chart with the habit's data
+//   const chartWrapper = document.createElement('div')
+//   chartWrapper.classList.add('metricsChartWrapper')
+
+//   const iconsDict = {
+//     exerciseSelBtn: 'fa-football',
+//     sleepSelBtn: 'fa-bed',
+//     moneySelBtn: 'fa-coins',
+//     smokingSelBtn: 'fa-smoking',
+//     waterSelBtn: 'fa-faucet-drip',
+//   }
+
+//   // selectionBarWrapper will have the buttons to select which
+//   // habit to show
+//   const selectionBarWrapper = document.createElement('div')
+//   selectionBarWrapper.classList.add('selectionBarWrapper')
+
+//   const trackingData = await getTrackingData(user)
+//   console.log('trackingData -> ', trackingData)
+
+//   for (let habit in trackingData) {
+//     if (
+//       trackingData[habit] &&
+//       habit.includes('_track') &&
+//       trackingData[habit] === true
+//     ) {
+//       console.log('*=*=* ', habit.includes('_track'))
+
+//       const btnClassName = habit.split('_track')[0].concat('SelBtn')
+//       const newBtn = document.createElement('div')
+//       newBtn.classList.add(btnClassName, 'metricsSelBtn')
+//       newBtn.innerHTML = `<i class="fa-solid ${iconsDict[btnClassName]}"></i>`
+
+//       newBtn.addEventListener('click', () => {
+//         // 1. fetch data for this specific habit
+//         console.log('Will populate the chart here')
+//         // 2. populate the chart
+//         chartWrapper.innerHTML = ''
+
+//         const chartElement = document.createElement('div')
+//         chartElement.classList.add('chartElement')
+//         chartWrapper.append(chartElement)
+
+//         console.log('AAA', this)
+//       })
+
+//       selectionBarWrapper.append(newBtn)
+//       console.log(btnClassName)
+//     }
+//   }
+
+//   targetElement.append(selectionBarWrapper)
+//   targetElement.append(chartWrapper)
+// }
+
 async function createHabitsSelectionBar(targetElement, user) {
   // chartWrapper will have the chart with the habit's data
   const chartWrapper = document.createElement('div')
   chartWrapper.classList.add('metricsChartWrapper')
 
-  const iconsDict = {
-    exerciseSelBtn: 'fa-football',
-    sleepSelBtn: 'fa-bed',
-    moneySelBtn: 'fa-coins',
-    smokingSelBtn: 'fa-smoking',
-    waterSelBtn: 'fa-faucet-drip',
-  }
+  const streakWrapper = document.createElement('div')
+  streakWrapper.classList.add('streakWrapper')
+  chartWrapper.append(streakWrapper)
+
+  const streakWrapperTitle = document.createElement('div')
+  streakWrapperTitle.classList.add('streakWrapperTitle')
+  streakWrapperTitle.textContent = 'Streak'
+  streakWrapper.append(streakWrapperTitle)
+
+  const streakWrapperValue = document.createElement('div')
+  streakWrapperValue.classList.add('streakWrapperValue')
+  streakWrapper.append(streakWrapperValue)
+
+  const chartFrame = document.createElement('canvas')
+  chartFrame.classList.add('chartFrame')
+  chartWrapper.append(chartFrame)
 
   // selectionBarWrapper will have the buttons to select which
   // habit to show
   const selectionBarWrapper = document.createElement('div')
   selectionBarWrapper.classList.add('selectionBarWrapper')
 
+  const metricsAllBtn = document.createElement('div')
+  metricsAllBtn.classList.add('metricsBtn', 'metricsAllBtn')
+  metricsAllBtn.innerHTML = `<i class="fa-solid fa-globe"></i>`
+  metricsAllBtn.addEventListener('click', () =>
+    metricsUpdateStreak(streakWrapperValue, 'all', user)
+  )
+
+  const metricsSleepBtn = document.createElement('div')
+  metricsSleepBtn.classList.add('metricsBtn', 'metricsSleepBtn')
+  metricsSleepBtn.innerHTML = `<i class="fa-solid fa-bed"></i>`
+  metricsSleepBtn.addEventListener('click', () =>
+    metricsUpdateStreak(streakWrapperValue, 'sleep', user)
+  )
+
+  const metricsExerciseBtn = document.createElement('div')
+  metricsExerciseBtn.classList.add('metricsBtn', 'metricsExerciseBtn')
+  metricsExerciseBtn.innerHTML = `<i class="fa-solid fa-football"></i>`
+  metricsExerciseBtn.addEventListener('click', () =>
+    metricsUpdateStreak(streakWrapperValue, 'exercise', user)
+  )
+
+  const metricsWaterBtn = document.createElement('div')
+  metricsWaterBtn.classList.add('metricsBtn', 'metricsWaterBtn')
+  metricsWaterBtn.innerHTML = `<i class="fa-solid fa-faucet-drip"></i>`
+  metricsWaterBtn.addEventListener('click', () =>
+    metricsUpdateStreak(streakWrapperValue, 'water', user)
+  )
+
+  const metricsSmokingBtn = document.createElement('div')
+  metricsSmokingBtn.classList.add('metricsBtn', 'metricsSmokingBtn')
+  metricsSmokingBtn.innerHTML = `<i class="fa-solid fa-smoking"></i>`
+  metricsSmokingBtn.addEventListener('click', () =>
+    metricsUpdateStreak(streakWrapperValue, 'smoking', user)
+  )
+
+  const metricsMoneyBtn = document.createElement('div')
+  metricsMoneyBtn.classList.add('metricsBtn', 'metricsMoneyBtn')
+  metricsMoneyBtn.innerHTML = `<i class="fa-solid fa-coins"></i>`
+  metricsMoneyBtn.addEventListener('click', () =>
+    metricsUpdateStreak(streakWrapperValue, 'money', user)
+  )
+
   const trackingData = await getTrackingData(user)
   console.log('trackingData -> ', trackingData)
 
+  const habitsTrackedByUser = []
   for (let habit in trackingData) {
     if (
       trackingData[habit] &&
       habit.includes('_track') &&
       trackingData[habit] === true
     ) {
-      console.log('*=*=* ', habit.includes('_track'))
-
-      const btnClassName = habit.split('_track')[0].concat('SelBtn')
-      const newBtn = document.createElement('div')
-      newBtn.classList.add(btnClassName, 'metricsSelBtn')
-      newBtn.innerHTML = `<i class="fa-solid ${iconsDict[btnClassName]}"></i>`
-
-      newBtn.addEventListener('click', () => {
-        // 1. fetch data for this specific habit
-        console.log('Will populate the chart here')
-        // 2. populate the chart
-        chartWrapper.innerHTML = ''
-
-        const chartElement = document.createElement('div')
-        chartElement.classList.add('chartElement')
-        chartWrapper.append(chartElement)
-      })
-
-      selectionBarWrapper.append(newBtn)
-      console.log(btnClassName)
+      habitsTrackedByUser.push(habit)
     }
   }
 
+  // Append global button and other tracked buttons to the wrapper
+  selectionBarWrapper.append(metricsAllBtn)
+
+  if (habitsTrackedByUser.includes('sleep_track'))
+    selectionBarWrapper.append(metricsSleepBtn)
+  if (habitsTrackedByUser.includes('exercise_track'))
+    selectionBarWrapper.append(metricsExerciseBtn)
+  if (habitsTrackedByUser.includes('water_track'))
+    selectionBarWrapper.append(metricsWaterBtn)
+  if (habitsTrackedByUser.includes('smoking_track'))
+    selectionBarWrapper.append(metricsSmokingBtn)
+  if (habitsTrackedByUser.includes('money_track'))
+    selectionBarWrapper.append(metricsMoneyBtn)
+
+  console.log('====================== habitsTrackedByUser', habitsTrackedByUser)
+
   targetElement.append(selectionBarWrapper)
   targetElement.append(chartWrapper)
+}
+
+// Fetching Functions
+
+async function metricsUpdateStreak(targetElement, endpoint, username) {
+  console.log('user is ', username)
+  const url = `http://localhost:3000/entries/streak/${endpoint}/${username}`
+  const response = await fetch(url)
+  const data = await response.json()
+
+  console.log('data', data)
+  targetElement.textContent = data
 }
