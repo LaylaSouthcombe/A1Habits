@@ -3,6 +3,8 @@ const router = express.Router();
 
 const Tracking = require('../models/track');
 const User = require('../models/user');
+const { verifyToken } = require('../middleware/auth');
+//add verifyToken to all routes once finished
 
 router.get('/', async (req, res) => {
     const trackings = await Tracking.all
