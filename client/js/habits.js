@@ -70,10 +70,22 @@ function openHabitsModal() {
 
     const habitsData = {
       trackSleep: document.querySelector('#checkbox-sleep').checked,
+      trackSleepHours: document.querySelector('#habits-form-sleep-hours').value,
       trackExercise: document.querySelector('#checkbox-exercise').checked,
+      trackExerciseTimesPerWeek: document.querySelector(
+        '#habits-form-exercise-times'
+      ).value,
       trackWater: document.querySelector('#checkbox-water').checked,
+      trackWaterDailyGlasses: document.querySelector(
+        '#habits-form-water-glasses'
+      ).value,
       trackSmoking: document.querySelector('#checkbox-smoking').checked,
+      trackSmokingDailyCigarettes: document.querySelector(
+        '#habits-form-smoking-cigarettes'
+      ).value,
       trackSavings: document.querySelector('#checkbox-savings').checked,
+      trackSavingsDaily: document.querySelector('#habits-form-money-daily')
+        .value,
     }
 
     console.log(habitsData)
