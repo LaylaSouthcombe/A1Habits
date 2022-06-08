@@ -2,6 +2,12 @@ function createMetricsWrapper() {
   // wipe the habits page
   metricspage.innerHTML = ''
 
+  // HARDCODED USER
+  const user = 'igormirowski'
+
+  createHabitsSelectionBar(metricspage, user)
+
+  // will pass it the metrics when available as a second argument
   createCalendar(metricspage)
 }
 
@@ -9,8 +15,8 @@ function createCalendar(targetElement) {
   const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const { numberOfDays, dayOfLastMonth, dayOfWeekLastMonthNumber } =
     getNumberOfDaysLastMonth()
-  console.log(numberOfDays)
-  console.log(dayOfLastMonth)
+  // console.log(numberOfDays)
+  // console.log(dayOfLastMonth)
   const now = new Date()
   const today = now.getDate()
   const thisMonth = getMonthString()
@@ -33,17 +39,17 @@ function createCalendar(targetElement) {
   })
 
   let j = dayOfLastMonth
-  console.log('dayOfLastMonth ', dayOfLastMonth)
+  // console.log('dayOfLastMonth ', dayOfLastMonth)
   for (let i = 1; i <= 35; i++) {
-    console.log('j ', j)
+    // console.log('j ', j)
     const day = document.createElement('div')
     day.classList.add('calendar-day-number', 'calendar-day')
 
-    console.log('aaaaaa ', dayOfWeekLastMonthNumber)
+    // console.log('aaaaaa ', dayOfWeekLastMonthNumber)
     if (j > numberOfDays) j = 1
 
     if (i > dayOfWeekLastMonthNumber + 1 && i <= dayOfLastMonth + 28) {
-      console.log('****', 28 + dayOfWeekLastMonthNumber)
+      // console.log('****', 28 + dayOfWeekLastMonthNumber)
       if (j === today) day.style.fontWeight = 'bold'
       day.textContent = j++
     }
@@ -58,7 +64,7 @@ function createCalendar(targetElement) {
 function getNumberOfDaysLastMonth() {
   const now = new Date()
   const month = now.getMonth()
-  console.log(month)
+  // console.log(month)
 
   const year = now.getFullYear()
   const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
@@ -151,4 +157,40 @@ function getMonthString() {
     default:
       console.log('Something went wrong getting the month...')
   }
+}
+
+// Create the bar at the top of the calendar that allows the user to
+// select which habits to show
+async function createHabitsSelectionBar(targetElement, user) {
+  const iconsDict = {
+    exerciseSelBtn: 'fa-football',
+    sleepSelBtn: 'fa-bed',
+    moneySelBtn: 'fa-coins',
+    smokingSelBtn: 'fa-smoking',
+    waterSelBtn: 'fa-glass-water-droplet',
+  }
+
+  const selectionBarWrapper = document.createElement('div')
+  selectionBarWrapper.classList.add('selectionBarWrapper')
+
+  const trackingData = await getTrackingData(user)
+  console.log('trackingData -> ', trackingData)
+  for (let habit in trackingData) {
+    if (
+      trackingData[habit] &&
+      habit.includes('_track') &&
+      trackingData[habit] === true
+    ) {
+      console.log('*=*=* ', habit.includes('_track'))
+
+      const btnClassName = habit.split('_track')[0].concat('SelBtn')
+      const newBtn = document.createElement('div')
+      newBtn.classList.add(btnClassName, 'metricsSelBtn')
+      newBtn.innerHTML = `<i class="fa-solid ${iconsDict[btnClassName]}"></i>`
+      selectionBarWrapper.append(newBtn)
+      console.log(btnClassName)
+    }
+  }
+
+  targetElement.append(selectionBarWrapper)
 }

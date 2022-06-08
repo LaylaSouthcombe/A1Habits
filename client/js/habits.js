@@ -53,7 +53,7 @@ async function createHabitsWrapper() {
 
 // call the modal for managing the Habits
 function openHabitsModal() {
-  console.log('Inside openHabitsModal!')
+  // console.log('Inside openHabitsModal!')
   const habitsModal = document.querySelector('.habits-modal')
   if (habitsModal.classList.contains('disabled')) {
     habitsModal.classList.remove('disabled')
@@ -89,6 +89,6 @@ async function getTrackingData(username) {
   const data = await response.json()
   // during testing, get the first user's data
   const dataFirstUser = data
-  console.log('************** ', dataFirstUser)
+  // console.log('************** ', dataFirstUser)
   return dataFirstUser
 }

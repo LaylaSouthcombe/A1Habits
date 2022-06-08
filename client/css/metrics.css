@@ -8,6 +8,9 @@
   gap: 10px;
 } */
 
+
+
+
 .calendar-wrapper {
   width: 100%;
   
@@ -41,4 +44,24 @@
 
 .calendar-day-number {
   
+}
+
+.selectionBarWrapper {
+  display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 4rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: linear-gradient(125deg, var(--colOne), var(--colTwo));
+    margin-top: 20px;
+}
+
+.metricsSelBtn {
+  color: var(--light);
+  min-width: 50px;
+  padding: 8px;
+
+  border: 2px solid var(--light);
+  border-radius: 50%;
 }
