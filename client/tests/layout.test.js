@@ -16,6 +16,7 @@ describe('index.html', () => {
         document.documentElement.innerHTML = html.toString();
     })
 
+   //Head Section
     test('it has a head title', () => {
         let header = document.querySelector('header');
         const title = document.querySelector('title');
@@ -34,10 +35,6 @@ describe('index.html', () => {
           expect(title.textContent).toContain('Atomic Addicts')
         })
     })
-
-
-})
-
 
 
 // Testing modal Section Starts
@@ -63,20 +60,22 @@ describe('body', () => {
         expect(emailBox.textContent).toContain('password')
       })
 
-      it('it has a Register button on login page', () => {
+      it('Register button exists on modal', () => {
         let postButton = document.getElementsByClassName('#form-reg-btn');
         expect(postButton).toBeTruthy();
       })
-// Testing Modal Section Ends
 
+// Testing Modal Section Ends | Add register code testing
 
-    //   it('it has a Login button on homescreen', () => {
-    //     let loginButton = document.querySelector('#form-log-btn');
-    //     expect(loginButton.value).toContain('Login?')
-    //   })
+    it('wrapper', () => {
+        let wrapper = document.getElementsByClassName('#wrapper');
+        expect(wrapper).toBeTruthy();
+      })
 
-
-
+      it('logo', () => {
+        let logoName = document.querySelector('.logo');
+        expect(logoName.textContent).toContain('Atomic Addicts')
+      })
 
 
       it('Signup button is present', () => {
@@ -85,8 +84,45 @@ describe('body', () => {
         expect(submit.value).toContain('Signup')
       })
 
+      it('auth', () => {
+        let authId = document.querySelector('.fa-solid')
+        expect(authId).toBeTruthy();
+      })
+
+      it('Home Section is present', () => {
+        let mainSection = document.querySelector('#home')
+        expect(mainSection.textContent).toContain('HOME')
+      })
+
+      it('Metric Section exists', () => {
+        let mmetricsSection = document.querySelector('#metrics')
+        expect(mmetricsSection.textContent).toContain('METRICS')
+      })
+
+    //   it('Habit Section exists', () => {
+    //     let habitSection = document.querySelector('#habits')
+    //     expect(habitSection.textContent).toContain('HABITS')
+    //   })
+
+
+      it('Metric Section exists', () => {
+        let mmetricsSection = document.querySelector('#metrics')
+        expect(mmetricsSection.textContent).toContain('METRICS')
+      })
+    
+      it('Smoking material icon exists', () => {
+        let smokingIcon = document.querySelector('.fa-smoking')
+        expect(smokingIcon).toBeTruthy();
+      })
+
+      
+      
+
+
+
 
   })
+
   
 
 
@@ -99,3 +135,4 @@ describe('body', () => {
 
         })
 
+})
