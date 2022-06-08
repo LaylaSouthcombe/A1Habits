@@ -152,14 +152,12 @@ async function updateEntryById(req, res) {
 
 //add one to most recent smoking entry - returns number of updated entry
 async function increaseSmokingNum(req, res) {
-    router.patch('/current/smoking/:username', async (req, res) => {
         try {
             const smokingNum = await Entry.addOneToCurrentSmokingNum(req.params.username)
             res.status(200).json(smokingNum)
         }catch(err){
             res.status(422).json({err})
         }
-    })
 }
 
 //remove one to from most recent smoking entry - returns number of updated entry

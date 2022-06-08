@@ -11,10 +11,10 @@ router.post('/', entriesController.createNewEntry);
 router.patch('/:id', entriesController.updateEntryById);
 router.delete('/:id', entriesController.deleteEntryById);
 //increase/decreasewater/smoking routes
-router.patch('/current/smoking/:username', entriesController.increaseSmokingNum);
-router.patch('/current/smoking/:username', entriesController.decreaseSmokingNum);
-router.patch('/current/water/:username', entriesController.increaseWaterNum);
-router.patch('/current/water/:username', entriesController.decreaseWaterNum);
+router.patch('/increase/smoking/:username', entriesController.increaseSmokingNum);
+router.patch('/decrease/smoking/:username', entriesController.decreaseSmokingNum);
+router.patch('/increase/water/:username', entriesController.increaseWaterNum);
+router.patch('/decrease/water/:username', entriesController.decreaseWaterNum);
 //streak routes
 router.get('/streak/all/:username', entriesController.getAllHabitsStreak);
 router.get('/streak/sleep/:username', entriesController.getSleepStreak);
