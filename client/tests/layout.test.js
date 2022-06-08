@@ -111,15 +111,24 @@ describe('index.html', () => {
 
 })
 
-describe('html', () => {
+describe('index.html', () => {
     test('it has a submit button', () => {
         let postButton = document.getElementsByClassName('postButton');
                 expect(postButton).toBeTruthy();
             })
 
         })
-
 })
 
 // Testing Functions Start
+// describe('index.html', () => {
+//     beforeEach(() => {
+//         document.documentElement.innerHTML = html.toString();
+//     })
 
+//     //Testing AuthBtn
+//     it('displays model when top right button is clicked', () => {
+//         const authButton = document.querySelector('#selection-1')
+//         authBtn.dispatchEvent(new Event('click'))
+//     })
+// })
