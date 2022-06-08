@@ -47,6 +47,16 @@ router.put('/:id', async (req, res) => {
 })
 
 
+//add one to most recent smoking entry - returns number of updated entry
+router.patch('/current/smoking/:username', async (req, res) => {
+    try {
+        const smokingNum = await Entry.addOneToCurrentSmokingNum(req.params.username)
+        res.json(smokingNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
 //delete an entry (not sure we need this one as an entry needs to be generated/present everyday)
 router.delete('/:id', async (req, res) => {
     try {
@@ -157,4 +167,6 @@ module.exports = router
 //single habit calendars
 ////same as above just for one habit and don't divide by number of trackings true
 
+//money
+////
 
