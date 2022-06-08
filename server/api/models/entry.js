@@ -1,5 +1,6 @@
 const db = require('../dbConfig');
 const User = require('./user');
+const Tracking = require('./track');
 class Entry {
     constructor(data){
         this.id = data.id
@@ -122,11 +123,7 @@ class Entry {
 
 
 
-
-
-
-
-
+//streak functions
     static async getCurrentSleepStreak(username){
         return new Promise(async (resolve, reject) => {
             try {
@@ -134,13 +131,154 @@ class Entry {
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 const entries = result.rows.map(r => new Entry(r))
-                console.log(entries)
                 for( let i = 0; i < entries.length; i++) {
                     if(entries[i].sleep_entry === false) { break; }
                     counter += 1
                 }
-                console.log(counter)
-                resolve (result.rows[0]);
+                resolve (counter);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async getCurrentExerciseStreak(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let counter = 0;
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                for( let i = 0; i < entries.length; i++) {
+                    if(entries[i].exercise_entry === false) { break; }
+                    counter += 1
+                }
+                resolve (counter);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async getCurrentMoneyStreak(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let counter = 0;
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                for( let i = 0; i < entries.length; i++) {
+                    if(entries[i].money_entry <= 0) { break; }
+                    counter += 1
+                }
+                resolve (counter);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async getCurrentWaterStreak(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let counter = 0;
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                const goal = await db.query('SELECT water_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
+                console.log(goal.rows[0].water_goal)
+                for( let i = 0; i < entries.length; i++) {
+                    if(entries[i].water_entry < goal.rows[0].water_goal) { break; }
+                    counter += 1
+                }
+                resolve (counter);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async getCurrentSmokingStreak(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let counter = 0;
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                const goal = await db.query('SELECT smoking_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
+                for( let i = 0; i < entries.length; i++) {
+                    if(entries[i].smoking_entry > goal.rows[0].smoking_goal) { break; }
+                    counter += 1
+                }
+                resolve (counter);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+
+
+    //get tracking preferences
+    //call each function
+    //if true, put into array
+    //arrange by value
+    //select highest
+
+    static async getCurrentAllHabitStreak(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                //going to put all streak into this array and chose smallest
+                let streakArray = [];
+                //finding user_id by username
+                let user = await User.findByUsername(username);
+                //finding tracking info by username
+                const trackingInfo = await db.query('SELECT * FROM tracking WHERE user_id = $1;', [user.id]);
+                //finding all entries for a user by user_id
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                //if statements that get the streak for each habit if tracking is set to true and push to array
+                if(trackingInfo.rows[0].sleep_track === true){
+                    let sleepCounter = 0;
+                    for( let i = 0; i < entries.length; i++) {
+                        if(entries[i].sleep_entry === false) { break; }
+                        sleepCounter += 1
+                    }
+                    streakArray.push(sleepCounter)
+                }
+                if(trackingInfo.rows[0].exercise_track === true){
+                    let exerciseCounter = 0;
+                    for( let i = 0; i < entries.length; i++) {
+                        if(entries[i].exercise_entry === false) { break; }
+                        exerciseCounter += 1
+                    }
+                    streakArray.push(exerciseCounter)
+                }
+                if(trackingInfo.rows[0].money_track === true){
+                    let moneyCounter = 0;
+                    for( let i = 0; i < entries.length; i++) {
+                        if(entries[i].money_entry <= 0) { break; }
+                        moneyCounter += 1
+                    }
+                    streakArray.push(moneyCounter)
+                }
+                if(trackingInfo.rows[0].water_track === true){
+                    const waterGoal = await db.query('SELECT water_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
+                    let waterCounter = 0;
+                    for( let i = 0; i < entries.length; i++) {
+                        if(entries[i].water_entry < waterGoal.rows[0].water_goal) { break; }
+                        waterCounter += 1
+                    }
+                    streakArray.push(waterCounter)
+                }
+                if(trackingInfo.rows[0].smoking_track === true){
+                    let smokingCounter = 0;
+                    const smokingGoal = await db.query('SELECT smoking_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
+                    for( let i = 0; i < entries.length; i++) {
+                        if(entries[i].smoking_entry > smokingGoal.rows[0].smoking_goal) { break; }
+                        smokingCounter += 1
+                    }
+                    streakArray.push(smokingCounter)
+                }
+                //sort array to have smallest first
+                streakArray.sort()
+                //send smallest streak
+                resolve(streakArray[0]);
             } catch (err) {
                 reject(`Error retrieving trackings: ${err}`)
             }

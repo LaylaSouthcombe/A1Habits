@@ -32,10 +32,11 @@ class User {
         })
     }
 
-    static create({ username, email, passwordDigest }){
+    static create({ username, email, password }){
         return new Promise(async (resolve, reject) => {
             try {
-                const result = await db.query('INSERT INTO users (username, email, password_digest) VALUES ($1, $2, $3) RETURNING *;', [ username, email, passwordDigest ]);
+                console.log(username)
+                const result = await db.query('INSERT INTO users (username, email, password_digest) VALUES ($1, $2, $3) RETURNING *;', [ username, email, password ]);
                 const user = new User(result.rows[0]);
                 resolve(user)
             } catch (err) {
@@ -65,6 +66,17 @@ class User {
             };
         });
     };
+    static findByEmail(email){
+        return new Promise(async (res, rej) => {
+            try {
+                let result = await db.query('SELECT * FROM users        WHERE email = $1;', [ email ]);
+                let user = new User(result.rows[0])
+                res(user)
+            } catch (err) {
+                rej(`Error retrieving user: ${err}`)
+            }
+        })
+    }
 }
 
 
