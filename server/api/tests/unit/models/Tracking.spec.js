@@ -19,7 +19,7 @@ describe('Tracking', () => {
         test('it resolves with trackings on successful db query', async () => {
             jest.spyOn(db, 'query')
                 .mockResolvedValueOnce({ rows: [{}, {}, {}]});
-            const all = await Entry.all;
+            const all = await Tracking.all;
             expect(all).toHaveLength(3)
         })
     });

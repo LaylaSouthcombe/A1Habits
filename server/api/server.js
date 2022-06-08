@@ -5,10 +5,10 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
-const usersRoutes = require('./controllers/users')
-const trackingsRoutes = require('./controllers/tracks')
-const entriesRoutes = require('./controllers/entries')
-const authRoutes = require('./controllers/auth');
+const usersRoutes = require('./routes/users')
+const trackingsRoutes = require('./routes/trackings')
+const entriesRoutes = require('./routes/entries')
+const authRoutes = require('./routes/auths');
 server.use('/users', usersRoutes)
 server.use('/trackings', trackingsRoutes)
 server.use('/entries', entriesRoutes)

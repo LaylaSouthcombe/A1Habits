@@ -1,31 +1,50 @@
-const express = require('express');
-const router = express.Router();
-
 const User = require('../models/user');
-const { verifyToken } = require('../middleware/auth');
-//add verifyToken to all routes once finished
+
 
 //gets all users in users table
-router.get('/', async (req, res) => {
-    const users = await User.all
-    res.json(users)
-})
+async function index(req, res) {
+    try {
+        // const authors = [];
+        const users = await User.all
+        res.status(200).json(users)
+    } catch (err) {
+        res.status(500).json({err})
+    }
+}
 
 //finds user info by their username
-router.get('/username/:username', async (req, res) => {
-    const users = await User.findByUsername(req.params.username)
-    res.json(users)
-})
+async function getByUsername(req, res) {
+    try {
+        const users = await User.findByUsername(req.params.username)
+        res.status(200).json(users)
+    } catch (err) {
+        res.status(500).json({err})
+    }
+}
+
+// router.get('/username/:username', async (req, res) => {
+//     const users = await User.findByUsername(req.params.username)
+//     res.json(users)
+// })
 
 //finds user info by their user id
-router.get('/:id', async (req, res) => {
+async function getById(req, res) {
     try {
         const users = await User.findById(req.params.id)
-        res.json(users)
+        res.status(200).json(users)
     } catch (err) {
         res.status(204).json({err})
     }
-})
+}
+
+// router.get('/:id', async (req, res) => {
+//     try {
+//         const users = await User.findById(req.params.id)
+//         res.json(users)
+//     } catch (err) {
+//         res.status(204).json({err})
+//     }
+// })
 
 // //creates a user (no longer needed as have the register route in auth)
 // router.post('/', async (req, res) => {
@@ -36,4 +55,4 @@ router.get('/:id', async (req, res) => {
         
 //     }
 // })
-module.exports = router
+module.exports = { index, getByUsername, getById }

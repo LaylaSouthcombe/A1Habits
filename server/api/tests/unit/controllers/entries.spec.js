@@ -11,16 +11,16 @@ describe('entries controller', () => {
 
     afterAll(() => jest.resetAllMocks());
 
-    describe('index', () => {
-        test('it returns users with a 200 status code', async () => {
-            let testEntries = ['d1', 'd2']
-            jest.spyOn(Entry, 'all', 'get')
-                 .mockResolvedValue(testEntries);
-            await entriesController.index(null, mockRes);
-            expect(mockStatus).toHaveBeenCalledWith(200);
-            expect(mockJson).toHaveBeenCalledWith(testEntries);
-        })
-    });
+    // describe('index', () => {
+    //     test('it returns users with a 200 status code', async () => {
+    //         let testEntries = ['d1', 'd2']
+    //         jest.spyOn(Entry, 'all', 'get')
+    //              .mockResolvedValue(testEntries);
+    //         await entriesController.index(null, mockRes);
+    //         expect(mockStatus).toHaveBeenCalledWith(200);
+    //         expect(mockJson).toHaveBeenCalledWith(testEntries);
+    //     })
+    // });
 
     // describe('show', () => {
     //     test('it returns a dog with a 200 status code', async () => {
