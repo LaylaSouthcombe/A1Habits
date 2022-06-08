@@ -6,7 +6,7 @@ const { verifyToken } = require('../middleware/auth');
 //add verifyToken to all routes once finished
 
 router.get('/', entriesController.getAllEntries);
-router.get('/:id', entriesController.getEntriesById);
+router.get('/:id', entriesController.getEntriesByUserId);
 router.post('/', entriesController.createNewEntry);
 router.patch('/:id', entriesController.updateEntryById);
 router.patch('/current/smoking/:username', entriesController.increaseSmokingNum);
