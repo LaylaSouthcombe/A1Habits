@@ -70,21 +70,6 @@ const sel1 = document.querySelector('#selection-1')
 const sel2 = document.querySelector('#selection-2')
 const sel3 = document.querySelector('#selection-3')
 const sel4 = document.querySelector('#selection-4')
-// sel1.addEventListener('click', () => {
-//   section1.innerHTML = 'list of Cards with smoking related data '
-// })
-
-// sel2.addEventListener('click', () => {
-//   section1.innerHTML = 'list of Cards with water related data '
-// })
-
-// sel3.addEventListener('click', () => {
-//   section1.innerHTML = 'list of Cards with sleeping related data '
-// })
-
-// sel4.addEventListener('click', () => {
-//   section1.innerHTML = 'charts with weekly and monthly charts and money saved'
-// })
 
 function displayInitialHomepage() {
   section1.innetHTML =

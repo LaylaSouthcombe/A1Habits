@@ -6,9 +6,9 @@ function createMetricsWrapper() {
   const user = 'igormirowski'
 
   createHabitsSelectionBar(metricspage, user)
+  createCalendar(metricspage)
 
   // will pass it the metrics when available as a second argument
-  createCalendar(metricspage)
 }
 
 function createCalendar(targetElement) {
@@ -162,19 +162,26 @@ function getMonthString() {
 // Create the bar at the top of the calendar that allows the user to
 // select which habits to show
 async function createHabitsSelectionBar(targetElement, user) {
+  // chartWrapper will have the chart with the habit's data
+  const chartWrapper = document.createElement('div')
+  chartWrapper.classList.add('metricsChartWrapper')
+
   const iconsDict = {
     exerciseSelBtn: 'fa-football',
     sleepSelBtn: 'fa-bed',
     moneySelBtn: 'fa-coins',
     smokingSelBtn: 'fa-smoking',
-    waterSelBtn: 'fa-glass-water-droplet',
+    waterSelBtn: 'fa-faucet-drip',
   }
 
+  // selectionBarWrapper will have the buttons to select which
+  // habit to show
   const selectionBarWrapper = document.createElement('div')
   selectionBarWrapper.classList.add('selectionBarWrapper')
 
   const trackingData = await getTrackingData(user)
   console.log('trackingData -> ', trackingData)
+
   for (let habit in trackingData) {
     if (
       trackingData[habit] &&
@@ -187,10 +194,23 @@ async function createHabitsSelectionBar(targetElement, user) {
       const newBtn = document.createElement('div')
       newBtn.classList.add(btnClassName, 'metricsSelBtn')
       newBtn.innerHTML = `<i class="fa-solid ${iconsDict[btnClassName]}"></i>`
+
+      newBtn.addEventListener('click', () => {
+        // 1. fetch data for this specific habit
+        console.log('Will populate the chart here')
+        // 2. populate the chart
+        chartWrapper.innerHTML = ''
+
+        const chartElement = document.createElement('div')
+        chartElement.classList.add('chartElement')
+        chartWrapper.append(chartElement)
+      })
+
       selectionBarWrapper.append(newBtn)
       console.log(btnClassName)
     }
   }
 
   targetElement.append(selectionBarWrapper)
+  targetElement.append(chartWrapper)
 }
