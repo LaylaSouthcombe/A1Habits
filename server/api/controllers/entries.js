@@ -57,6 +57,16 @@ router.patch('/current/smoking/:username', async (req, res) => {
     }
 })
 
+//add one to most recent water entry - returns number of updated entry
+router.patch('/current/water/:username', async (req, res) => {
+    try {
+        const waterNum = await Entry.addOneToCurrentWaterNum(req.params.username)
+        res.json(waterNum)
+    }catch(err){
+        res.status(422).json({err})
+    }
+})
+
 //delete an entry (not sure we need this one as an entry needs to be generated/present everyday)
 router.delete('/:id', async (req, res) => {
     try {
