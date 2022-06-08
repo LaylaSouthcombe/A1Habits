@@ -13,7 +13,7 @@ class Entry {
         this.date_entry = data.date_entry
     }
     
-    // Get All
+    // Get All for a user
     static get all(){
         return new Promise(async (resolve, reject) => {
             try {
@@ -146,92 +146,6 @@ class Entry {
             }
         })
     }
-
-    //removes one to the most recent smoking entry
-
-static async removeOneFromCurrentSmokingNum(username){
-    return new Promise(async (resolve, reject) => {
-        try {
-            let user = await User.findByUsername(username);
-
-            const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
-
-            const entries = result.rows.map(r => new Entry(r))
-
-            const recentEntry = entries[0].smoking_entry
-            const newEntry = recentEntry - 1
-
-            const entryId = entries[0].id
-            let updatedEntryData = await db.query(`UPDATE entries 
-                                                   SET 
-                                                   smoking_entry = $2
-                                                   WHERE id = $1
-                                                   RETURNING *;`, [ entryId, newEntry ]);
-            resolve (updatedEntryData);
-        } catch (err) {
-            reject(`Error retrieving trackings: ${err}`)
-        }
-    })
-}
-
-
-    //adds one to the most recent water entry
-
-    //GOAL: Find latest entry-->add 1 to latest water entry(by pressing + button)-->update
-    
-    static async addOneToCurrentWaterNum(username){
-        return new Promise(async (resolve, reject) => {
-            try {
-                let user = await User.findByUsername(username); // find user by taking username (from client side)
-
-                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]); //we order by date entry to make it easier 
-
-                const entries = result.rows.map(r => new Entry(r)) // each row that comes as a result make it into a new entry (constructor data)
-
-                const recentEntry = entries[0].water_entry //we access first object (0 index) from recent entry (see query line 189) --> then we access key (water_entry) and get value from it
-                const newEntry = recentEntry + 1 // add 1 to value
-
-                const entryId = entries[0].id // we find entry id and we want to update it in below query
-                let updatedEntryData = await db.query(`UPDATE entries 
-                                                       SET 
-                                                       water_entry = $2
-                                                       WHERE id = $1
-                                                       RETURNING *;`, [ entryId, newEntry ]);
-                resolve (updatedEntryData);
-            } catch (err) {
-                reject(`Error retrieving trackings: ${err}`)
-            }
-        })
-    }
-
-
-      //removes one to the most recent water entry
-    
-      static async removeOneFromCurrentWaterNum(username){
-        return new Promise(async (resolve, reject) => {
-            try {
-                let user = await User.findByUsername(username);
-
-                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
-
-                const entries = result.rows.map(r => new Entry(r))
-
-                const recentEntry = entries[0].water_entry
-                const newEntry = recentEntry - 1
-
-                const entryId = entries[0].id
-                let updatedEntryData = await db.query(`UPDATE entries 
-                                                       SET 
-                                                       water_entry = $2
-                                                       WHERE id = $1
-                                                       RETURNING *;`, [ entryId, newEntry ]);
-                resolve (updatedEntryData);
-            } catch (err) {
-                reject(`Error retrieving trackings: ${err}`)
-            }
-        })
-    }
-
 
 
 
@@ -397,6 +311,89 @@ static async removeOneFromCurrentSmokingNum(username){
             }
         })
     }
+
+
+    static async findExerciseEntries(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const recentExerciseEntries = [];
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                for( let i = 0; i < 7; i++) {
+                    recentExerciseEntries.push(entries[i].exercise_entry)
+                }
+                resolve (recentExerciseEntries);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async findSmokingEntries(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const recentSmokingEntries = [];
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                for( let i = 0; i < 7; i++) {
+                    recentSmokingEntries.push(entries[i].smoking_entry)
+                }
+                resolve (recentSmokingEntries);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async findWaterEntries(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const recentWaterEntries = [];
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                for( let i = 0; i < 7; i++) {
+                    recentWaterEntries.push(entries[i].water_entry)
+                }
+                resolve (recentWaterEntries);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async findMoneyEntries(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const recentMoneyEntries = [];
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                for( let i = 0; i < 7; i++) {
+                    recentMoneyEntries.push(entries[i].money_entry)
+                }
+                resolve (recentMoneyEntries);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async findSleepEntries(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const recentSleepEntries = [];
+                let user = await User.findByUsername(username);
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+                const entries = result.rows.map(r => new Entry(r))
+                for( let i = 0; i < 7; i++) {
+                    recentSleepEntries.push(entries[i].sleep_entry)
+                }
+                resolve (recentSleepEntries);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+
 }
 module.exports = Entry
 

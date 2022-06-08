@@ -97,28 +97,3 @@ module.exports = Tracking
 
 
 
-//each day a new entry needs to be created automatically and be at 0
-//get tracking info for that day =
-//get tracking and latest entry for that user =
-
-//create tracking preferences =
-//update tracking preferences =
-
-//get most recent entries =
-
-//new entry everyday
-//update entry
-// - increase water by 1
-// - decrease water by 1
-// - increase smoking by 1
-// - decrease smoking by 1
-// - complete task
-// - decomplete task
-
-//streak
-//change from boolean to str and have "yes" or "no"
-//-run counter++ until reach false on entry 
-//while (smoking_entry === true) {
-//    counter++
-//}
-

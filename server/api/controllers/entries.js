@@ -1,9 +1,54 @@
 const Entry = require('../models/entry');
-
+//GET ENTRIES FUNCTIONS
 //get all entries in the entries db
 async function getAllEntries(req, res) {
     try {
         const entries = await Entry.all;
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+//get last 7 smoking entries - returns array of numbers
+async function getSmokingEntries(req, res) {
+    try {
+        const entries = await Entry.findSmokingEntries(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+//get last 7 exercise entries - returns array of booleans
+async function getExerciseEntries(req, res) {
+    try {
+        const entries = await Entry.findExerciseEntries(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+//get last 7 water entries - returns array of numbers
+async function getWaterEntries(req, res) {
+    try {
+        const entries = await Entry.findWaterEntries(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+//get last 7 money entries - returns array of numbers
+async function getMoneyEntries(req, res) {
+    try {
+        const entries = await Entry.findMoneyEntries(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+//get last 7 sleep entries - returns array of booleans
+async function getSleepEntries(req, res) {
+    try {
+        const entries = await Entry.findSleepEntries(req.params.username);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -19,7 +64,7 @@ async function getEntriesByUserId(req, res) {
         res.status(404).json({ err })
     }
 }
-
+//CREATE
 //create a new entry
 async function createNewEntry(req, res) {
     try {
@@ -63,7 +108,6 @@ async function decreaseSmokingNum(req, res) {
 }
 
 //add one to most recent water entry - returns number of updated entry
-
 async function increaseWaterNum(req, res) {
     try {
         const waterNum = await Entry.addOneToCurrentWaterNum(req.params.username)
@@ -166,7 +210,7 @@ async function getMoneyStreak(req, res) {
     }
 }
 
-module.exports = { getAllEntries, getEntriesByUserId, createNewEntry, updateEntryById, increaseSmokingNum, deleteEntryById, getAllHabitsStreak, getSleepStreak, getExerciseStreak, getWaterStreak, getSmokingStreak, getMoneyStreak, decreaseSmokingNum, increaseWaterNum, decreaseWaterNum }
+module.exports = { getAllEntries, getEntriesByUserId, createNewEntry, updateEntryById, increaseSmokingNum, deleteEntryById, getAllHabitsStreak, getSleepStreak, getExerciseStreak, getWaterStreak, getSmokingStreak, getMoneyStreak, decreaseSmokingNum, increaseWaterNum, decreaseWaterNum, getExerciseEntries, getSleepEntries, getMoneyEntries, getWaterEntries, getSmokingEntries }
 
 
 //pseudo code
