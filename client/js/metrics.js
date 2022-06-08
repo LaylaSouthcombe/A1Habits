@@ -38,9 +38,15 @@ function createCalendar(targetElement) {
     console.log('j ', j)
     const day = document.createElement('div')
     day.classList.add('calendar-day-number', 'calendar-day')
+
+    console.log('aaaaaa ', dayOfWeekLastMonthNumber)
     if (j > numberOfDays) j = 1
-    if (i > dayOfWeekLastMonthNumber && i <= 28 + dayOfWeekLastMonthNumber)
+
+    if (i > dayOfWeekLastMonthNumber && i <= dayOfLastMonth + 28) {
+      console.log('****', 28 + dayOfWeekLastMonthNumber)
+      if (j === today) day.style.fontWeight = 'bold'
       day.textContent = j++
+    }
 
     calendarDaysWrapper.append(day)
   }
@@ -97,8 +103,8 @@ function getLastMonthDay(date = new Date()) {
   const lastMonth = new Date(date.getTime())
   lastMonth.setDate(date.getDate() - 28)
   const dayOfLastMonth = lastMonth.getDate() + 1
-  const dayOfLastMonthNumber = lastMonth.getDay()
-  return { dayOfLastMonth, dayOfLastMonthNumber }
+  const dayOfWeekLastMonthNumber = lastMonth.getDay()
+  return { dayOfLastMonth, dayOfWeekLastMonthNumber }
 }
 
 function getMonthString() {
