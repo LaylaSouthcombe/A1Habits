@@ -9,6 +9,18 @@ async function getAllEntries(req, res) {
         res.status(500).json({ err })
     }
 }
+
+
+async function autoAddUserEntry(req, res) {
+    try {
+        const entries = await Entry.addUserEntryForEveryUser(req.params.username);
+        res.status(200).json(entries)
+    } catch (err) {
+        res.status(500).json({ err })
+    }
+}
+
+
 //7 DAY ENTRIES FUNCTIONS
 //get last 7 all habits entries - returns array of numbers that should convert to %
 async function getAllHabitsEntries(req, res) {

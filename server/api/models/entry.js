@@ -26,7 +26,6 @@ class Entry {
         })
     }
 
-
     //FIND BY USER ID 
 
     static findByUserId(user_id){
