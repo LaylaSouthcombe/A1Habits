@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require('../models/user');
 
+//register a new user and use bcrypt to store password_digest
 router.post('/register', async (req, res) => {
     try {
         const salt = await bcrypt.genSalt();
@@ -19,6 +20,7 @@ router.post('/register', async (req, res) => {
     }
 })
 
+//login a user and use bcrypt to compare password with digest in db, and jwt to generate a token
 router.post('/login', async (req, res) => {
     try {
         const user = await User.findByEmail(req.body.email)
