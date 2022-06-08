@@ -115,16 +115,8 @@ describe('body', () => {
         expect(smokingIcon).toBeTruthy();
       })
 
-      
-      
-
-
-
 
   })
-
-  
-
 
   // has footer section 
         describe('html', () => {
