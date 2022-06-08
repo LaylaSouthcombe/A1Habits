@@ -94,35 +94,61 @@ async function increaseSmokingNum(req, res) {
 // })
 
 //remove one to from most recent smoking entry - returns number of updated entry
-router.patch('/current/smoking/:username', async (req, res) => {
+async function decreaseSmokingNum(req, res) {
     try {
         const smokingNum = await Entry.removeOneFromCurrentSmokingNum(req.params.username)
         res.json(smokingNum)
     }catch(err){
         res.status(422).json({err})
     }
-})
+}
+
+// router.patch('/current/smoking/:username', async (req, res) => {
+//     try {
+//         const smokingNum = await Entry.removeOneFromCurrentSmokingNum(req.params.username)
+//         res.json(smokingNum)
+//     }catch(err){
+//         res.status(422).json({err})
+//     }
+// })
 
 //add one to most recent water entry - returns number of updated entry
 
-router.patch('/current/water/:username', async (req, res) => {
+async function increaseWaterNum(req, res) {
     try {
         const waterNum = await Entry.addOneToCurrentWaterNum(req.params.username)
         res.json(waterNum)
     }catch(err){
         res.status(422).json({err})
     }
-})
+}
+
+// router.patch('/current/water/:username', async (req, res) => {
+//     try {
+//         const waterNum = await Entry.addOneToCurrentWaterNum(req.params.username)
+//         res.json(waterNum)
+//     }catch(err){
+//         res.status(422).json({err})
+//     }
+// })
 
 //remove one from most recent water entry - returns number of updated entry
-router.patch('/current/water/:username', async (req, res) => {
+async function decreaseWaterNum(req, res) {
     try {
         const waterNum = await Entry.removeOneFromCurrentWaterNum(req.params.username)
         res.json(waterNum)
     }catch(err){
         res.status(422).json({err})
     }
-})
+}
+// router.patch('/current/water/:username', async (req, res) => {
+//     try {
+//         const waterNum = await Entry.removeOneFromCurrentWaterNum(req.params.username)
+//         res.json(waterNum)
+//     }catch(err){
+//         res.status(422).json({err})
+//     }
+// })
 
 //delete an entry (not sure we need this one as an entry needs to be generated/present everyday)
 async function deleteEntryById(req, res) {
@@ -261,7 +287,7 @@ async function getMoneyStreak(req, res) {
 //     }
 // })
 
-module.exports = { getAllEntries, getEntriesByUserId, createNewEntry, updateEntryById, increaseSmokingNum, deleteEntryById, getAllHabitsStreak, getSleepStreak, getExerciseStreak, getWaterStreak, getSmokingStreak, getMoneyStreak }
+module.exports = { getAllEntries, getEntriesByUserId, createNewEntry, updateEntryById, increaseSmokingNum, deleteEntryById, getAllHabitsStreak, getSleepStreak, getExerciseStreak, getWaterStreak, getSmokingStreak, getMoneyStreak, decreaseSmokingNum, increaseWaterNum, decreaseWaterNum }
 
 
 //pseudo code
