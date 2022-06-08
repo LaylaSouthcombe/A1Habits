@@ -24,7 +24,7 @@ services:
       - NODE_ENV=development
     depends_on:
       - db
-    command: bash -c "npm install && npm start"
+    command: bash -c "npm install && npm run seedDev && npm run dev"
 
   db:
     container_name: habits_dev_db
@@ -38,4 +38,4 @@ volumes:
   dbdata:
 networks: 
   default:
-    name: habits_api
+    name: habits_api_dev
