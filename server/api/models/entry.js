@@ -121,6 +121,32 @@ class Entry {
     };
 
 
+//adds one to the most recent smoking entry
+    static async addOneToCurrentSmokingNum(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let user = await User.findByUsername(username);
+
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+
+                const entries = result.rows.map(r => new Entry(r))
+
+                const recentEntry = entries[0].smoking_entry
+                const newEntry = recentEntry + 1
+
+                const entryId = entries[0].id
+                let updatedEntryData = await db.query(`UPDATE entries 
+                                                       SET 
+                                                       smoking_entry = $2
+                                                       WHERE id = $1
+                                                       RETURNING *;`, [ entryId, newEntry ]);
+                resolve (updatedEntryData);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+
 
 
 //streak functions
@@ -131,6 +157,7 @@ class Entry {
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 const entries = result.rows.map(r => new Entry(r))
+
                 for( let i = 0; i < entries.length; i++) {
                     if(entries[i].sleep_entry === false) { break; }
                     counter += 1
