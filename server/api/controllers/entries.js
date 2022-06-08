@@ -149,6 +149,43 @@ async function updateEntryById(req, res) {
         res.status(404).json({ err });
     }
 }
+//complete sleep entry - returns { sleep_entry: true }
+async function completeSleep(req, res) {
+    try {
+        const sleepStatus = await Entry.completeSleepHabit(req.params.username)
+        res.status(200).json(sleepStatus)
+    }catch(err){
+        res.status(422).json({err})
+    }
+}
+//incomplete sleep entry - returns { sleep_entry: false }
+async function incompleteSleep(req, res) {
+    try {
+        const sleepStatus = await Entry.incompleteSleepHabit(req.params.username)
+        res.status(200).json(sleepStatus)
+    }catch(err){
+        res.status(422).json({err})
+    }
+}
+//complete exercise entry - returns { exercise_entry: true }
+async function completeExercise(req, res) {
+    try {
+        const exerciseStatus = await Entry.completeExerciseHabit(req.params.username)
+        res.status(200).json(exerciseStatus)
+    }catch(err){
+        res.status(422).json({err})
+    }
+}
+//complete exercise entry - returns { exercise_entry: false }
+async function incompleteExercise(req, res) {
+    try {
+        const exerciseStatus = await Entry.incompleteExerciseHabit(req.params.username)
+        res.status(200).json(exerciseStatus)
+    }catch(err){
+        res.status(422).json({err})
+    }
+}
+
 
 //add one to most recent smoking entry - returns number of updated entry
 async function increaseSmokingNum(req, res) {
@@ -200,18 +237,6 @@ async function deleteEntryById(req, res) {
         res.status(404).json({ err });
     }
 }
-
-//DESTROY 2nd DRAFT 
-
-// router.get('/:id', async (req, res) => {
-//     try {
-//         const destroyEntry = await Entry.findById(req.params.id);
-//         const res = await destroyEntry.destroy();
-//         res.status(204).end();
-//     } catch (err) {
-//         res.status(404).json({ err });
-//     }
-// })
 
 //finds the all habit streak by username - retruns a number
 async function getAllHabitsStreak(req, res) {
@@ -273,7 +298,7 @@ async function getMoneyStreak(req, res) {
     }
 }
 
-module.exports = { getAllEntries, getEntriesByUserId, createNewEntry, updateEntryById, increaseSmokingNum, deleteEntryById, getAllHabitsStreak, getSleepStreak, getExerciseStreak, getWaterStreak, getSmokingStreak, getMoneyStreak, decreaseSmokingNum, increaseWaterNum, decreaseWaterNum, getExerciseEntries, getSleepEntries, getMoneyEntries, getWaterEntries, getSmokingEntries, getAllHabitsEntries, getAllCalendarEntries, getSleepCalendarEntries, getWaterCalendarEntries, getSmokingCalendarEntries, getExerciseCalendarEntries, getMoneyCalendarEntries }
+module.exports = { getAllEntries, getEntriesByUserId, createNewEntry, updateEntryById, increaseSmokingNum, deleteEntryById, getAllHabitsStreak, getSleepStreak, getExerciseStreak, getWaterStreak, getSmokingStreak, getMoneyStreak, decreaseSmokingNum, increaseWaterNum, decreaseWaterNum, getExerciseEntries, getSleepEntries, getMoneyEntries, getWaterEntries, getSmokingEntries, getAllHabitsEntries, getAllCalendarEntries, getSleepCalendarEntries, getWaterCalendarEntries, getSmokingCalendarEntries, getExerciseCalendarEntries, getMoneyCalendarEntries, incompleteExercise, completeExercise, incompleteSleep, completeSleep }
 
 
 //pseudo code

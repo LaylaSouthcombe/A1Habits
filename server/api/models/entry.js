@@ -120,6 +120,88 @@ class Entry {
         })
     };
 
+    
+    static async incompleteSleepHabit(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let user = await User.findByUsername(username);
+
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+
+                const entries = result.rows.map(r => new Entry(r))
+                const entryId = entries[0].id
+                let updatedEntryData = await db.query(`UPDATE entries 
+                                                       SET 
+                                                       sleep_entry = $2
+                                                       WHERE id = $1
+                                                       RETURNING *;`, [ entryId, false ]);
+                resolve (updatedEntryData);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async completeSleepHabit(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let user = await User.findByUsername(username);
+
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+
+                const entries = result.rows.map(r => new Entry(r))
+                const entryId = entries[0].id
+                let updatedEntryData = await db.query(`UPDATE entries 
+                                                       SET 
+                                                       sleep_entry = $2
+                                                       WHERE id = $1
+                                                       RETURNING *;`, [ entryId, true ]);
+                resolve (updatedEntryData);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async incompleteExerciseHabit(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let user = await User.findByUsername(username);
+
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+
+                const entries = result.rows.map(r => new Entry(r))
+                const entryId = entries[0].id
+                let updatedEntryData = await db.query(`UPDATE entries 
+                                                       SET 
+                                                       exercise_entry = $2
+                                                       WHERE id = $1
+                                                       RETURNING *;`, [ entryId, false ]);
+                resolve (updatedEntryData);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
+    static async completeExerciseHabit(username){
+        return new Promise(async (resolve, reject) => {
+            try {
+                let user = await User.findByUsername(username);
+
+                const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
+
+                const entries = result.rows.map(r => new Entry(r))
+                const entryId = entries[0].id
+                let updatedEntryData = await db.query(`UPDATE entries 
+                                                       SET 
+                                                       exercise_entry = $2
+                                                       WHERE id = $1
+                                                       RETURNING exercise_entry;`, [ entryId, true ]);
+                console.log(updatedEntryData.rows[0])
+                resolve (updatedEntryData);
+            } catch (err) {
+                reject(`Error retrieving trackings: ${err}`)
+            }
+        })
+    }
 
 //adds one to the most recent smoking entry
     static async addOneToCurrentSmokingNum(username){
