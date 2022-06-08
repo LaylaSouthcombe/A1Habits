@@ -7,6 +7,7 @@
     --colOne: coral;
     --colTwo: purple;
     --linen: #faf0e6;
+    --lightBG: #e2e2e2;
   }
   
   *,
@@ -24,8 +25,10 @@
     min-height: 780px;
     color: var(--light);
     font-family: "Nunito", sans-serif;
-    background-color: darkslategray;
+    background: linear-gradient(90deg, gray, var(--lightBG), var(--lightBG), gray);
+    
   }
+  
   
   .wrapper {
     height: 100vh;
@@ -41,7 +44,7 @@
   .nav {
     height: 12rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     background: linear-gradient(125deg, var(--colOne), var(--colTwo));
     color: var(--light);
@@ -49,8 +52,8 @@
   }
   
   .logo {
-    margin-left: 2rem;
-    font-size: 4rem;
+    /* margin-left: 3rem; */
+    font-size: 4.7rem;
     color: var(--light);
     font-family: "Neonderthaw", cursive;
     transform: skewY(-5deg);
@@ -68,7 +71,7 @@
   
   #auth {
     padding: 0.7rem 0.6rem 0.6rem 0.9rem;
-    margin-right: 2rem;
+    /* margin-right: 2rem; */
     border: 2px solid var(--light);
     border-radius: 100%;
     width: 50px;
@@ -86,7 +89,8 @@
   
   .main {
     height: calc(100% - 12rem);
-    background-color: var(--light);
+    /* background-color: var(--light); */
+    background-color: var(--lightBG);
     margin-top: -96px;
   }
   
