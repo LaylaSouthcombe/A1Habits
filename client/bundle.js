@@ -87,6 +87,7 @@ async function loginSendData() {
   const url = `http://localhost:3000/auth/login`
   const email = emailInput.value
   const password = passwordInput.value
+  const token = retrieveToken()
 
   try {
     const response = await fetch(url, {
@@ -94,7 +95,7 @@ async function loginSendData() {
       body: JSON.stringify({ email, password }),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Basic ${retrieveToken()}`,
+        Authorization: token,
       },
     })
 
@@ -129,7 +130,6 @@ async function registerSendData() {
     body: JSON.stringify({ username, email, password }),
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Basic ${retrieveToken()}`,
     },
   })
 

@@ -5,17 +5,29 @@ function createMetricsWrapper() {
   // HARDCODED USER
   const user = 'igormirowski'
 
-  createHabitsSelectionBar(metricspage, user)
-  createCalendar(metricspage, user)
+  createHabitsSelectionBar(metricspage)
+  createCalendar(metricspage)
 
   // will pass it the metrics when available as a second argument
 }
 
-async function createCalendar(targetElement, user, endpoint = 'all') {
-  const url = `http://localhost:3000/entries/calendar/${endpoint}/${user}`
-  const response = await fetch(url)
-  const data = await response.json()
-  console.log('28 days data ', data)
+async function createCalendar(targetElement, endpoint = 'all') {
+  const url = `http://localhost:3000/entries/calendar/${endpoint}`
+  const token = retrieveToken()
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    })
+    const data = await response.json()
+    console.log('28 days data ', data)
+  } catch (err) {
+    console.log('metrics.js - createCalendar ', err)
+  }
 
   const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const { numberOfDays, dayOfLastMonth, dayOfWeekLastMonthNumber } =
@@ -240,7 +252,7 @@ function getMonthString() {
 //   targetElement.append(chartWrapper)
 // }
 
-async function createHabitsSelectionBar(targetElement, user) {
+async function createHabitsSelectionBar(targetElement) {
   // chartWrapper will have the chart with the habit's data
   const chartWrapper = document.createElement('div')
   chartWrapper.classList.add('metricsChartWrapper')
@@ -353,20 +365,26 @@ async function createHabitsSelectionBar(targetElement, user) {
 
 // Fetching Functions
 
-async function metricsUpdateStreak(targetElement, endpoint, username) {
-  console.log('user is ', username)
-  const url = `http://localhost:3000/entries/streak/${endpoint}/${username}`
-  const response = await fetch(url)
+async function metricsUpdateStreak(targetElement, endpoint) {
+  const url = `http://localhost:3000/entries/streak/${endpoint}`
+  const token = retrieveToken()
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: token,
+    },
+  })
   const data = await response.json()
 
   console.log('data', data)
   targetElement.textContent = data
 }
 
-async function metricsUpdateChart(targetElement, endpoint, username) {
+async function metricsUpdateChart(targetElement, endpoint) {
   let canvasChart = document.querySelector(targetElement)
 
   const url = `http://localhost:3000/entries/${endpoint}/${username}`
+  const token = retrieveToken()
 
   // routes not working
   // const response = await fetch(url)
@@ -375,7 +393,11 @@ async function metricsUpdateChart(targetElement, endpoint, username) {
   // console.log('data for the chart', data)
 
   // fetch data
-  const response = await fetch(url)
+  const response = await fetch(url, {
+    headers: {
+      Authorization: token,
+    },
+  })
   const data = await response.json()
   console.log('****===*** ', data)
   console.log('===***=== ', url)

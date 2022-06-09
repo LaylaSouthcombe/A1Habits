@@ -40,7 +40,7 @@ async function createHabitsWrapper() {
 
   // fetch Data
 
-  const username = 'igormirowski'
+  const username = ''
   const userOneData = await getTrackingData(username)
   // console.log('Tracking - userOneData -> ', userOneData)
 
@@ -53,7 +53,7 @@ async function createHabitsWrapper() {
 
 // call the modal for managing the Habits
 function openHabitsModal() {
-  const url = `http://localhost:3000/trackings/`
+  const url = `http://localhost:3000/trackings`
 
   // console.log('Inside openHabitsModal!')
   const habitsModal = document.querySelector('.habits-modal')
@@ -71,53 +71,75 @@ function openHabitsModal() {
     console.log('use fetch to send POST request to the DB to save the data')
 
     const habitsData = {
-      trackSleep: document.querySelector('#checkbox-sleep').checked,
-      trackSleepHours: document.querySelector('#habits-form-sleep-hours').value,
-      trackExercise: document.querySelector('#checkbox-exercise').checked,
-      trackExerciseTimesPerWeek: document.querySelector(
-        '#habits-form-exercise-times'
-      ).value,
-      trackWater: document.querySelector('#checkbox-water').checked,
-      trackWaterDailyGlasses: document.querySelector(
-        '#habits-form-water-glasses'
-      ).value,
-      trackSmoking: document.querySelector('#checkbox-smoking').checked,
+      trackSleep: document.querySelector('#checkbox-sleep').checked || false,
+      trackSleepHours:
+        document.querySelector('#habits-form-sleep-hours').value || 0,
+      trackExercise:
+        document.querySelector('#checkbox-exercise').checked || false,
+      trackExerciseTimesPerWeek:
+        document.querySelector('#habits-form-exercise-times').value || 0,
+      trackWater: document.querySelector('#checkbox-water').checked || false,
+      trackWaterDailyGlasses:
+        document.querySelector('#habits-form-water-glasses').value || 0,
+      trackSmoking:
+        document.querySelector('#checkbox-smoking').checked || false,
       trackSmokingDailyCigarettes: document.querySelector(
-        '#habits-form-smoking-cigarettes'
+        '#habits-form-smoking-cigarettes' || 0
       ).value,
-      trackSavings: document.querySelector('#checkbox-savings').checked,
-      trackSavingsDaily: document.querySelector('#habits-form-money-daily')
-        .value,
+      trackSavings:
+        document.querySelector('#checkbox-savings').checked || false,
+      trackSavingsDaily:
+        document.querySelector('#habits-form-money-daily').value || 0,
     }
 
     console.log(habitsData)
     // POST REQUEST then UPDATE PAGE calling createHabitsWrapper()
 
-    const response = await fetch(url, {
-      method: 'PUT',
-      body: JSON.stringify(habitsData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    try {
+      const token = retrieveToken()
+      console.log('token: ', token)
 
-    const data = await response.json()
+      const response = await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(habitsData),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+      console.log('response ', response)
 
-    console.log(
-      'habits.js - response from sending the tracked data: possibly missing :username from the url of the route as using req.params serverside, however if implementing auth might not be needed anymore',
-      data
-    )
+      const data = await response.json()
+
+      console.log(
+        'habits.js - response from sending the tracked data: possibly missing :username from the url of the route as using req.params serverside, however if implementing auth might not be needed anymore',
+        data
+      )
+    } catch (err) {
+      console.log('habits.js - openHabitsModal Error -> ', err)
+    }
   })
 }
 
 // fetch the data for the habits
-async function getTrackingData(username) {
-  const url = `http://localhost:3000/trackings/current/` + username
+async function getTrackingData() {
+  const url = `http://localhost:3000/trackings/current/`
+  const token = retrieveToken()
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    })
+    console.log('response ====== ', response)
+    const data = await response.json()
+    console.log('data ======= ', data)
 
-  const response = await fetch(url)
-  const data = await response.json()
-  // during testing, get the first user's data
-  const dataFirstUser = data
-  // console.log('************** ', dataFirstUser)
-  return dataFirstUser
+    const dataFirstUser = data
+    console.log('habits.js - getTrackingData - ************** ', dataFirstUser)
+    return dataFirstUser
+  } catch (err) {
+    console.log('habits.js - getTrackingData Error: ', err)
+  }
 }
