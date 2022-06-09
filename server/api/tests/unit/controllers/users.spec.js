@@ -11,8 +11,8 @@ describe('users controller', () => {
 
     afterAll(() => jest.resetAllMocks());
 
-    describe('index', () => {
-        test('it returns users with a 200 status code', async () => {
+    describe('get all', () => {
+        test('it returns all users with a 200 status code', async () => {
             let testUsers = ['d1', 'd2']
             jest.spyOn(User, 'all', 'get')
                  .mockResolvedValue(testUsers);
@@ -21,6 +21,24 @@ describe('users controller', () => {
             expect(mockJson).toHaveBeenCalledWith(testUsers);
         })
     });
+
+    //show
+    describe('show', () => {
+        test('it returns a user by email and a status code of 200 ', async () => {
+            let testUser = {
+                username: 'user3',
+                password: 'password3',
+                email: 'email3'
+            }
+            jest.spyOn(User, 'findByEmail')
+                .mockResolvedValue(new User(testUser));
+            const mockReq = { params: { id: 1 } }
+            await UserController.show(mockReq, mockRes);
+            expect(mockStatus).toHaveBeenCalledWith(200);
+            expect(mockJson).toHaveBeenCalledWith(new User(testUser));
+        })
+    });
+    
 
     // describe('show', () => {
     //     test('it returns a dog with a 200 status code', async () => {

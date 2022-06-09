@@ -19,10 +19,40 @@ describe('Tracking', () => {
         test('it resolves with trackings on successful db query', async () => {
             jest.spyOn(db, 'query')
                 .mockResolvedValueOnce({ rows: [{}, {}, {}]});
-            const all = await Entry.all;
+            const all = await Tracking.all;
             expect(all).toHaveLength(3)
         })
     });
+
+          //  test to findTrackingByUsername
+
+          describe('findTrackingByUsername', () => {
+            test('tracking to be an instance of an Array on successful db query', async () => {
+                let trackingData = {
+                    sleep_track: true, sleep_goal: 8,exercise_track: true, exercise_goal: 4, exercise_freq: 'week', water_track: true, water_goal: 6, smoking_track: true, smoking_goal: 8, money_track: true, money_goal: 4, money_begin_date: '2022-06-06', money_end_date: '2022-07-06'
+                }
+                jest.spyOn(db, 'query')
+                    .mockResolvedValueOnce({ rows: [trackingData] });
+                const result = await Tracking.findTrackingByUsername(1);
+                expect(result).toBeInstanceOf(Array)
+            })
+    
+        });
+    
+        // test to findTrackingByUserId
+    
+        describe('findTrackingByUserId', () => {
+            test('it resolves with a Tracking on successful db query', async () => {
+                let trackingData = {
+                  sleep_track: true, sleep_goal: 8,exercise_track: true, exercise_goal: 4, exercise_freq: 'week', water_track: true, water_goal: 6, smoking_track: true, smoking_goal: 8, money_track: true, money_goal: 4, money_begin_date: '2022-06-06', money_end_date: '2022-07-06'
+                }
+                jest.spyOn(db, 'query')
+                    .mockResolvedValueOnce({ rows: [trackingData] });
+                const result = await Tracking.findTrackingByUserId(1);
+                expect(result).toBeInstanceOf(Tracking)
+    
+            })
+        });
 
     // describe('findById', () => {
     //     test('it resolves with dog on successful db query', async () => {
