@@ -11,10 +11,18 @@ describe('entries controller', () => {
 
     afterAll(() => jest.resetAllMocks());
 
+    describe('getAllEntries', () => {
+        test('it returns entries with a 200 status code', async () => {
+            let testEntries = ['d1', 'd2']
+            jest.spyOn(Entries, 'all', 'get')
+                 .mockResolvedValue(testEntries);
+            await entriesController.getAllEntries(null, mockRes);
+            expect(mockStatus).toHaveBeenCalledWith(200);
+            expect(mockJson).toHaveBeenCalledWith(testEntries);
+        })
+    });
 
-
-
-
+  
 
     // test to create 
 
