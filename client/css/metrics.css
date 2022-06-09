@@ -55,7 +55,7 @@
     font-size: 1.2rem;
     font-weight: bold;
     background: linear-gradient(125deg, var(--colOne), var(--colTwo));
-    margin-top: 60px;
+    margin-top: 10px;
     margin-bottom: 60px;
 }
 

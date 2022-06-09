@@ -6,12 +6,17 @@ function createMetricsWrapper() {
   const user = 'igormirowski'
 
   createHabitsSelectionBar(metricspage, user)
-  createCalendar(metricspage)
+  createCalendar(metricspage, user)
 
   // will pass it the metrics when available as a second argument
 }
 
-function createCalendar(targetElement) {
+async function createCalendar(targetElement, user, endpoint = 'all') {
+  const url = `http://localhost:3000/entries/calendar/${endpoint}/${user}`
+  const response = await fetch(url)
+  const data = await response.json()
+  console.log('28 days data ', data)
+
   const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const { numberOfDays, dayOfLastMonth, dayOfWeekLastMonthNumber } =
     getNumberOfDaysLastMonth()
@@ -49,6 +54,17 @@ function createCalendar(targetElement) {
     if (j > numberOfDays) j = 1
 
     if (i > dayOfWeekLastMonthNumber + 1 && i <= dayOfLastMonth + 28) {
+      // modify day colour in here
+      const colourCode = data[i]
+      if (colourCode === 1) {
+        day.style.backgroundColor = 'red'
+        day.style.color = 'white'
+      }
+      if (colourCode === 2) {
+        day.style.backgroundColor = 'green'
+        day.style.color = 'white'
+      }
+
       // console.log('****', 28 + dayOfWeekLastMonthNumber)
       if (j === today) day.style.fontWeight = 'bold'
       day.textContent = j++
