@@ -14,7 +14,7 @@ describe('User', () => {
     beforeEach(() => jest.clearAllMocks())
     
     afterAll(() => jest.resetAllMocks())
-
+    //test for all
     describe('all', () => {
         test('it resolves with users on successful db query', async () => {
             jest.spyOn(db, 'query')
