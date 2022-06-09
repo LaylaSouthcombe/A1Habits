@@ -159,7 +159,7 @@ function createAndAppendCards(data, targetElem) {
 
       const moneyCardTitle = document.createElement('div')
       moneyCardTitle.classList.add('habitsCardTitle', 'habitsMoneyCardTitle')
-      moneyCardTitle.textContent = 'Money'
+      moneyCardTitle.textContent = 'Sleep'
       moneyCard.append(moneyCardTitle)
 
       const moneyCardTarget = document.createElement('div')
@@ -169,32 +169,12 @@ function createAndAppendCards(data, targetElem) {
 
       const moneyCardBtn = document.createElement('div')
       moneyCardBtn.classList.add('habitsCardBtn', 'habitsMoneyCardBtn')
-
-      const moneyBtnContainer = document.createElement('div')
-      moneyBtnContainer.classList.add('habitsBtnContainer')
-      const moneyMinusBtn = document.createElement('div')
-      moneyMinusBtn.classList.add('habitsMinusBtn')
-      moneyMinusBtn.textContent = 'REMOVE'
-      moneyMinusBtn.addEventListener('click', () =>
-        adjustCounter('money', 'decrease', moneyCurrentBtn.value)
+      moneyCardBtn.innerHTML = '<i class="fa-solid fa-thumbs-down"></i>'
+      moneyCardBtn.addEventListener('click', () =>
+        toggleBtn(moneyCardBtn, 'sleep')
       )
-      moneyBtnContainer.append(moneyMinusBtn)
+      moneyCard.append(moneyCardBtn)
 
-      const moneyCurrentBtn = document.createElement('input')
-      moneyCurrentBtn.classList.add('habitsCurrentBtn')
-      // serverside: need the current water intake, need a JOIN with another table
-      moneyCurrentBtn.value = 0
-      moneyBtnContainer.append(moneyCurrentBtn)
-
-      const moneyPlusBtn = document.createElement('div')
-      moneyPlusBtn.classList.add('habitsPlusBtn')
-      moneyPlusBtn.textContent = 'ADD'
-      moneyPlusBtn.addEventListener('click', () =>
-        adjustCounter('money', 'increase', moneyCurrentBtn.value)
-      )
-      moneyBtnContainer.append(moneyPlusBtn)
-
-      moneyCard.append(moneyBtnContainer)
       targetElem.append(moneyCard)
     }
   } else {
@@ -250,7 +230,7 @@ function toggleBtn(btnRef, activity) {
   }
 }
 
-function adjustCounter(activity, operation, amount = 1) {
+async function adjustCounter(activity, operation, amount = 1) {
   const token = retrieveToken()
   const url = `http://localhost:3000/entries/${operation}/${activity}`
   console.log(
@@ -260,14 +240,20 @@ function adjustCounter(activity, operation, amount = 1) {
     `activity: ${activity}, operation: ${operation}, amount: ${amount}`
   )
 
-  fetch(url, {
-    method: 'PATCH',
-    body: JSON.stringify({ value: amount }),
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: token,
-    },
-  })
+  try {
+    await fetch(url, {
+      method: 'GET',
+      body: JSON.stringify({ value: amount }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    })
+
+    await createHabitsWrapper()
+  } catch (err) {
+    console.log('habitsCards - adjustCounter -> Error: ', err)
+  }
 
   // call createHabitsWrapper to update the view and maintain
   // one Source of Truth
