@@ -189,7 +189,7 @@ async function toggleBtn(btnRef, activity) {
 
   console.log('btnRef -> ', btnRef)
   if (btnRef.innerHTML.match(/fa-thumbs-down/i)) {
-    const url = `http://localhost:3000/entries/increase/${activity}`
+    const url = `${baseUrl}entries/increase/${activity}`
 
     // commented out as want the button to reflect the db state
     btnRef.innerHTML = '<i class="fa-solid fa-thumbs-up"></i>'
@@ -217,7 +217,7 @@ async function toggleBtn(btnRef, activity) {
     console.log(
       `TODO: endpoint and token - PATCH: ${activity} has been marked as UNDONE`
     )
-    const url = `http://localhost:3000/entries/decrease/${activity}`
+    const url = `${baseUrl}entries/decrease/${activity}`
 
     // TODO Add token and Amend endpoint
     await fetch(url, {
@@ -235,7 +235,7 @@ async function toggleBtn(btnRef, activity) {
 
 async function adjustCounter(activity, operation, amount = 1) {
   const token = retrieveToken()
-  const url = `http://localhost:3000/entries/${operation}/${activity}`
+  const url = `${baseUrl}entries/${operation}/${activity}`
   console.log(
     `TODO: add token and amend endpoint - fetch PATCH - operation ${operation}  ${activity}`
   )

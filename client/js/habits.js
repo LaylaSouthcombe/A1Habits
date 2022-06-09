@@ -53,7 +53,7 @@ async function createHabitsWrapper() {
 
 // call the modal for managing the Habits
 async function openHabitsModal() {
-  const url = `http://localhost:3000/trackings`
+  const url = `${baseUrl}trackings`
 
   // console.log('Inside openHabitsModal!')
   const habitsModal = document.querySelector('.habits-modal')
@@ -117,7 +117,7 @@ async function openHabitsModal() {
 
 // fetch the data for the habits
 async function getTrackingData() {
-  const url = `http://localhost:3000/trackings/current/`
+  const url = `${baseUrl}trackings/current/`
   const token = retrieveToken()
   try {
     const response = await fetch(url, {

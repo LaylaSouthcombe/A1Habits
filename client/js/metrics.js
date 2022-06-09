@@ -12,7 +12,7 @@ function createMetricsWrapper() {
 }
 
 async function createCalendar(targetElement, endpoint = 'all') {
-  const url = `http://localhost:3000/entries/calendar/${endpoint}`
+  const url = `${baseUrl}entries/calendar/${endpoint}`
   const token = retrieveToken()
 
   try {
@@ -365,7 +365,7 @@ async function createHabitsSelectionBar(targetElement) {
 // Fetching Functions
 
 async function metricsUpdateStreak(targetElement, endpoint) {
-  const url = `http://localhost:3000/entries/streak/${endpoint}`
+  const url = `${baseUrl}entries/streak/${endpoint}`
   const token = retrieveToken()
 
   const response = await fetch(url, {
@@ -382,7 +382,7 @@ async function metricsUpdateStreak(targetElement, endpoint) {
 async function metricsUpdateChart(targetElement, endpoint) {
   let canvasChart = document.querySelector(targetElement)
 
-  const url = `http://localhost:3000/entries/seven/${endpoint}`
+  const url = `${baseUrl}entries/seven/${endpoint}`
   console.log('*** entries/seven/habit -> endpoint ', endpoint)
   const token = retrieveToken()
 
