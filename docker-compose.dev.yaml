@@ -1,14 +1,14 @@
 services:
   client:
     container_name: habits_dev_client
-    build: ../client
+    build: ./client
     image: habits_client
     ports: 
       - 8080:8080
     working_dir: /code
     volumes:
       - type: bind
-        source: ../client
+        source: ./client
         target: /code
     command: [ "http-server" ]
   api:
