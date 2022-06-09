@@ -41,8 +41,7 @@ describe('findByUserId', () => {
 });
 
 
-// test  CREATE 
-
+// test  CREATE
 describe("create", () => {
     test("it resolves with entry on successful db query", async () => {
       let entryData = { id: 1, name: "New Entry" };
