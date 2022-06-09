@@ -343,7 +343,7 @@ async function metricsUpdateStreak(targetElement, endpoint, username) {
 async function metricsUpdateChart(targetElement, endpoint, username) {
   let canvasChart = document.querySelector(targetElement)
 
-  const url = `http://localhost:3000/entries/calendar/${endpoint}/${username}`
+  const url = `http://localhost:3000/entries/${endpoint}/${username}`
 
   // routes not working
   // const response = await fetch(url)
