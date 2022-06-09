@@ -108,9 +108,7 @@
     letter-spacing: 2px;
     line-height: 1.8rem;
     font-size: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+   
   }
 
   #home ul {
@@ -123,10 +121,16 @@
     font-style: italic;
   }
 
+#imgWrapper {
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
   #home img {
-    
     margin-bottom: 10px;
-    width: 25vw;
+    width: 60%;
   }
 
   h3 {

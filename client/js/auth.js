@@ -2,6 +2,10 @@ const btn2 = document.querySelector('#selection-2')
 const btn3 = document.querySelector('#selection-3')
 const loginBtn = document.querySelector('#auth')
 const logoutBtn = document.querySelector('#authLogout')
+logoutBtn.addEventListener('click', () => {
+  logout()
+  displayPage(homepage)
+})
 
 function login(token) {
   const user = jwt_decode(token)
