@@ -40,20 +40,20 @@ async function createHabitsWrapper() {
 
   // fetch Data
 
-  const username = 'igormirowski'
-  const userOneData = await getTrackingData(username)
+  const userData = await getTrackingData()
   // console.log('Tracking - userOneData -> ', userOneData)
 
   // create the habits cards
-  createAndAppendCards(userOneData, habitsTrackedList)
+  createAndAppendCards(userData, habitsTrackedList)
 
   // append the frame to the habits section (id=habits, habitspage)
-  habitspage.append(frame)
+
+  habits.append(frame)
 }
 
 // call the modal for managing the Habits
-function openHabitsModal() {
-  const url = `http://localhost:3000/trackings/`
+async function openHabitsModal() {
+  const url = `http://localhost:3000/trackings`
 
   // console.log('Inside openHabitsModal!')
   const habitsModal = document.querySelector('.habits-modal')
@@ -63,12 +63,9 @@ function openHabitsModal() {
 
   const habitsModalSubmitBtn = document.querySelector('#habits-submit-button')
   habitsModalSubmitBtn.addEventListener('click', async () => {
-    // dismiss modal
-    habitsModal.classList.add('disabled')
-
     console.log('modal should be disabled ', habitsModal)
     console.log('modal button ', habitsModalSubmitBtn)
-    console.log('use fetch to send POST request to the DB to save the data')
+    console.log('use fetch to send PUT request to the DB to save the data')
 
     const habitsData = {
       trackSleep: document.querySelector('#checkbox-sleep').checked,
@@ -91,33 +88,64 @@ function openHabitsModal() {
     }
 
     console.log(habitsData)
-    // POST REQUEST then UPDATE PAGE calling createHabitsWrapper()
+    // PUT REQUEST then UPDATE PAGE calling createHabitsWrapper()
 
-    const response = await fetch(url, {
-      method: 'PUT',
-      body: JSON.stringify(habitsData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    try {
+      const token = retrieveToken()
+      console.log('token: ', token)
 
-    const data = await response.json()
+      const response = await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(habitsData),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+      // console.log('response ', response)
 
-    console.log(
-      'habits.js - response from sending the tracked data: possibly missing :username from the url of the route as using req.params serverside, however if implementing auth might not be needed anymore',
-      data
-    )
+      // const data = await response.json()
+
+      const url2 = `http://localhost:3000/trackings/current`
+      const response2 = await fetch(url2, {
+        headers: {
+          Authorization: token,
+        },
+      })
+
+      const data2 = await response2.json()
+
+      console.log(
+        'habits.js - response from sending the tracked data: possibly missing :username from the url of the route as using req.params serverside, however if implementing auth might not be needed anymore - data2 ->',
+        data2
+      )
+    } catch (err) {
+      console.log('habits.js - openHabitsModal Error -> ', err)
+    }
+    // dismiss modal
+    habitsModal.classList.add('disabled')
   })
 }
 
 // fetch the data for the habits
-async function getTrackingData(username) {
-  const url = `http://localhost:3000/trackings/current/` + username
+async function getTrackingData() {
+  const url = `http://localhost:3000/trackings/current/`
+  const token = retrieveToken()
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: token,
+      },
+    })
+    console.log('response ====== ', response)
+    const data = await response.json()
+    console.log('data ======= ', data)
 
-  const response = await fetch(url)
-  const data = await response.json()
-  // during testing, get the first user's data
-  const dataFirstUser = data
-  // console.log('************** ', dataFirstUser)
-  return dataFirstUser
+    const dataFirstUser = data
+    console.log('habits.js - getTrackingData - ************** ', dataFirstUser)
+    return dataFirstUser
+  } catch (err) {
+    console.log('habits.js - getTrackingData Error: ', err)
+  }
 }
