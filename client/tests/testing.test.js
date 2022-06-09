@@ -11,12 +11,24 @@ describe('index.html', () => {
     })
 
     //Testing AuthBtn
-    it('displays model when login button is clicked', () => {
+    it('habit section appears upon clicking habit icon', () => {
         // const authButton = document.querySelector('#selection-1')
         // const authBtn = document.querySelector('#auth')
-        // authBtn.dispatchEvent(new dom.window.Event('click'))
+        const selectThree = document.querySelector('.fa-smoking')
+        selectThree.dispatchEvent(new dom.window.Event('click'))
 
-        const login = document.querySelector('.modal-title')
-        expect(login.textContent).toContain('Login')
+        const habitsManageBtnAnchor = document.querySelector('.section1')
+        expect(habitsManageBtnAnchor).toBeTruthy()
     })
+
+    it('habit section appears upon clicking habit icon', () => {
+        const selectThree = document.querySelector('.fa-smoking')
+        selectThree.dispatchEvent(new dom.window.Event('click'))
+
+        const habitsTopCtner = document.querySelector('.habitsWaterCard')
+        expect(habitsTopCtner).toBeTruthy()
+    })
+
+
+
 })
