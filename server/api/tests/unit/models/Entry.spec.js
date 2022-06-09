@@ -24,6 +24,40 @@ describe('Entry', () => {
         })
     });
 
+
+// test to findByUserID
+
+describe('findByUserId', () => {
+    test('entry to be an instance of an Array on successful db query', async () => {
+        let entryData = {
+            sleep_entry: true, exercise_entry: true, water_entry: 8, smoking_entry: 8, money_entry: 1, date_entry: '2022-06-06'
+        }
+        jest.spyOn(db, 'query')
+            .mockResolvedValueOnce({ rows: [entryData] });
+        const result = await Entry.findByUserId(1);
+        expect(result).toBeInstanceOf(Array)
+    })
+
+});
+
+
+// test to delete 
+
+describe('deleteEntry', () => {
+    test('it resolves with updated entry on successful db query', async () => {
+        let testEntry = new Entry({
+            sleep_entry: true, exercise_entry: true, water_entry: 8, smoking_entry: 8, money_entry: 1, date_entry: '2022-06-06'
+        });
+        jest.spyOn(db, 'query')
+            .mockResolvedValueOnce({ rows: [{ ...testEntry }] });
+        const result = await testEntry.del();
+        expect(result).toBe('The habit has been deleted')
+    })
+});
+
+
+
+
     // describe('findById', () => {
     //     test('it resolves with dog on successful db query', async () => {
     //         let dogData = { id: 1, name: 'Test Dog' }

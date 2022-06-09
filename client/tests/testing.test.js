@@ -1,14 +1,14 @@
-const renderDOM = require('./helpers');
+const renderDOM = require('./helpers')
 
-let dom;
-let document;
-
+let dom
+let document
 
 describe('index.html', () => {
-    beforeEach(async () => {
-        dom = await renderDOM('index.html')
-        document = await dom.window.document
-    })
+  beforeEach(async () => {
+    dom = await renderDOM('index.html')
+    document = await dom.window.document
+  })
+
 
     //Testing AuthBtn
     it('habit section appears upon clicking habit icon', () => {
@@ -28,6 +28,7 @@ describe('index.html', () => {
         const habitsTopCtner = document.querySelector('.habitsWaterCard')
         expect(habitsTopCtner).toBeTruthy()
     })
+
 
 
 
