@@ -41,6 +41,19 @@ describe('findByUserId', () => {
 });
 
 
+// test  CREATE 
+
+describe("create", () => {
+    test("it resolves with entry on successful db query", async () => {
+      let entryData = { id: 1, name: "New Entry" };
+      jest.spyOn(db, "query").mockResolvedValueOnce({ rows: [entryData] });
+      const result = await Entry.create("New Entry");
+      expect(result).toBeInstanceOf(Entry);
+    });
+  });
+
+
+
 // test to delete 
 
 describe('deleteEntry', () => {

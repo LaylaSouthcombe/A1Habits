@@ -6,12 +6,17 @@ function createMetricsWrapper() {
   const user = 'igormirowski'
 
   createHabitsSelectionBar(metricspage, user)
-  createCalendar(metricspage)
+  createCalendar(metricspage, user)
 
   // will pass it the metrics when available as a second argument
 }
 
-function createCalendar(targetElement) {
+async function createCalendar(targetElement, user, endpoint = 'all') {
+  const url = `http://localhost:3000/entries/calendar/${endpoint}/${user}`
+  const response = await fetch(url)
+  const data = await response.json()
+  console.log('28 days data ', data)
+
   const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const { numberOfDays, dayOfLastMonth, dayOfWeekLastMonthNumber } =
     getNumberOfDaysLastMonth()
@@ -19,6 +24,7 @@ function createCalendar(targetElement) {
   // console.log(dayOfLastMonth)
   const now = new Date()
   const today = now.getDate()
+  const daysToSkip = now.getDay() + 1
   const thisMonth = getMonthString()
 
   const calendarWrapper = document.createElement('div')
@@ -39,21 +45,38 @@ function createCalendar(targetElement) {
   })
 
   let j = dayOfLastMonth
+  let colourIndex = 0
   // console.log('dayOfLastMonth ', dayOfLastMonth)
   for (let i = 1; i <= 35; i++) {
     // console.log('j ', j)
     const day = document.createElement('div')
     day.classList.add('calendar-day-number', 'calendar-day')
+    if (i > daysToSkip) {
+      if (data[colourIndex] === 1) {
+        day.style.backgroundColor = '#e56b6f'
+        day.style.color = 'white'
+        day.style.border = 'none'
+      }
+      if (data[colourIndex] === 2) {
+        day.style.backgroundColor = '#57cc99'
+        day.style.color = 'white'
+        day.style.border = 'none'
+      }
+      colourIndex++
+    }
 
     // console.log('aaaaaa ', dayOfWeekLastMonthNumber)
     if (j > numberOfDays) j = 1
 
     if (i > dayOfWeekLastMonthNumber + 1 && i <= dayOfLastMonth + 28) {
       // console.log('****', 28 + dayOfWeekLastMonthNumber)
-      if (j === today) day.style.fontWeight = 'bold'
+      if (j === today) {
+        day.style.fontWeight = 'bold'
+        day.style.color = 'black'
+        day.style.fontSize = '20px'
+      }
       day.textContent = j++
     }
-
     calendarDaysWrapper.append(day)
   }
 
@@ -343,7 +366,7 @@ async function metricsUpdateStreak(targetElement, endpoint, username) {
 async function metricsUpdateChart(targetElement, endpoint, username) {
   let canvasChart = document.querySelector(targetElement)
 
-  const url = `http://localhost:3000/entries/calendar/${endpoint}/${username}`
+  const url = `http://localhost:3000/entries/${endpoint}/${username}`
 
   // routes not working
   // const response = await fetch(url)
