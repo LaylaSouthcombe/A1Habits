@@ -241,7 +241,8 @@ function toggleBtn(btnRef, activity) {
 }
 
 function adjustCounter(activity, operation, amount = 1) {
-  const url = `http://localhost:3000/entries/${activity}/${operation}`
+  const username = 'igormirowski'
+  const url = `http://localhost:3000/entries/${operation}/${activity}/${username}`
   console.log('TODO: add token and amend endpoint - fetch PATCH ')
   console.log(
     `activity: ${activity}, operation: ${operation}, amount: ${amount}`
