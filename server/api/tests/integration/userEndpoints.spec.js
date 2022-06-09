@@ -16,6 +16,6 @@ describe('user endpoints', () => {
     it('should return a list of all users in database', async () => {
         const res = await request(api).get('/users');
         expect(res.statusCode).toEqual(200);
-        expect(res.body.length).toEqual(3);
+        expect(res.body.length).toEqual(4);
     }) 
 })
