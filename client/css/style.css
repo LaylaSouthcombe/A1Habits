@@ -53,7 +53,8 @@
   
   .logo {
     /* margin-left: 3rem; */
-    font-size: 4.7rem;
+    font-size: 4.4rem;
+    padding-left: 15px;
     color: var(--light);
     font-family: "Neonderthaw", cursive;
     transform: skewY(-5deg);
@@ -63,6 +64,7 @@
     display: flex;
     font-size: 1.3rem;
     transform: skewY(5deg);
+    padding-right: 15px;
   }
   
   .links {
@@ -286,7 +288,7 @@
     filter: blur(2px);
   }
   
-  @media screen and (min-width: 700px) {
+  /* @media screen and (min-width: 700px) {
     .nav {
       transform: skewY(-2deg) translateY(-20px);
     }
@@ -297,9 +299,9 @@
     .right-panel {
       transform: skewY(2deg);
     }
-  }
+  } */
   
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 700px) {
     .nav {
       transform: skewY(0deg) translateY(-20px);
     }

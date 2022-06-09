@@ -13,6 +13,7 @@
 
 .calendar-wrapper {
   width: 100%;
+  margin-top: 20px;
   
 }
 
@@ -22,7 +23,7 @@
 }
 
 .calendar-days-wrapper {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   margin-top: 1rem;
   display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -30,9 +31,15 @@
 
 .calendar-day {
   
-  /* width: 50px; */
-  height: 40px;
-  border: 1px solid black;
+  width: 50px;
+  height: 50px;
+  border: 1px solid gray;
+  border-radius: 50%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
 }
 
 .calendar-day-name {
@@ -54,7 +61,8 @@
     font-size: 1.2rem;
     font-weight: bold;
     background: linear-gradient(125deg, var(--colOne), var(--colTwo));
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 60px;
 }
 
 .metricsBtn {
@@ -74,14 +82,14 @@
   width: 100%;
   height: 400px;
   margin-top: 10px;
-  background-color: salmon;
+  /* background-color: salmon; */
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 2fr 4fr;
   align-items: center;
 }
 
 .streakWrapper {
-  background-color: lightblue;
+  /* background-color: lightblue; */
   width: 100%;
   height: 100%;
   display: grid;
@@ -94,25 +102,35 @@
 .streakWrapperTitle {
   width: 100%;
   height: 100%;
-  background-color: aqua;
+  /* background-color: aqua; */
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
+  font-size: 2.7rem;
+  padding-top: 60px;
 }
 
 .streakWrapperValue {
   width: 100%;
   height: 100%;
-  background-color: bisque;
+  /* background-color: bisque; */
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 3rem;
+  padding-bottom: 60px
 }
 
 .chartFrame {
-  background-color: lightgoldenrodyellow;
+  position: relative;
+  /* background-color: lightgoldenrodyellow; */
+  width: 100%;
+  height: 100%;
+}
+
+.chartCanvas {
+  position: relative;
+  /* background-color: lightgoldenrodyellow; */
   width: 100%;
   height: 100%;
 }

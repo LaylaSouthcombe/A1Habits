@@ -33,6 +33,28 @@ describe('trackings controller', () => {
     //     })
     // });
 
+
+    // test for getUserTrackingsByUserId
+
+    describe("show by user_id", () => {
+        test("it returns a tracking with a 200 status code", async () => {
+          let testTracking = {
+              user_id: 1, sleep_track: true, sleep_goal: 8,exercise_track: true, exercise_goal: 4, exercise_freq: 'week', water_track: true, water_goal: 6, smoking_track: true, smoking_goal: 8, money_track: true, money_goal: 4, money_begin_date: '2022-06-06', money_end_date: '2022-07-06'
+          };
+          jest
+            .spyOn(Tracking, "getUserTrackingsByUserId")
+            .mockResolvedValue(new Tracking(testTracking));
+    
+          const mockReq = { params: { user_id: 1 } };
+          await trackingsController.getUserTrackingsByUserId(mockReq, mockRes);
+          expect(mockStatus).toHaveBeenCalledWith(200);
+          expect(mockJson).toHaveBeenCalledWith(new Habit(testTracking));
+        });
+      });
+
+
+
+
     // describe('show', () => {
     //     test('it returns a dog with a 200 status code', async () => {
     //         let testDog = {

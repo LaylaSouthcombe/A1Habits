@@ -24,6 +24,11 @@ const modalSignup = document.querySelector('.modal-signup')
 const authBtn = document.querySelector('#auth')
 const wrapper = document.querySelector('#wrapper')
 
+const loginSendBtn = document.querySelector('#form-button')
+loginSendBtn.addEventListener('click', loginSendData)
+const registerSendBtn = document.querySelector('#form-button-signup')
+registerSendBtn.addEventListener('click', registerSendData)
+
 toggleLabelShift(emailInput, emailLabel, 'move-up')
 toggleLabelShift(passwordInput, passwordLabel, 'move-up')
 toggleLabelShift(nameInput, nameLabel, 'move-up')
@@ -73,5 +78,49 @@ const sel4 = document.querySelector('#selection-4')
 
 function displayInitialHomepage() {
   section1.innetHTML =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porta posuere convallis. Aenean luctus velit in urna dictum sodales. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut porttitor eu ligula posuere sollicitudin. Donec posuere urna odio, id tempus risus bibendum in. Pellentesque non metus maximus, suscipit nisl vitae, condimentum lorem. Ut pellentesque accumsan turpis at euismod. Integer auctor, nunc id vulputate mollis, libero massa lobortis urna, nec mollis tortor massa ut dolor. Curabitur iaculis suscipit sapien, at suscipit est tempus in. Donec consequat et nisl sed sodales. Duis egestas sapien eget nulla porta pellentesque. Fusce tincidunt tortor elit, et eleifend nisi tincidunt quis. Praesent ipsum sem, ornare eget rutrum et, lobortis vel nisi. Donec tempus viverra libero et condimentum. Donec lobortis scelerisque aliquet. Cras at iaculis diam, quis venenatis nisi.'
+    '<h3>Welcome to Atomic Addicts!</h3> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porta posuere convallis. Aenean luctus velit in urna dictum sodales. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut porttitor eu ligula posuere sollicitudin.</p><p> Donec posuere urna odio, id tempus risus bibendum in. Pellentesque non metus maximus, suscipit nisl vitae, condimentum lorem. Ut pellentesque accumsan turpis at euismod. Integer auctor, nunc id vulputate mollis, libero massa lobortis urna, nec mollis tortor massa ut dolor.</p> <p>Curabitur iaculis suscipit sapien, at suscipit est tempus in. Donec consequat et nisl sed sodales. Duis egestas sapien eget nulla porta pellentesque. Fusce tincidunt tortor elit, et eleifend nisi tincidunt quis. Praesent ipsum sem, ornare eget rutrum et, lobortis vel nisi. Donec tempus viverra libero et condimentum. Donec lobortis scelerisque aliquet. Cras at iaculis diam, quis venenatis nisi.</p>'
+}
+
+// FETCHING FUNCTIONS
+async function loginSendData() {
+  const url = `http://localhost:3000/auth/login`
+  const email = emailInput.value
+  const password = passwordInput.value
+
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  const data = await response.json()
+  console.log('app.js - data received from server after logging in: ', data)
+  emailInput.value = ''
+  passwordInput.value = ''
+  modal.classList.add('disabled')
+}
+
+async function registerSendData() {
+  const url = `http://localhost:3000/auth/register`
+
+  const username = nameInput.value
+  const email = emailInputSignup.value
+  const password = passwordInputSignup.value
+
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({ username, email, password }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  const data = await response.json()
+  console.log('app.js - data received from server after registering in: ', data)
+  nameInput.value = ''
+  emailInputSignup.value = ''
+  passwordInputSignup.value = ''
+  modal.classList.add('disabled')
 }

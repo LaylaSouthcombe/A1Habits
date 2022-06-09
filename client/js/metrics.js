@@ -6,12 +6,17 @@ function createMetricsWrapper() {
   const user = 'igormirowski'
 
   createHabitsSelectionBar(metricspage, user)
-  createCalendar(metricspage)
+  createCalendar(metricspage, user)
 
   // will pass it the metrics when available as a second argument
 }
 
-function createCalendar(targetElement) {
+async function createCalendar(targetElement, user, endpoint = 'all') {
+  const url = `http://localhost:3000/entries/calendar/${endpoint}/${user}`
+  const response = await fetch(url)
+  const data = await response.json()
+  console.log('28 days data ', data)
+
   const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const { numberOfDays, dayOfLastMonth, dayOfWeekLastMonthNumber } =
     getNumberOfDaysLastMonth()
@@ -19,6 +24,7 @@ function createCalendar(targetElement) {
   // console.log(dayOfLastMonth)
   const now = new Date()
   const today = now.getDate()
+  const daysToSkip = now.getDay() + 1
   const thisMonth = getMonthString()
 
   const calendarWrapper = document.createElement('div')
@@ -39,21 +45,38 @@ function createCalendar(targetElement) {
   })
 
   let j = dayOfLastMonth
+  let colourIndex = 0
   // console.log('dayOfLastMonth ', dayOfLastMonth)
   for (let i = 1; i <= 35; i++) {
     // console.log('j ', j)
     const day = document.createElement('div')
     day.classList.add('calendar-day-number', 'calendar-day')
+    if (i > daysToSkip) {
+      if (data[colourIndex] === 1) {
+        day.style.backgroundColor = '#e56b6f'
+        day.style.color = 'white'
+        day.style.border = 'none'
+      }
+      if (data[colourIndex] === 2) {
+        day.style.backgroundColor = '#57cc99'
+        day.style.color = 'white'
+        day.style.border = 'none'
+      }
+      colourIndex++
+    }
 
     // console.log('aaaaaa ', dayOfWeekLastMonthNumber)
     if (j > numberOfDays) j = 1
 
     if (i > dayOfWeekLastMonthNumber + 1 && i <= dayOfLastMonth + 28) {
       // console.log('****', 28 + dayOfWeekLastMonthNumber)
-      if (j === today) day.style.fontWeight = 'bold'
+      if (j === today) {
+        day.style.fontWeight = 'bold'
+        day.style.color = 'black'
+        day.style.fontSize = '20px'
+      }
       day.textContent = j++
     }
-
     calendarDaysWrapper.append(day)
   }
 
@@ -235,8 +258,8 @@ async function createHabitsSelectionBar(targetElement, user) {
   streakWrapperValue.classList.add('streakWrapperValue')
   streakWrapper.append(streakWrapperValue)
 
-  const chartFrame = document.createElement('canvas')
-  chartFrame.classList.add('chartFrame')
+  const chartFrame = document.createElement('div')
+  chartFrame.classList.add('chartFrame', 'ct-chart')
   chartWrapper.append(chartFrame)
 
   // selectionBarWrapper will have the buttons to select which
@@ -247,44 +270,50 @@ async function createHabitsSelectionBar(targetElement, user) {
   const metricsAllBtn = document.createElement('div')
   metricsAllBtn.classList.add('metricsBtn', 'metricsAllBtn')
   metricsAllBtn.innerHTML = `<i class="fa-solid fa-globe"></i>`
-  metricsAllBtn.addEventListener('click', () =>
+  metricsAllBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'all', user)
-  )
+    metricsUpdateChart('.chartFrame', 'all', user)
+  })
 
   const metricsSleepBtn = document.createElement('div')
   metricsSleepBtn.classList.add('metricsBtn', 'metricsSleepBtn')
   metricsSleepBtn.innerHTML = `<i class="fa-solid fa-bed"></i>`
-  metricsSleepBtn.addEventListener('click', () =>
+  metricsSleepBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'sleep', user)
-  )
+    metricsUpdateChart('.chartFrame', 'sleep', user)
+  })
 
   const metricsExerciseBtn = document.createElement('div')
   metricsExerciseBtn.classList.add('metricsBtn', 'metricsExerciseBtn')
   metricsExerciseBtn.innerHTML = `<i class="fa-solid fa-football"></i>`
-  metricsExerciseBtn.addEventListener('click', () =>
+  metricsExerciseBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'exercise', user)
-  )
+    metricsUpdateChart('.chartFrame', 'exercise', user)
+  })
 
   const metricsWaterBtn = document.createElement('div')
   metricsWaterBtn.classList.add('metricsBtn', 'metricsWaterBtn')
   metricsWaterBtn.innerHTML = `<i class="fa-solid fa-faucet-drip"></i>`
-  metricsWaterBtn.addEventListener('click', () =>
+  metricsWaterBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'water', user)
-  )
+    metricsUpdateChart('.chartFrame', 'water', user)
+  })
 
   const metricsSmokingBtn = document.createElement('div')
   metricsSmokingBtn.classList.add('metricsBtn', 'metricsSmokingBtn')
   metricsSmokingBtn.innerHTML = `<i class="fa-solid fa-smoking"></i>`
-  metricsSmokingBtn.addEventListener('click', () =>
+  metricsSmokingBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'smoking', user)
-  )
+    metricsUpdateChart('.chartFrame', 'smoking', user)
+  })
 
   const metricsMoneyBtn = document.createElement('div')
   metricsMoneyBtn.classList.add('metricsBtn', 'metricsMoneyBtn')
   metricsMoneyBtn.innerHTML = `<i class="fa-solid fa-coins"></i>`
-  metricsMoneyBtn.addEventListener('click', () =>
+  metricsMoneyBtn.addEventListener('click', () => {
     metricsUpdateStreak(streakWrapperValue, 'money', user)
-  )
+    metricsUpdateChart('.chartFrame', 'money', user)
+  })
 
   const trackingData = await getTrackingData(user)
   console.log('trackingData -> ', trackingData)
@@ -318,6 +347,8 @@ async function createHabitsSelectionBar(targetElement, user) {
 
   targetElement.append(selectionBarWrapper)
   targetElement.append(chartWrapper)
+  metricsUpdateStreak(streakWrapperValue, 'all', user)
+  metricsUpdateChart('.chartFrame', 'all', user)
 }
 
 // Fetching Functions
@@ -330,4 +361,43 @@ async function metricsUpdateStreak(targetElement, endpoint, username) {
 
   console.log('data', data)
   targetElement.textContent = data
+}
+
+async function metricsUpdateChart(targetElement, endpoint, username) {
+  let canvasChart = document.querySelector(targetElement)
+
+  const url = `http://localhost:3000/entries/${endpoint}/${username}`
+
+  // routes not working
+  // const response = await fetch(url)
+  // const data = await response.json()
+
+  // console.log('data for the chart', data)
+
+  // fetch data
+  const response = await fetch(url)
+  const data = await response.json()
+  console.log('****===*** ', data)
+  console.log('===***=== ', url)
+
+  const hardcodedArrayWater = [4, 6, 5, 2, 7, 4, 6]
+  const hardcodedArraySmoking = [12, 5, 3, 7, 4, 16, 7]
+  const hardcodedArrayExercise = [0, 1, 0, 1, 0, 1, 1]
+  const hardcodedArrayMoney = [20, 10, 15, 10, 5, 0, 10]
+  const hardcodedArrayGlobal = [1, 1, 2, 3, 3, 2, 3]
+
+  populateChart(data, canvasChart)
+}
+
+// Chart related functions and data
+
+function populateChart(chartData, targetElemCtx) {
+  const labels = ['Day1', 'Day2', 'Day3', 'Day4', 'Day5', 'Day6', 'Day7']
+
+  const data = {
+    labels,
+    series: [chartData],
+  }
+
+  new Chartist.Bar(targetElemCtx, data)
 }

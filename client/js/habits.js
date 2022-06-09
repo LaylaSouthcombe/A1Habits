@@ -53,6 +53,8 @@ async function createHabitsWrapper() {
 
 // call the modal for managing the Habits
 function openHabitsModal() {
+  const url = `http://localhost:3000/trackings/`
+
   // console.log('Inside openHabitsModal!')
   const habitsModal = document.querySelector('.habits-modal')
   if (habitsModal.classList.contains('disabled')) {
@@ -60,7 +62,7 @@ function openHabitsModal() {
   }
 
   const habitsModalSubmitBtn = document.querySelector('#habits-submit-button')
-  habitsModalSubmitBtn.addEventListener('click', () => {
+  habitsModalSubmitBtn.addEventListener('click', async () => {
     // dismiss modal
     habitsModal.classList.add('disabled')
 
@@ -90,6 +92,21 @@ function openHabitsModal() {
 
     console.log(habitsData)
     // POST REQUEST then UPDATE PAGE calling createHabitsWrapper()
+
+    const response = await fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify(habitsData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await response.json()
+
+    console.log(
+      'habits.js - response from sending the tracked data: possibly missing :username from the url of the route as using req.params serverside, however if implementing auth might not be needed anymore',
+      data
+    )
   })
 }
 

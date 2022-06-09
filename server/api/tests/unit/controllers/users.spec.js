@@ -22,6 +22,28 @@ describe('users controller', () => {
         })
     });
 
+    //show getById
+
+
+    describe("show getById", () => {
+        test("it returns a user with a 200 status code", async () => {
+          let testUser = {
+            id: 1,
+            username: "Test user",
+            password_digest: "testPassword",
+            email: "test@test.com"
+            
+          };
+          jest.spyOn(User, "getById").mockResolvedValue(new User(testUser));
+    
+          const mockReq = { params: { id: 1 } };
+          await usersController.show(mockReq, mockRes);
+          expect(mockStatus).toHaveBeenCalledWith(200);
+          expect(mockJson).toHaveBeenCalledWith(new User(testUser));
+        });
+      });
+    
+
     // describe('show', () => {
     //     test('it returns a dog with a 200 status code', async () => {
     //         let testDog = {

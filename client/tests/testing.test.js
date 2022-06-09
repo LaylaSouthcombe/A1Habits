@@ -1,22 +1,35 @@
-const renderDOM = require('./helpers');
+const renderDOM = require('./helpers')
 
-let dom;
-let document;
-
+let dom
+let document
 
 describe('index.html', () => {
-    beforeEach(async () => {
-        dom = await renderDOM('index.html')
-        document = await dom.window.document
-    })
+  beforeEach(async () => {
+    dom = await renderDOM('index.html')
+    document = await dom.window.document
+  })
+
 
     //Testing AuthBtn
-    it('displays model when login button is clicked', () => {
+    it('habit section appears upon clicking habit icon', () => {
         // const authButton = document.querySelector('#selection-1')
         // const authBtn = document.querySelector('#auth')
-        // authBtn.dispatchEvent(new dom.window.Event('click'))
+        const selectThree = document.querySelector('.fa-smoking')
+        selectThree.dispatchEvent(new dom.window.Event('click'))
 
-        const login = document.querySelector('.modal-title')
-        expect(login.textContent).toContain('Login')
+        const habitsManageBtnAnchor = document.querySelector('.section1')
+        expect(habitsManageBtnAnchor).toBeTruthy()
     })
+
+    it('habit section appears upon clicking habit icon', () => {
+        const selectThree = document.querySelector('.fa-smoking')
+        selectThree.dispatchEvent(new dom.window.Event('click'))
+
+        const habitsTopCtner = document.querySelector('.habitsWaterCard')
+        expect(habitsTopCtner).toBeTruthy()
+    })
+
+
+
+
 })

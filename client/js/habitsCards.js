@@ -198,27 +198,64 @@ function createAndAppendCards(data, targetElem) {
 // Utility functions ///////////////////
 
 function toggleBtn(btnRef, activity) {
+  const url = `http://localhost:3000/entries/${activity}`
+
   console.log('btnRef -> ', btnRef)
   if (btnRef.innerHTML.match(/fa-thumbs-down/i)) {
+    // commented out as want the button to reflect the db state
     btnRef.innerHTML = '<i class="fa-solid fa-thumbs-up"></i>'
     // send update to the server
-    console.log(`do a fetch POST:  ${activity} has been marked as DONE`)
+    console.log(
+      `TODO: endpoint and token -  PATCH:  ${activity} has been marked as DONE`
+    )
 
+    // TODO Add token and Amend endpoint
+    fetch(url, {
+      method: 'PATCH',
+      body: JSON.stringify({ value: true }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    // refresh the page by calling the following function
     // createHabitsWrapper()
   } else {
-    btnRef.innerHTML = '<i class="fa-solid fa-thumbs-down"></i>'
+    // btnRef.innerHTML = '<i class="fa-solid fa-thumbs-down"></i>'
     // send update to the server
-    console.log(`do a fetch POST: ${activity} has been marked as UNDONE`)
+    console.log(
+      `TODO: endpoint and token - PATCH: ${activity} has been marked as UNDONE`
+    )
 
-    // createHabitsWrapper()
+    // TODO Add token and Amend endpoint
+    fetch(url, {
+      method: 'PATCH',
+      body: JSON.stringify({ value: false }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    // refresh the page by calling the following function
+    createHabitsWrapper()
   }
 }
 
 function adjustCounter(activity, operation, amount = 1) {
-  console.log('fetch POST ')
+  const username = 'igormirowski'
+  const url = `http://localhost:3000/entries/${operation}/${activity}/${username}`
+  console.log('TODO: add token and amend endpoint - fetch PATCH ')
   console.log(
     `activity: ${activity}, operation: ${operation}, amount: ${amount}`
   )
+
+  fetch(url, {
+    method: 'PATCH',
+    body: JSON.stringify({ value: amount }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
   // call createHabitsWrapper to update the view and maintain
   // one Source of Truth
 }
