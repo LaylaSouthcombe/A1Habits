@@ -102,15 +102,6 @@ async function openHabitsModal() {
 
       const data = await response.json()
 
-      // const url2 = `http://localhost:3000/trackings/current`
-      // const response2 = await fetch(url2, {
-      //   headers: {
-      //     Authorization: token,
-      //   },
-      // })
-
-      // const data2 = await response2.json()
-
       console.log(
         'habits.js - response from sending the tracked data: possibly missing :username from the url of the route as using req.params serverside, however if implementing auth might not be needed anymore - data2 ->',
         data
@@ -119,6 +110,7 @@ async function openHabitsModal() {
       console.log('habits.js - openHabitsModal Error -> ', err)
     }
     // dismiss modal
+    displayPage(habitspage)
     habitsModal.classList.add('disabled')
   })
 }
@@ -144,4 +136,31 @@ async function getTrackingData() {
   } catch (err) {
     console.log('habits.js - getTrackingData Error: ', err)
   }
+}
+
+async function populateTrackedHabitsOnModalOnLogin() {
+  const data = await getTrackingData()
+  console.log('============= ', data)
+
+  const sleep_track = document.querySelector('#checkbox-sleep')
+  const sleep_goal = document.querySelector('#habits-form-sleep-hours')
+  const exercise_track = document.querySelector('#checkbox-exercise')
+  const exercise_goal = document.querySelector('#habits-form-exercise-times')
+  const water_track = document.querySelector('#checkbox-water')
+  const water_goal = document.querySelector('#habits-form-water-glasses')
+  const smoking_track = document.querySelector('#checkbox-smoking')
+  const smoking_goal = document.querySelector('#habits-form-smoking-cigarettes')
+  const money_track = document.querySelector('#checkbox-savings')
+  const money_goal = document.querySelector('#habits-form-money-daily')
+
+  sleep_track.value = data.sleep_track || false
+  sleep_goal.value = data.sleep_goal || 0
+  exercise_track.value = data.exercise_track || false
+  exercise_goal.value = data.exercise_goal || 0
+  water_track.value = data.water_track || false
+  water_goal.value = data.water_goal || 0
+  smoking_track.value = data.smoking_track || false
+  smoking_goal.value = data.smoking_goal || 0
+  money_track.value = data.money_track || false
+  money_goal.value = data.money_goal || 0
 }

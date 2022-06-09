@@ -14,6 +14,8 @@ const passwordLabelSignup = document.querySelector(
   '.form-password-label-signup'
 )
 
+document.onload = logout()
+
 const regBtn = document.querySelector('#form-reg-btn')
 const logBtn = document.querySelector('#form-log-btn')
 

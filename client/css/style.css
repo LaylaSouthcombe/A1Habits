@@ -71,7 +71,7 @@
     padding: 1rem;
   }
   
-  #auth {
+  #auth, #authLogout {
     padding: 0.7rem 0.6rem 0.6rem 0.9rem;
     /* margin-right: 2rem; */
     border: 2px solid var(--light);
@@ -81,6 +81,11 @@
     color: var(--light);
     cursor: pointer;
   }
+
+    #authLogout {
+      border: 2px solid greenyellow;
+      color: greenyellow;
+    }
   
   .link,
   .link:active,
@@ -95,6 +100,37 @@
     background-color: var(--lightBG);
     margin-top: -96px;
     overflow-y: auto;
+  }
+
+  #home {
+    text-align:justify;
+    margin: 0px 40px;
+    letter-spacing: 2px;
+    line-height: 1.8rem;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #home ul {
+    margin: 10px;
+  }
+
+  #home li {
+    list-style: none;
+    padding: 5px;
+    font-style: italic;
+  }
+
+  #home img {
+    
+    margin-bottom: 10px;
+    width: 25vw;
+  }
+
+  h3 {
+    margin-bottom: 20px;
   }
   
   .section1 {
@@ -230,6 +266,7 @@
     padding: 10px;
     border: none;
     border-radius: 10px;
+    font-size: 1.3rem;
   }
   
   button {
@@ -263,8 +300,9 @@
   .form-email-label-signup,
   .form-password-label-signup {
     padding: 5px 0 5px 10px;
-    transform: translateY(34px);
+    transform: translateY(40px);
     transition: all 0.2s ease-out;
+    font-size: 1.2rem;
   }
   
   .move-up {

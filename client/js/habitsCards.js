@@ -171,7 +171,7 @@ function createAndAppendCards(data, targetElem) {
       moneyCardBtn.classList.add('habitsCardBtn', 'habitsMoneyCardBtn')
       moneyCardBtn.innerHTML = '<i class="fa-solid fa-thumbs-down"></i>'
       moneyCardBtn.addEventListener('click', () =>
-        toggleBtn(moneyCardBtn, 'sleep')
+        toggleBtn(moneyCardBtn, 'money')
       )
       moneyCard.append(moneyCardBtn)
 
@@ -184,12 +184,13 @@ function createAndAppendCards(data, targetElem) {
 
 // Utility functions ///////////////////
 
-function toggleBtn(btnRef, activity) {
-  const url = `http://localhost:3000/entries/${activity}`
+async function toggleBtn(btnRef, activity) {
   const token = retrieveToken()
 
   console.log('btnRef -> ', btnRef)
   if (btnRef.innerHTML.match(/fa-thumbs-down/i)) {
+    const url = `http://localhost:3000/entries/increase/${activity}`
+
     // commented out as want the button to reflect the db state
     btnRef.innerHTML = '<i class="fa-solid fa-thumbs-up"></i>'
     // send update to the server
@@ -198,14 +199,16 @@ function toggleBtn(btnRef, activity) {
     )
 
     // TODO Add token and Amend endpoint
-    fetch(url, {
-      method: 'PATCH',
-      body: JSON.stringify({ value: true }),
+    const response = await fetch(url, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: token,
       },
     })
+
+    const data = await response.json()
+    console.log('MMMMMMMMM data -> ', data)
     // refresh the page by calling the following function
     // createHabitsWrapper()
   } else {
@@ -214,9 +217,10 @@ function toggleBtn(btnRef, activity) {
     console.log(
       `TODO: endpoint and token - PATCH: ${activity} has been marked as UNDONE`
     )
+    const url = `http://localhost:3000/entries/decrease/${activity}`
 
     // TODO Add token and Amend endpoint
-    fetch(url, {
+    await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
