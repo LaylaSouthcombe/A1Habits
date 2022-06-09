@@ -1,3 +1,5 @@
+const baseUrl = 'http://localhost:3000/'
+
 const emailInput = document.querySelector('#form-email-input')
 const emailLabel = document.querySelector('.form-email-label')
 const passwordInput = document.querySelector('#form-password-input')
@@ -13,6 +15,8 @@ const passwordInputSignup = document.querySelector(
 const passwordLabelSignup = document.querySelector(
   '.form-password-label-signup'
 )
+
+document.onload = logout()
 
 const regBtn = document.querySelector('#form-reg-btn')
 const logBtn = document.querySelector('#form-log-btn')
@@ -83,7 +87,7 @@ function displayInitialHomepage() {
 
 // FETCHING FUNCTIONS
 async function loginSendData() {
-  const url = `http://localhost:3000/auth/login`
+  const url = `${baseUrl}auth/login`
   const email = emailInput.value
   const password = passwordInput.value
   const token = retrieveToken()
@@ -118,7 +122,7 @@ async function loginSendData() {
 }
 
 async function registerSendData() {
-  const url = `http://localhost:3000/auth/register`
+  const url = `${baseUrl}auth/register`
 
   const username = nameInput.value
   const email = emailInputSignup.value
