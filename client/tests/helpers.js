@@ -1,8 +1,9 @@
 const path = require('path')
-const jsdom = require('jsdom')
-const { resolve } = require('path')
-const { rejects } = require('assert')
-const { JSDOM } = jsdom
+
+const jsdom = require('jsdom');
+
+const { JSDOM } = jsdom;
+
 
 const renderDOM = async (filename) => {
   const filePath = path.join(process.cwd(), filename)
