@@ -24,6 +24,7 @@ async function createCalendar(targetElement, user, endpoint = 'all') {
   // console.log(dayOfLastMonth)
   const now = new Date()
   const today = now.getDate()
+  const daysToSkip = now.getDay() + 1
   const thisMonth = getMonthString()
 
   const calendarWrapper = document.createElement('div')
@@ -44,32 +45,38 @@ async function createCalendar(targetElement, user, endpoint = 'all') {
   })
 
   let j = dayOfLastMonth
+  let colourIndex = 0
   // console.log('dayOfLastMonth ', dayOfLastMonth)
   for (let i = 1; i <= 35; i++) {
     // console.log('j ', j)
     const day = document.createElement('div')
     day.classList.add('calendar-day-number', 'calendar-day')
+    if (i > daysToSkip) {
+      if (data[colourIndex] === 1) {
+        day.style.backgroundColor = '#e56b6f'
+        day.style.color = 'white'
+        day.style.border = 'none'
+      }
+      if (data[colourIndex] === 2) {
+        day.style.backgroundColor = '#57cc99'
+        day.style.color = 'white'
+        day.style.border = 'none'
+      }
+      colourIndex++
+    }
 
     // console.log('aaaaaa ', dayOfWeekLastMonthNumber)
     if (j > numberOfDays) j = 1
 
     if (i > dayOfWeekLastMonthNumber + 1 && i <= dayOfLastMonth + 28) {
-      // modify day colour in here
-      const colourCode = data[i]
-      if (colourCode === 1) {
-        day.style.backgroundColor = 'red'
-        day.style.color = 'white'
-      }
-      if (colourCode === 2) {
-        day.style.backgroundColor = 'green'
-        day.style.color = 'white'
-      }
-
       // console.log('****', 28 + dayOfWeekLastMonthNumber)
-      if (j === today) day.style.fontWeight = 'bold'
+      if (j === today) {
+        day.style.fontWeight = 'bold'
+        day.style.color = 'black'
+        day.style.fontSize = '20px'
+      }
       day.textContent = j++
     }
-
     calendarDaysWrapper.append(day)
   }
 
