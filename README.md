@@ -34,6 +34,8 @@ and our API is hosted [here]() on Heroku.
     - Server in localhost:3000
     - Client in localhost:8080
 
+- Create a .env file in the api directory, and and add a key of SECRET assigned anything you like eg SECRET=my_super_secret
+
 - To rexecute the tests:
     - Run: `bash _scripts/startTest.sh`
 
