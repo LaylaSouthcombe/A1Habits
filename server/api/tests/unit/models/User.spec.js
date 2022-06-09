@@ -24,6 +24,42 @@ describe('User', () => {
         })
     });
 
+
+
+      //  test for create 
+
+  describe('create', () => {
+    test('it resolves with user on successful db query', async () => {
+        let userData = { username: 'testUser', password: 'testPassword', email: 'testEmail' };
+        jest.spyOn(db, 'query')
+            .mockResolvedValueOnce({ rows: [userData] });
+        const result = await User.create(userData);
+        expect(result).toHaveProperty('id')
+    })
+});
+
+// test for findByEmail
+
+describe('findByEmail', () => {
+    test('it resolves with a user email on successful db query', async () => {
+        let userData = { username: 'testUser', password: 'testPassword', email: 'testEmail' };
+        jest.spyOn(db, 'query')
+            .mockResolvedValueOnce({ rows: [userData] });
+        const result = await User.findByEmail('testEmail');
+        expect(result.email).toContain('testEmail')
+    })
+
+    test('the result should be an instance of User', async () => {
+        let userData = { username: 'testUser', password: 'testPassword', email: 'testEmail' };
+        jest.spyOn(db, 'query')
+            .mockResolvedValueOnce({ rows: [userData] });
+        const result = await User.findByEmail('testEmail');
+        expect(result).toBeInstanceOf(User)
+    });
+
+
+});
+
     // describe('findById', () => {
     //     test('it resolves with dog on successful db query', async () => {
     //         let dogData = { id: 1, name: 'Test Dog' }

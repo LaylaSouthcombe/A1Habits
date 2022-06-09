@@ -10,11 +10,16 @@ router.get('/:id', entriesController.getEntriesByUserId);
 router.post('/', entriesController.createNewEntry);
 router.patch('/:id', entriesController.updateEntryById);
 router.delete('/:id', entriesController.deleteEntryById);
-//increase/decreasewater/smoking routes
-router.patch('/current/smoking/:username', entriesController.increaseSmokingNum);
-router.patch('/current/smoking/:username', entriesController.decreaseSmokingNum);
-router.patch('/current/water/:username', entriesController.increaseWaterNum);
-router.patch('/current/water/:username', entriesController.decreaseWaterNum);
+//increase/decrease water/smoking routes
+router.patch('/increase/smoking/:username', entriesController.increaseSmokingNum);
+router.patch('/decrease/smoking/:username', entriesController.decreaseSmokingNum);
+router.patch('/increase/water/:username', entriesController.increaseWaterNum);
+router.patch('/decrease/water/:username', entriesController.decreaseWaterNum);
+//complete/incomplete water/smoking routes
+router.patch('/complete/sleep/:username', entriesController.completeSleep);
+router.patch('/incomplete/sleep/:username', entriesController.incompleteSleep);
+router.patch('/complete/exercise/:username', entriesController.completeExercise);
+router.patch('/incomplete/exercise/:username', entriesController.incompleteExercise);
 //streak routes
 router.get('/streak/all/:username', entriesController.getAllHabitsStreak);
 router.get('/streak/sleep/:username', entriesController.getSleepStreak);
