@@ -352,13 +352,18 @@ async function metricsUpdateChart(targetElement, endpoint, username) {
   // console.log('data for the chart', data)
 
   // fetch data
+  const response = await fetch(url)
+  const data = await response.json()
+  console.log('****===*** ', data)
+  console.log('===***=== ', url)
+
   const hardcodedArrayWater = [4, 6, 5, 2, 7, 4, 6]
   const hardcodedArraySmoking = [12, 5, 3, 7, 4, 16, 7]
   const hardcodedArrayExercise = [0, 1, 0, 1, 0, 1, 1]
   const hardcodedArrayMoney = [20, 10, 15, 10, 5, 0, 10]
   const hardcodedArrayGlobal = [1, 1, 2, 3, 3, 2, 3]
 
-  populateChart(hardcodedArrayWater, canvasChart)
+  populateChart(data, canvasChart)
 }
 
 // Chart related functions and data
