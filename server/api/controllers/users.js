@@ -1,6 +1,5 @@
 const User = require('../models/user');
 
-
 //gets all users in users table
 async function index(req, res) {
     try {

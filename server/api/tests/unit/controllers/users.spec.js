@@ -29,9 +29,9 @@ describe('users controller', () => {
         test("it returns a user with a 200 status code", async () => {
           let testUser = {
             id: 1,
-            username: "Test user",
-            password_digest: "testPassword",
-            email: "test@test.com"
+            username: "tinab123",
+            password_digest: "$2a$10$sosndSuA2qyqsvbV.BwjxucwERZSZsSbJtzmcHg2vJ8LR7o6xpK2e",
+            email: "tinab123@gmail.com"
             
           };
           jest.spyOn(User, "getById").mockResolvedValue(new User(testUser));

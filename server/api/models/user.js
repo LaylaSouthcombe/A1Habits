@@ -1,5 +1,4 @@
 const db = require('../dbConfig');
-const jwt_decode = require('jwt-decode');
 
 class User {
     constructor(data){
@@ -23,7 +22,6 @@ class User {
     static create({ username, email, password }){
         return new Promise(async (resolve, reject) => {
             try {
-                console.log(username)
                 const result = await db.query('INSERT INTO users (username, email, password_digest) VALUES ($1, $2, $3) RETURNING *;', [ username, email, password ]);
                 const user = new User(result.rows[0]);
                 resolve(user)
@@ -35,8 +33,6 @@ class User {
     static findByUsername(username){
         return new Promise (async (resolve, reject) => {
             try {
-                // const decoded = jwt_decode(token)
-                // const username = decoded.username
                 let userData = await db.query('SELECT * FROM users WHERE username = $1;', [ username ]);
                 let user = new User(userData.rows[0]);
                 resolve(user);
@@ -45,17 +41,6 @@ class User {
             };
         });
     };
-    // static findById(id){
-    //     return new Promise (async (resolve, reject) => {
-    //         try {
-    //             let userData = await db.query('SELECT * FROM users WHERE id = $1;', [ id ]);
-    //             let user = new User(userData.rows[0]);
-    //             resolve(user);
-    //         } catch (err) {
-    //             reject('User not found');
-    //         };
-    //     });
-    // };
     static findByEmail(email){
         return new Promise(async (res, rej) => {
             try {
@@ -68,6 +53,5 @@ class User {
         })
     }
 }
-
 
 module.exports = User

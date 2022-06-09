@@ -1,6 +1,5 @@
 const trackingsController = require('../../../controllers/tracks')
 const Tracking = require('../../../models/track');
-const jwt = require("jsonwebtoken");
 
 const mockSend = jest.fn();
 const mockJson = jest.fn();
