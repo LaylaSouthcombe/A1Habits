@@ -11,12 +11,43 @@ describe('entries controller', () => {
 
     afterAll(() => jest.resetAllMocks());
 
+    describe('getAllEntries', () => {
+        test('it returns entries with a 200 status code', async () => {
+            let testEntries = ['d1', 'd2']
+            jest.spyOn(Entries, 'all', 'get')
+                 .mockResolvedValue(testEntries);
+            await entriesController.getAllEntries(null, mockRes);
+            expect(mockStatus).toHaveBeenCalledWith(200);
+            expect(mockJson).toHaveBeenCalledWith(testEntries);
+        })
+    });
+
+  
+
+    // test to create 
+
+
+    describe('createNewEntry', () => {
+        test('it returns a new entry with a 201 status code', async () => {
+            let testEntry = {
+                sleep_entry: true, exercise_entry: true, water_entry: 8, smoking_entry: 8, money_entry: 1, date_entry: '2022-06-06'
+            }
+            jest.spyOn(Entry, 'createNewEntry')
+                .mockResolvedValue(new Entry(testEntry));
+                
+            const mockReq = { body: testEntry }
+            await entriesController.create(mockReq, mockRes);
+            expect(mockStatus).toHaveBeenCalledWith(201);
+            expect(mockJson).toHaveBeenCalledWith(new Entry(testEntry));
+        })
+    });
+
     // // test to delete
 
     describe('del', () => {
         test('it resolves with updated entry on successful db query', async () => {
             let testEntry = new Entry({
-                user_id: 2, sleep_entry: false, exercise_entry: true, water_entry: 5, smoking_entry: 8, money_entry: 3, date_entry: '2022-06-07'
+                sleep_entry: false, exercise_entry: true, water_entry: 5, smoking_entry: 8, money_entry: 3, date_entry: '2022-06-07'
             });
             jest.spyOn(db, 'query')
                 .mockResolvedValueOnce({ rows: [{ ...testEntry }] });
