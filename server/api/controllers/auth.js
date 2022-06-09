@@ -20,10 +20,12 @@ async function registerUser(req, res) {
 async function loginUser(req, res) {
     try {
         const user = await User.findByEmail(req.body.email)
+        console.log(user)
         if(!user){ throw new Error('No user with this email') }
         const authed = bcrypt.compare(req.body.password, user.passwordDigest)
         if (!!authed){
             const payload = { username: user.username, email: user.email }
+            console.log(payload)
             const sendToken = (err, token) => {
                 if(err){ throw new Error('Error in token generation') }
                 res.status(200).json({
@@ -31,7 +33,7 @@ async function loginUser(req, res) {
                     token: "Bearer " + token,
                 });
             }
-            jwt.sign(payload, process.env.SECRET, { expiresIn: 600 }, sendToken);
+            jwt.sign(payload, process.env.SECRET, { expiresIn: 60 }, sendToken);
         } else {
             throw new Error('User could not be authenticated')  
         }
