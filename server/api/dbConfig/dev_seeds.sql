@@ -1,10 +1,10 @@
 -- USERS
 INSERT INTO users (id, username, password_digest, email) 
 VALUES
-    (1, 'igormirowski', 'xxxxx', 'igor@gmail.com'),
+    (1, 'tinab123', '$2a$10$sosndSuA2qyqsvbV.BwjxucwERZSZsSbJtzmcHg2vJ8LR7o6xpK2e', 'tinab123@gmail.com'),
     (2, 'leo123', 'xxxxx', 'leo12@gmail.com'),
     (3, 'pati123', 'xxxxx', 'pati123@gmail.com'),
-    (4, 'tinab123', '$2a$10$sosndSuA2qyqsvbV.BwjxucwERZSZsSbJtzmcHg2vJ8LR7o6xpK2e', 'tinab123@gmail.com');
+    (4, 'igormirowski', 'xxxxx', 'igor@gmail.com');
 
 
 -- ENTRIES

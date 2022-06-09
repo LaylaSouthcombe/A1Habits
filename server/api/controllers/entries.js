@@ -13,7 +13,7 @@ async function getAllEntries(req, res) {
 
 async function autoAddUserEntry(req, res) {
     try {
-        const entries = await Entry.addUserEntryForEveryUser(req.params.username);
+        const entries = await Entry.addUserEntryForEveryUser(req.headers.authorization);
         res.status(201).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -25,16 +25,17 @@ async function autoAddUserEntry(req, res) {
 //get last 7 all habits entries - returns array of numbers that should convert to %
 async function getAllHabitsEntries(req, res) {
     try {
-        const entries = await Entry.findAllHabitsEntries(req.params.username);
+        const entries = await Entry.findAllHabitsEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
     }
 }
+
 //get last 7 smoking entries - returns array of numbers
 async function getSmokingEntries(req, res) {
     try {
-        const entries = await Entry.findSmokingEntries(req.params.username);
+        const entries = await Entry.findSmokingEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -43,7 +44,7 @@ async function getSmokingEntries(req, res) {
 //get last 7 exercise entries - returns array of booleans
 async function getExerciseEntries(req, res) {
     try {
-        const entries = await Entry.findExerciseEntries(req.params.username);
+        const entries = await Entry.findExerciseEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -52,7 +53,7 @@ async function getExerciseEntries(req, res) {
 //get last 7 water entries - returns array of numbers
 async function getWaterEntries(req, res) {
     try {
-        const entries = await Entry.findWaterEntries(req.params.username);
+        const entries = await Entry.findWaterEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -61,7 +62,7 @@ async function getWaterEntries(req, res) {
 //get last 7 money entries - returns array of numbers
 async function getMoneyEntries(req, res) {
     try {
-        const entries = await Entry.findMoneyEntries(req.params.username);
+        const entries = await Entry.findMoneyEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -70,7 +71,7 @@ async function getMoneyEntries(req, res) {
 //get last 7 sleep entries - returns array of booleans
 async function getSleepEntries(req, res) {
     try {
-        const entries = await Entry.findSleepEntries(req.params.username);
+        const entries = await Entry.findSleepEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -80,7 +81,7 @@ async function getSleepEntries(req, res) {
 //get calendar 28 all habit entries - returns array of 0, 1, or 2
 async function getAllCalendarEntries(req, res) {
     try {
-        const entries = await Entry.findAllCalendarEntries(req.params.username);
+        const entries = await Entry.findAllCalendarEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -89,7 +90,7 @@ async function getAllCalendarEntries(req, res) {
 //get calendar 28 sleep entries - returns array of 0, 1, or 2
 async function getSleepCalendarEntries(req, res) {
     try {
-        const entries = await Entry.findSleepCalendarEntries(req.params.username);
+        const entries = await Entry.findSleepCalendarEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -98,7 +99,7 @@ async function getSleepCalendarEntries(req, res) {
 //get calendar 28 water entries - returns array of 0, 1, or 2
 async function getWaterCalendarEntries(req, res) {
     try {
-        const entries = await Entry.findWaterCalendarEntries(req.params.username);
+        const entries = await Entry.findWaterCalendarEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -107,7 +108,7 @@ async function getWaterCalendarEntries(req, res) {
 //get calendar 28 smoking entries - returns array of 0, 1, or 2
 async function getSmokingCalendarEntries(req, res) {
     try {
-        const entries = await Entry.findSmokingCalendarEntries(req.params.username);
+        const entries = await Entry.findSmokingCalendarEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -116,7 +117,7 @@ async function getSmokingCalendarEntries(req, res) {
 //get calendar 28 exercise entries - returns array of 0, 1, or 2
 async function getExerciseCalendarEntries(req, res) {
     try {
-        const entries = await Entry.findExerciseCalendarEntries(req.params.username);
+        const entries = await Entry.findExerciseCalendarEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -125,7 +126,7 @@ async function getExerciseCalendarEntries(req, res) {
 //get calendar 28 money entries - returns array of 0, 1, or 2
 async function getMoneyCalendarEntries(req, res) {
     try {
-        const entries = await Entry.findMoneyCalendarEntries(req.params.username);
+        const entries = await Entry.findMoneyCalendarEntries(req.headers.authorization);
         res.status(200).json(entries)
     } catch (err) {
         res.status(500).json({ err })
@@ -164,7 +165,7 @@ async function updateEntryById(req, res) {
 //complete sleep entry - returns { sleep_entry: true }
 async function completeSleep(req, res) {
     try {
-        const sleepStatus = await Entry.completeSleepHabit(req.params.username)
+        const sleepStatus = await Entry.completeSleepHabit(req.headers.authorization)
         res.status(200).json(sleepStatus)
     }catch(err){
         res.status(422).json({err})
@@ -173,7 +174,7 @@ async function completeSleep(req, res) {
 //incomplete sleep entry - returns { sleep_entry: false }
 async function incompleteSleep(req, res) {
     try {
-        const sleepStatus = await Entry.incompleteSleepHabit(req.params.username)
+        const sleepStatus = await Entry.incompleteSleepHabit(req.headers.authorization)
         res.status(200).json(sleepStatus)
     }catch(err){
         res.status(422).json({err})
@@ -182,7 +183,7 @@ async function incompleteSleep(req, res) {
 //complete exercise entry - returns { exercise_entry: true }
 async function completeExercise(req, res) {
     try {
-        const exerciseStatus = await Entry.completeExerciseHabit(req.params.username)
+        const exerciseStatus = await Entry.completeExerciseHabit(req.headers.authorization)
         res.status(200).json(exerciseStatus)
     }catch(err){
         res.status(422).json({err})
@@ -191,7 +192,7 @@ async function completeExercise(req, res) {
 //complete exercise entry - returns { exercise_entry: false }
 async function incompleteExercise(req, res) {
     try {
-        const exerciseStatus = await Entry.incompleteExerciseHabit(req.params.username)
+        const exerciseStatus = await Entry.incompleteExerciseHabit(req.headers.authorization)
         res.status(200).json(exerciseStatus)
     }catch(err){
         res.status(422).json({err})
@@ -202,7 +203,7 @@ async function incompleteExercise(req, res) {
 //add one to most recent smoking entry - returns number of updated entry
 async function increaseSmokingNum(req, res) {
         try {
-            const smokingNum = await Entry.addOneToCurrentSmokingNum(req.params.username)
+            const smokingNum = await Entry.addOneToCurrentSmokingNum(req.headers.authorization)
             res.status(200).json(smokingNum)
         }catch(err){
             res.status(422).json({err})
@@ -212,7 +213,7 @@ async function increaseSmokingNum(req, res) {
 //remove one to from most recent smoking entry - returns number of updated entry
 async function decreaseSmokingNum(req, res) {
     try {
-        const smokingNum = await Entry.removeOneFromCurrentSmokingNum(req.params.username)
+        const smokingNum = await Entry.removeOneFromCurrentSmokingNum(req.headers.authorization)
         res.json(smokingNum)
     }catch(err){
         res.status(422).json({err})
@@ -222,7 +223,7 @@ async function decreaseSmokingNum(req, res) {
 //add one to most recent water entry - returns number of updated entry
 async function increaseWaterNum(req, res) {
     try {
-        const waterNum = await Entry.addOneToCurrentWaterNum(req.params.username)
+        const waterNum = await Entry.addOneToCurrentWaterNum(req.headers.authorization)
         res.json(waterNum)
     }catch(err){
         res.status(422).json({err})
@@ -232,7 +233,7 @@ async function increaseWaterNum(req, res) {
 //remove one from most recent water entry - returns number of updated entry
 async function decreaseWaterNum(req, res) {
     try {
-        const waterNum = await Entry.removeOneFromCurrentWaterNum(req.params.username)
+        const waterNum = await Entry.removeOneFromCurrentWaterNum(req.headers.authorization)
         res.json(waterNum)
     }catch(err){
         res.status(422).json({err})
@@ -253,7 +254,7 @@ async function deleteEntryById(req, res) {
 //finds the all habit streak by username - retruns a number
 async function getAllHabitsStreak(req, res) {
     try {
-        const streakNum = await Entry.getCurrentAllHabitStreak(req.params.username)
+        const streakNum = await Entry.getCurrentAllHabitStreak(req.headers.authorization)
         res.status(200).json(streakNum)
     }catch(err){
         res.status(422).json({err})
@@ -263,7 +264,7 @@ async function getAllHabitsStreak(req, res) {
 //finds the all habit streak by username - retruns a number
 async function getSleepStreak(req, res) {
     try {
-        const streakNum = await Entry.getCurrentSleepStreak(req.params.username)
+        const streakNum = await Entry.getCurrentSleepStreak(req.headers.authorization)
         res.status(200).json(streakNum)
     }catch(err){
         res.status(422).json({err})
@@ -273,7 +274,7 @@ async function getSleepStreak(req, res) {
 //finds the exercise habit streak by username - retruns a number
 async function getExerciseStreak(req, res) {
     try {
-        const streakNum = await Entry.getCurrentExerciseStreak(req.params.username)
+        const streakNum = await Entry.getCurrentExerciseStreak(req.headers.authorization)
         res.status(200).json(streakNum)
     }catch(err){
         res.status(422).json({err})
@@ -283,7 +284,7 @@ async function getExerciseStreak(req, res) {
 //finds the water habit streak by username - retruns a number
 async function getWaterStreak(req, res) {
     try {
-        const streakNum = await Entry.getCurrentWaterStreak(req.params.username)
+        const streakNum = await Entry.getCurrentWaterStreak(req.headers.authorization)
         res.status(200).json(streakNum)
     }catch(err){
         res.status(422).json({err})
@@ -293,7 +294,7 @@ async function getWaterStreak(req, res) {
 //finds the smoking habit streak by username - retruns a number
 async function getSmokingStreak(req, res) {
     try {
-        const streakNum = await Entry.getCurrentSmokingStreak(req.params.username)
+        const streakNum = await Entry.getCurrentSmokingStreak(req.headers.authorization)
         res.status(200).json(streakNum)
     }catch(err){
         res.status(422).json({err})
@@ -303,7 +304,7 @@ async function getSmokingStreak(req, res) {
 //finds the money habit streak by username - retruns a number
 async function getMoneyStreak(req, res) {
     try {
-        const streakNum = await Entry.getCurrentMoneyStreak(req.params.username)
+        const streakNum = await Entry.getCurrentMoneyStreak(req.headers.authorization)
         res.status(200).json(streakNum)
     }catch(err){
         res.status(422).json({err})

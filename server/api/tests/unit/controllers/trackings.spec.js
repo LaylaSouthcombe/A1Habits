@@ -1,5 +1,6 @@
 const trackingsController = require('../../../controllers/tracks')
 const Tracking = require('../../../models/track');
+const jwt = require("jsonwebtoken");
 
 const mockSend = jest.fn();
 const mockJson = jest.fn();
@@ -13,7 +14,7 @@ describe('trackings controller', () => {
 
     describe('get all trackings', () => {
         test('it returns users with a 200 status code', async () => {
-            let testTracking = ['t1', 't2']
+            let testTracking = ['1', '2']
             jest.spyOn(Tracking, 'all', 'get')
                  .mockResolvedValue(testTracking);
             await trackingsController.getAllTracking(null, mockRes);
@@ -21,6 +22,16 @@ describe('trackings controller', () => {
             expect(mockJson).toHaveBeenCalledWith(testTracking);
         })
     });
+    // describe('get trackings for user', () => {
+    //     test('it returns users with a 200 status code', async () => {
+    //         let testTracking = ['t1', 't2']
+    //         jest.spyOn(Tracking, 'all', 'get')
+    //              .mockResolvedValue(testTracking);
+    //         await trackingsController.getAllTracking(null, mockRes);
+    //         expect(mockStatus).toHaveBeenCalledWith(200);
+    //         expect(mockJson).toHaveBeenCalledWith(testTracking);
+    //     })
+    // });
 
     // describe('show', () => {
     //     test('it returns a dog with a 200 status code', async () => {

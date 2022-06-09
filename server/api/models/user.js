@@ -1,4 +1,5 @@
 const db = require('../dbConfig');
+const jwt_decode = require('jwt-decode');
 
 class User {
     constructor(data){
@@ -19,19 +20,6 @@ class User {
             }
         })
     }
-    // FIND BY EMAIL
-    static findByEmail(email) {
-        return new Promise(async (res, rej) => {
-            try {
-                let selectQuery = await db.query(`SELECT * FROM users WHERE email = $1;`, [email])
-                let user = new User(selectQuery.rows[0])
-                res(user)
-            } catch (err) {
-                rej(`Failed to find user:${err}`)
-            }
-        })
-    }
-
     static create({ username, email, password }){
         return new Promise(async (resolve, reject) => {
             try {
@@ -47,6 +35,8 @@ class User {
     static findByUsername(username){
         return new Promise (async (resolve, reject) => {
             try {
+                // const decoded = jwt_decode(token)
+                // const username = decoded.username
                 let userData = await db.query('SELECT * FROM users WHERE username = $1;', [ username ]);
                 let user = new User(userData.rows[0]);
                 resolve(user);
@@ -55,17 +45,17 @@ class User {
             };
         });
     };
-    static findById(id){
-        return new Promise (async (resolve, reject) => {
-            try {
-                let userData = await db.query('SELECT * FROM users WHERE id = $1;', [ id ]);
-                let user = new User(userData.rows[0]);
-                resolve(user);
-            } catch (err) {
-                reject('User not found');
-            };
-        });
-    };
+    // static findById(id){
+    //     return new Promise (async (resolve, reject) => {
+    //         try {
+    //             let userData = await db.query('SELECT * FROM users WHERE id = $1;', [ id ]);
+    //             let user = new User(userData.rows[0]);
+    //             resolve(user);
+    //         } catch (err) {
+    //             reject('User not found');
+    //         };
+    //     });
+    // };
     static findByEmail(email){
         return new Promise(async (res, rej) => {
             try {

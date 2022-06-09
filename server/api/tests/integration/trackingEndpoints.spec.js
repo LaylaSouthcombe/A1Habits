@@ -18,7 +18,7 @@ describe('tracking endpoints', () => {
         expect(res.statusCode).toEqual(200);
         expect(res.body.length).toEqual(3);
     })
-    it('should get 403 with expired token getting users tracking preferences', async () => {
+    it('should get users tracking preferences', async () => {
         const res = await request(api)
             .get('/trackings/username')
             .send({headers: {
@@ -27,6 +27,7 @@ describe('tracking endpoints', () => {
                 }
             }
             })
-        expect(res.statusCode).toEqual(403);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body.length).toEqual(1);
     });
 })

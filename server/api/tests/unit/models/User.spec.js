@@ -20,7 +20,7 @@ describe('User', () => {
             jest.spyOn(db, 'query')
                 .mockResolvedValueOnce({ rows: [{}, {}, {}]});
             const all = await User.all;
-            expect(all).toHaveLength(3)
+            expect(all).toHaveLength(4)
         })
     });
 

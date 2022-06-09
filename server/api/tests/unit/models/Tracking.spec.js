@@ -23,7 +23,15 @@ describe('Tracking', () => {
             expect(all).toHaveLength(3)
         })
     });
-
+    
+    describe('find users tracking info', () => {
+        test('it resolves with trackings for a user on successful db query', async () => {
+            jest.spyOn(db, 'query')
+                .mockResolvedValueOnce({ rows: [{}]});
+            const all = await Tracking.findTrackingByUsername(token);
+            expect(all).toHaveLength(1)
+        })
+    });
     // describe('findById', () => {
     //     test('it resolves with dog on successful db query', async () => {
     //         let dogData = { id: 1, name: 'Test Dog' }
