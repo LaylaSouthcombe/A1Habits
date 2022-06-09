@@ -11,6 +11,25 @@ describe('entries controller', () => {
 
     afterAll(() => jest.resetAllMocks());
 
+
+
+
+      // // test to delete
+
+      describe('del', () => {
+        test('it resolves with updated entry on successful db query', async () => {
+            let testEntry = new Entry({
+                user_id: 2, sleep_entry: false, exercise_entry: true, water_entry: 5, smoking_entry: 8, money_entry: 3, date_entry: '2022-06-07'
+            });
+            jest.spyOn(db, 'query')
+                .mockResolvedValueOnce({ rows: [{ ...testEntry }] });
+            const result = await testEntry.del();
+            expect(result).toBe('The entry has been deleted')
+        })
+    });
+
+
+
     // describe('index', () => {
     //     test('it returns users with a 200 status code', async () => {
     //         let testEntries = ['d1', 'd2']

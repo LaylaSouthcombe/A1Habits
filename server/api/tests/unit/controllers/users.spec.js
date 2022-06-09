@@ -40,6 +40,7 @@ describe('users controller', () => {
         })
     });
 
+    
     // describe('show', () => {
     //     test('it returns a dog with a 200 status code', async () => {
     //         let testDog = {
