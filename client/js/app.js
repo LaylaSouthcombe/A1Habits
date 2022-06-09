@@ -87,18 +87,31 @@ async function loginSendData() {
   const email = emailInput.value
   const password = passwordInput.value
 
-  const response = await fetch(url, {
-    method: 'POST',
-    body: JSON.stringify({ email, password }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
 
-  const data = await response.json()
-  console.log('app.js - data received from server after logging in: ', data)
-  emailInput.value = ''
-  passwordInput.value = ''
+    const data = await response.json()
+
+    if (data.err) {
+      throw new Error(data.err)
+    } else {
+      console.log('app.js - data received from server after logging in: ', data)
+      emailInput.value = ''
+      passwordInput.value = ''
+
+      console.log('saving token to localStorage: ', { data })
+      login(data.token)
+    }
+  } catch (err) {
+    console.log(err)
+  }
+
   modal.classList.add('disabled')
 }
 
@@ -118,9 +131,20 @@ async function registerSendData() {
   })
 
   const data = await response.json()
-  console.log('app.js - data received from server after registering in: ', data)
-  nameInput.value = ''
-  emailInputSignup.value = ''
-  passwordInputSignup.value = ''
+
+  if (data.err) {
+    console.log('Error registering: add a pop up somewhere: ', data.err)
+  } else {
+    console.log(
+      'app.js - data received from server after registering in: ',
+      data
+    )
+    nameInput.value = ''
+    emailInputSignup.value = ''
+    passwordInputSignup.value = ''
+
+    console.log('saving token to localStorage: ', { data })
+    login(data.token)
+  }
   modal.classList.add('disabled')
 }
