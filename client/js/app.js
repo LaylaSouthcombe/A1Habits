@@ -83,7 +83,7 @@ function displayInitialHomepage() {
 
 // FETCHING FUNCTIONS
 async function loginSendData() {
-  const url = `http://localhost:3000/auth/login`
+  const url = `https://team1-habit-tracker.herokuapp.com/auth/login`
   const email = emailInput.value
   const password = passwordInput.value
 
@@ -103,7 +103,7 @@ async function loginSendData() {
 }
 
 async function registerSendData() {
-  const url = `http://localhost:3000/auth/register`
+  const url = `https://team1-habit-tracker.herokuapp.com/auth/register`
 
   const username = nameInput.value
   const email = emailInputSignup.value
