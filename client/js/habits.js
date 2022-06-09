@@ -40,19 +40,19 @@ async function createHabitsWrapper() {
 
   // fetch Data
 
-  const username = ''
-  const userOneData = await getTrackingData(username)
+  const userData = await getTrackingData()
   // console.log('Tracking - userOneData -> ', userOneData)
 
   // create the habits cards
-  createAndAppendCards(userOneData, habitsTrackedList)
+  createAndAppendCards(userData, habitsTrackedList)
 
   // append the frame to the habits section (id=habits, habitspage)
-  habitspage.append(frame)
+
+  habits.append(frame)
 }
 
 // call the modal for managing the Habits
-function openHabitsModal() {
+async function openHabitsModal() {
   const url = `http://localhost:3000/trackings`
 
   // console.log('Inside openHabitsModal!')
@@ -63,37 +63,32 @@ function openHabitsModal() {
 
   const habitsModalSubmitBtn = document.querySelector('#habits-submit-button')
   habitsModalSubmitBtn.addEventListener('click', async () => {
-    // dismiss modal
-    habitsModal.classList.add('disabled')
-
     console.log('modal should be disabled ', habitsModal)
     console.log('modal button ', habitsModalSubmitBtn)
-    console.log('use fetch to send POST request to the DB to save the data')
+    console.log('use fetch to send PUT request to the DB to save the data')
 
     const habitsData = {
-      trackSleep: document.querySelector('#checkbox-sleep').checked || false,
-      trackSleepHours:
-        document.querySelector('#habits-form-sleep-hours').value || 0,
-      trackExercise:
-        document.querySelector('#checkbox-exercise').checked || false,
-      trackExerciseTimesPerWeek:
-        document.querySelector('#habits-form-exercise-times').value || 0,
-      trackWater: document.querySelector('#checkbox-water').checked || false,
-      trackWaterDailyGlasses:
-        document.querySelector('#habits-form-water-glasses').value || 0,
-      trackSmoking:
-        document.querySelector('#checkbox-smoking').checked || false,
-      trackSmokingDailyCigarettes: document.querySelector(
-        '#habits-form-smoking-cigarettes' || 0
+      trackSleep: document.querySelector('#checkbox-sleep').checked,
+      trackSleepHours: document.querySelector('#habits-form-sleep-hours').value,
+      trackExercise: document.querySelector('#checkbox-exercise').checked,
+      trackExerciseTimesPerWeek: document.querySelector(
+        '#habits-form-exercise-times'
       ).value,
-      trackSavings:
-        document.querySelector('#checkbox-savings').checked || false,
-      trackSavingsDaily:
-        document.querySelector('#habits-form-money-daily').value || 0,
+      trackWater: document.querySelector('#checkbox-water').checked,
+      trackWaterDailyGlasses: document.querySelector(
+        '#habits-form-water-glasses'
+      ).value,
+      trackSmoking: document.querySelector('#checkbox-smoking').checked,
+      trackSmokingDailyCigarettes: document.querySelector(
+        '#habits-form-smoking-cigarettes'
+      ).value,
+      trackSavings: document.querySelector('#checkbox-savings').checked,
+      trackSavingsDaily: document.querySelector('#habits-form-money-daily')
+        .value,
     }
 
     console.log(habitsData)
-    // POST REQUEST then UPDATE PAGE calling createHabitsWrapper()
+    // PUT REQUEST then UPDATE PAGE calling createHabitsWrapper()
 
     try {
       const token = retrieveToken()
@@ -107,17 +102,28 @@ function openHabitsModal() {
           Authorization: token,
         },
       })
-      console.log('response ', response)
+      // console.log('response ', response)
 
-      const data = await response.json()
+      // const data = await response.json()
+
+      const url2 = `http://localhost:3000/trackings/current`
+      const response2 = await fetch(url2, {
+        headers: {
+          Authorization: token,
+        },
+      })
+
+      const data2 = await response2.json()
 
       console.log(
-        'habits.js - response from sending the tracked data: possibly missing :username from the url of the route as using req.params serverside, however if implementing auth might not be needed anymore',
-        data
+        'habits.js - response from sending the tracked data: possibly missing :username from the url of the route as using req.params serverside, however if implementing auth might not be needed anymore - data2 ->',
+        data2
       )
     } catch (err) {
       console.log('habits.js - openHabitsModal Error -> ', err)
     }
+    // dismiss modal
+    habitsModal.classList.add('disabled')
   })
 }
 
@@ -128,7 +134,7 @@ async function getTrackingData() {
   try {
     const response = await fetch(url, {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-type': 'application/json',
         Authorization: token,
       },
     })

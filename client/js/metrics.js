@@ -3,7 +3,7 @@ function createMetricsWrapper() {
   metricspage.innerHTML = ''
 
   // HARDCODED USER
-  const user = 'igormirowski'
+  // const user = 'igormirowski'
 
   createHabitsSelectionBar(metricspage)
   createCalendar(metricspage)
@@ -283,51 +283,51 @@ async function createHabitsSelectionBar(targetElement) {
   metricsAllBtn.classList.add('metricsBtn', 'metricsAllBtn')
   metricsAllBtn.innerHTML = `<i class="fa-solid fa-globe"></i>`
   metricsAllBtn.addEventListener('click', () => {
-    metricsUpdateStreak(streakWrapperValue, 'all', user)
-    metricsUpdateChart('.chartFrame', 'all', user)
+    metricsUpdateStreak(streakWrapperValue, 'all')
+    metricsUpdateChart('.chartFrame', 'all')
   })
 
   const metricsSleepBtn = document.createElement('div')
   metricsSleepBtn.classList.add('metricsBtn', 'metricsSleepBtn')
   metricsSleepBtn.innerHTML = `<i class="fa-solid fa-bed"></i>`
   metricsSleepBtn.addEventListener('click', () => {
-    metricsUpdateStreak(streakWrapperValue, 'sleep', user)
-    metricsUpdateChart('.chartFrame', 'sleep', user)
+    metricsUpdateStreak(streakWrapperValue, 'sleep')
+    metricsUpdateChart('.chartFrame', 'sleep')
   })
 
   const metricsExerciseBtn = document.createElement('div')
   metricsExerciseBtn.classList.add('metricsBtn', 'metricsExerciseBtn')
   metricsExerciseBtn.innerHTML = `<i class="fa-solid fa-football"></i>`
   metricsExerciseBtn.addEventListener('click', () => {
-    metricsUpdateStreak(streakWrapperValue, 'exercise', user)
-    metricsUpdateChart('.chartFrame', 'exercise', user)
+    metricsUpdateStreak(streakWrapperValue, 'exercise')
+    metricsUpdateChart('.chartFrame', 'exercise')
   })
 
   const metricsWaterBtn = document.createElement('div')
   metricsWaterBtn.classList.add('metricsBtn', 'metricsWaterBtn')
   metricsWaterBtn.innerHTML = `<i class="fa-solid fa-faucet-drip"></i>`
   metricsWaterBtn.addEventListener('click', () => {
-    metricsUpdateStreak(streakWrapperValue, 'water', user)
-    metricsUpdateChart('.chartFrame', 'water', user)
+    metricsUpdateStreak(streakWrapperValue, 'water')
+    metricsUpdateChart('.chartFrame', 'water')
   })
 
   const metricsSmokingBtn = document.createElement('div')
   metricsSmokingBtn.classList.add('metricsBtn', 'metricsSmokingBtn')
   metricsSmokingBtn.innerHTML = `<i class="fa-solid fa-smoking"></i>`
   metricsSmokingBtn.addEventListener('click', () => {
-    metricsUpdateStreak(streakWrapperValue, 'smoking', user)
-    metricsUpdateChart('.chartFrame', 'smoking', user)
+    metricsUpdateStreak(streakWrapperValue, 'smoking')
+    metricsUpdateChart('.chartFrame', 'smoking')
   })
 
   const metricsMoneyBtn = document.createElement('div')
   metricsMoneyBtn.classList.add('metricsBtn', 'metricsMoneyBtn')
   metricsMoneyBtn.innerHTML = `<i class="fa-solid fa-coins"></i>`
   metricsMoneyBtn.addEventListener('click', () => {
-    metricsUpdateStreak(streakWrapperValue, 'money', user)
-    metricsUpdateChart('.chartFrame', 'money', user)
+    metricsUpdateStreak(streakWrapperValue, 'money')
+    metricsUpdateChart('.chartFrame', 'money')
   })
 
-  const trackingData = await getTrackingData(user)
+  const trackingData = await getTrackingData()
   console.log('trackingData -> ', trackingData)
 
   const habitsTrackedByUser = []
@@ -359,8 +359,8 @@ async function createHabitsSelectionBar(targetElement) {
 
   targetElement.append(selectionBarWrapper)
   targetElement.append(chartWrapper)
-  metricsUpdateStreak(streakWrapperValue, 'all', user)
-  metricsUpdateChart('.chartFrame', 'all', user)
+  metricsUpdateStreak(streakWrapperValue, 'all')
+  metricsUpdateChart('.chartFrame', 'all')
 }
 
 // Fetching Functions
@@ -383,7 +383,8 @@ async function metricsUpdateStreak(targetElement, endpoint) {
 async function metricsUpdateChart(targetElement, endpoint) {
   let canvasChart = document.querySelector(targetElement)
 
-  const url = `http://localhost:3000/entries/${endpoint}/${username}`
+  const url = `http://localhost:3000/entries/seven/${endpoint}`
+  console.log('*** entries/seven/habit -> endpoint ', endpoint)
   const token = retrieveToken()
 
   // routes not working
