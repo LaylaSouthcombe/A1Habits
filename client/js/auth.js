@@ -13,3 +13,8 @@ function currentUser() {
   const username = localStorage.getItem('username')
   return username
 }
+
+function retrieveToken() {
+  const token = localStorage.getItem('token')
+  return token
+}
