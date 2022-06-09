@@ -1,3 +1,5 @@
+const fn = require('./funcs')
+
 const emailInput = document.querySelector('#form-email-input')
 const emailLabel = document.querySelector('.form-email-label')
 const passwordInput = document.querySelector('#form-password-input')
