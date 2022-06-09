@@ -26,7 +26,7 @@ async function registerUser(req, res) {
     }
     console.log('secret: ', process.env.SECRET)
 
-    jwt.sign(payload, process.env.SECRET, { expiresIn: 600 }, sendToken)
+    jwt.sign(payload, process.env.SECRET, { expiresIn: 6000 }, sendToken)
   } catch (err) {
     res.status(500).json({ err })
   }

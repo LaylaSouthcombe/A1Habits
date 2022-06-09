@@ -217,8 +217,7 @@ function toggleBtn(btnRef, activity) {
 
     // TODO Add token and Amend endpoint
     fetch(url, {
-      method: 'PATCH',
-      body: JSON.stringify({ value: false }),
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: token,
@@ -243,7 +242,6 @@ async function adjustCounter(activity, operation, amount = 1) {
   try {
     await fetch(url, {
       method: 'GET',
-      body: JSON.stringify({ value: amount }),
       headers: {
         'Content-Type': 'application/json',
         Authorization: token,

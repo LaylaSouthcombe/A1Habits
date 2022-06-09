@@ -68,23 +68,19 @@ async function openHabitsModal() {
     console.log('use fetch to send PUT request to the DB to save the data')
 
     const habitsData = {
-      trackSleep: document.querySelector('#checkbox-sleep').checked,
-      trackSleepHours: document.querySelector('#habits-form-sleep-hours').value,
-      trackExercise: document.querySelector('#checkbox-exercise').checked,
-      trackExerciseTimesPerWeek: document.querySelector(
-        '#habits-form-exercise-times'
-      ).value,
-      trackWater: document.querySelector('#checkbox-water').checked,
-      trackWaterDailyGlasses: document.querySelector(
-        '#habits-form-water-glasses'
-      ).value,
-      trackSmoking: document.querySelector('#checkbox-smoking').checked,
-      trackSmokingDailyCigarettes: document.querySelector(
-        '#habits-form-smoking-cigarettes'
-      ).value,
-      trackSavings: document.querySelector('#checkbox-savings').checked,
-      trackSavingsDaily: document.querySelector('#habits-form-money-daily')
-        .value,
+      sleep_track: document.querySelector('#checkbox-sleep').checked,
+      sleep_goal: document.querySelector('#habits-form-sleep-hours').value || 0,
+      exercise_track: document.querySelector('#checkbox-exercise').checked,
+      exercise_goal:
+        document.querySelector('#habits-form-exercise-times').value || 0,
+      water_track: document.querySelector('#checkbox-water').checked,
+      water_goal:
+        document.querySelector('#habits-form-water-glasses').value || 0,
+      smoking_track: document.querySelector('#checkbox-smoking').checked,
+      smoking_goal:
+        document.querySelector('#habits-form-smoking-cigarettes').value || 0,
+      money_track: document.querySelector('#checkbox-savings').checked,
+      money_goal: document.querySelector('#habits-form-money-daily').value || 0,
     }
 
     console.log(habitsData)
@@ -102,22 +98,22 @@ async function openHabitsModal() {
           Authorization: token,
         },
       })
-      // console.log('response ', response)
+      console.log('response ', response)
 
-      // const data = await response.json()
+      const data = await response.json()
 
-      const url2 = `http://localhost:3000/trackings/current`
-      const response2 = await fetch(url2, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      // const url2 = `http://localhost:3000/trackings/current`
+      // const response2 = await fetch(url2, {
+      //   headers: {
+      //     Authorization: token,
+      //   },
+      // })
 
-      const data2 = await response2.json()
+      // const data2 = await response2.json()
 
       console.log(
         'habits.js - response from sending the tracked data: possibly missing :username from the url of the route as using req.params serverside, however if implementing auth might not be needed anymore - data2 ->',
-        data2
+        data
       )
     } catch (err) {
       console.log('habits.js - openHabitsModal Error -> ', err)
