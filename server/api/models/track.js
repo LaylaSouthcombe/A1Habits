@@ -1,6 +1,7 @@
 const db = require('../dbConfig');
 const User = require('./user');
 const Entry = require('./entry')
+const jwt_decode = require('jwt-decode');
 
 class Tracking {
     constructor(data){
@@ -32,9 +33,11 @@ class Tracking {
             }
         })
     }
-    static findTrackingByUsername(username){
+    static findTrackingByUsername(token){
         return new Promise (async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let user = await User.findByUsername(username);
                 let result = await db.query('SELECT * FROM tracking WHERE user_id = $1;', [ user.id ]);
                 resolve (result.rows[0]);
@@ -43,24 +46,11 @@ class Tracking {
             };
         });
     };
-    static findTrackingByUserId(user_id){
+    static async create( token, {sleep_track, sleep_goal, exercise_track, exercise_goal, exercise_freq, water_track, water_goal, smoking_track, smoking_goal, money_track, money_goal, money_begin_date, money_end_date}  ){
         return new Promise (async (resolve, reject) => {
             try {
-                let user = await User.findById(user_id);
-                let result = await db.query('SELECT * FROM tracking WHERE user_id = $1;', [ user.id ]);
-                resolve (result.rows[0]);
-            } catch (err) {
-                reject('User not found');
-            };
-        });
-    };
-    
-
-
-    //need to change logic so creates preferences if not exist, but updates if they do
-    static async create({ username, sleep_track, sleep_goal, exercise_track, exercise_goal, exercise_freq, water_track, water_goal, smoking_track, smoking_goal, money_track, money_goal, money_begin_date, money_end_date } ){
-        return new Promise (async (resolve, reject) => {
-            try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let user = await User.findByUsername(username);
                 let result = await db.query(`INSERT INTO tracking (user_id, sleep_track, sleep_goal, exercise_track, exercise_goal, exercise_freq, water_track, water_goal, smoking_track, smoking_goal, money_track, money_goal, money_begin_date, money_end_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *;`, [ user.id, sleep_track, sleep_goal, exercise_track, exercise_goal, exercise_freq, water_track, water_goal, smoking_track, smoking_goal, money_track, money_goal, money_begin_date, money_end_date ])
                 resolve (result.rows[0]);
@@ -69,21 +59,26 @@ class Tracking {
             }
         });
     };
-    static async update({ username, sleep, sleep_goal, exercise, exercise_goal, exercise_freq, water, water_goal, smoking, smoking_goal, money, money_goal, money_begin_date, money_end_date } ){
+    static async update( token, {sleep_track, sleep_goal, exercise_track, exercise_goal, exercise_freq, water_track, water_goal, smoking_track, smoking_goal, money_track, money_goal, money_begin_date, money_end_date} ){
         return new Promise (async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
+                console.log(username)
                 let user = await User.findByUsername(username);
-                let result = await db.query(`UPDATE tracking SET sleep = $2, sleep_goal = $3, exercise = $4, exercise_goal = $5, exercise_freq = $6, water = $7, water_goal = $8, smoking = $9, smoking_goal = $10, money = $11, money_goal = $12, money_begin_date = $13, money_end_date = $14 WHERE user_id = $1 RETURNING *;`, [ user.id, sleep, sleep_goal, exercise, exercise_goal, exercise_freq, water, water_goal, smoking, smoking_goal, money, money_goal, money_begin_date, money_end_date ])
+                let result = await db.query(`UPDATE tracking SET sleep_track = $1, sleep_goal = $2, exercise_track = $3, exercise_goal = $4, exercise_freq = $5, water_track = $6, water_goal = $7, smoking_track = $8, smoking_goal = $9, money_track = $10, money_goal = $11, money_begin_date = $12, money_end_date = $13 WHERE user_id = $14 RETURNING *;`, [ sleep_track, sleep_goal, exercise_track, exercise_goal, exercise_freq, water_track, water_goal, smoking_track, smoking_goal, money_track, money_goal, money_begin_date, money_end_date, user.id ])
                 resolve (result.rows[0]);
             } catch (err) {
-                reject('Tracking could not be created');
+                reject(`Tracking could not be created: ${err}`);
             }
         });
     };
 
-    static async getCurrentTrackingData(username){
+    static async getCurrentTrackingData(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT tracking.*, entries.* FROM tracking JOIN entries ON tracking.user_id = entries.user_id WHERE tracking.user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 resolve (result.rows[0]);
@@ -91,7 +86,7 @@ class Tracking {
                 reject(`Error retrieving trackings: ${err}`)
             }
         })
-    }
+    };
 }
 module.exports = Tracking
 

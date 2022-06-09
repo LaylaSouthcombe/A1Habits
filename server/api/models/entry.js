@@ -1,6 +1,8 @@
 const db = require('../dbConfig');
 const User = require('./user');
 const Tracking = require('./track');
+const jwt_decode = require('jwt-decode');
+
 class Entry {
     constructor(data){
         this.id = data.id
@@ -120,9 +122,11 @@ class Entry {
     };
 
     
-    static async incompleteSleepHabit(username){
+    static async incompleteSleepHabit(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let user = await User.findByUsername(username);
 
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -133,16 +137,24 @@ class Entry {
                                                        SET 
                                                        sleep_entry = $2
                                                        WHERE id = $1
-                                                       RETURNING *;`, [ entryId, false ]);
+                                                       RETURNING sleep_entry;`, [ entryId, false ]);
                 resolve (updatedEntryData);
             } catch (err) {
                 reject(`Error retrieving trackings: ${err}`)
             }
         })
     }
-    static async completeSleepHabit(username){
+    static async completeSleepHabit(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
+                // const decoded = token
+                // console.log(username)
+                // const username = decoded[Object.keys(decoded)[0]]
+                
+                
+                // console.log(username)
                 let user = await User.findByUsername(username);
 
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -153,16 +165,18 @@ class Entry {
                                                        SET 
                                                        sleep_entry = $2
                                                        WHERE id = $1
-                                                       RETURNING *;`, [ entryId, true ]);
+                                                       RETURNING sleep_entry;`, [ entryId, true ]);
                 resolve (updatedEntryData);
             } catch (err) {
-                reject(`Error retrieving trackings: ${err}`)
+                reject(`Error completing sleep habit: ${err}`)
             }
         })
     }
-    static async incompleteExerciseHabit(username){
+    static async incompleteExerciseHabit(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let user = await User.findByUsername(username);
 
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -173,16 +187,18 @@ class Entry {
                                                        SET 
                                                        exercise_entry = $2
                                                        WHERE id = $1
-                                                       RETURNING *;`, [ entryId, false ]);
+                                                       RETURNING exercise_entry;`, [ entryId, false ]);
                 resolve (updatedEntryData);
             } catch (err) {
                 reject(`Error retrieving trackings: ${err}`)
             }
         })
     }
-    static async completeExerciseHabit(username){
+    static async completeExerciseHabit(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let user = await User.findByUsername(username);
 
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -194,7 +210,6 @@ class Entry {
                                                        exercise_entry = $2
                                                        WHERE id = $1
                                                        RETURNING exercise_entry;`, [ entryId, true ]);
-                console.log(updatedEntryData.rows[0])
                 resolve (updatedEntryData);
             } catch (err) {
                 reject(`Error retrieving trackings: ${err}`)
@@ -203,9 +218,11 @@ class Entry {
     }
 
 //adds one to the most recent smoking entry
-    static async addOneToCurrentSmokingNum(username){
+    static async addOneToCurrentSmokingNum(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let user = await User.findByUsername(username);
 
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -227,9 +244,11 @@ class Entry {
             }
         })
     }
-    static async removeOneFromCurrentSmokingNum(username){
+    static async removeOneFromCurrentSmokingNum(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let user = await User.findByUsername(username);
     
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -253,9 +272,11 @@ class Entry {
     }
     //adds one to the most recent water entry
     //GOAL: Find latest entry-->add 1 to latest water entry(by pressing + button)-->update
-    static async addOneToCurrentWaterNum(username){
+    static async addOneToCurrentWaterNum(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let user = await User.findByUsername(username); // find user by taking username (from client side)
 
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]); //we order by date entry to make it easier 
@@ -279,9 +300,11 @@ class Entry {
     }
     
     //removes one to the most recent water entry    
-    static async removeOneFromCurrentWaterNum(username){
+    static async removeOneFromCurrentWaterNum(token){
     return new Promise(async (resolve, reject) => {
         try {
+            const decoded = jwt_decode(token)
+            const username = decoded.username
             let user = await User.findByUsername(username);
 
             const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -307,9 +330,11 @@ class Entry {
 
 
 //streak functions
-    static async getCurrentSleepStreak(username){
+    static async getCurrentSleepStreak(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let counter = 0;
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -325,9 +350,11 @@ class Entry {
             }
         })
     }
-    static async getCurrentExerciseStreak(username){
+    static async getCurrentExerciseStreak(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let counter = 0;
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -342,9 +369,11 @@ class Entry {
             }
         })
     }
-    static async getCurrentMoneyStreak(username){
+    static async getCurrentMoneyStreak(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let counter = 0;
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -359,15 +388,16 @@ class Entry {
             }
         })
     }
-    static async getCurrentWaterStreak(username){
+    static async getCurrentWaterStreak(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let counter = 0;
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 const entries = result.rows.map(r => new Entry(r))
                 const goal = await db.query('SELECT water_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
-                console.log(goal.rows[0].water_goal)
                 for( let i = 0; i < entries.length; i++) {
                     if(entries[i].water_entry < goal.rows[0].water_goal) { break; }
                     counter += 1
@@ -378,9 +408,11 @@ class Entry {
             }
         })
     }
-    static async getCurrentSmokingStreak(username){
+    static async getCurrentSmokingStreak(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 let counter = 0;
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -396,9 +428,11 @@ class Entry {
             }
         })
     }
-    static async getCurrentAllHabitStreak(username){
+    static async getCurrentAllHabitStreak(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 //going to put all streak into this array and chose smallest
                 let streakArray = [];
                 //finding user_id by username
@@ -461,9 +495,11 @@ class Entry {
         })
     }
 
-    static async findAllHabitsEntries(username){
+    static async findAllHabitsEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 //going to put all streak into this array and chose smallest
                 let recentAllEntries = [0,0,0,0,0,0,0];
                 let trackingNum = 0;
@@ -525,9 +561,11 @@ class Entry {
             }
         })
     }
-    static async findExerciseEntries(username){
+    static async findExerciseEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 const recentExerciseEntries = [];
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -541,9 +579,11 @@ class Entry {
             }
         })
     }
-    static async findSmokingEntries(username){
+    static async findSmokingEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 const recentSmokingEntries = [];
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -557,9 +597,11 @@ class Entry {
             }
         })
     }
-    static async findWaterEntries(username){
+    static async findWaterEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 const recentWaterEntries = [];
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -573,9 +615,11 @@ class Entry {
             }
         })
     }
-    static async findMoneyEntries(username){
+    static async findMoneyEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 const recentMoneyEntries = [];
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -589,9 +633,11 @@ class Entry {
             }
         })
     }
-    static async findSleepEntries(username){
+    static async findSleepEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 const recentSleepEntries = [];
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -606,9 +652,11 @@ class Entry {
         })
     }
 
-    static async findMoneyCalendarEntries(username){
+    static async findMoneyCalendarEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 const calendarMoneyEntries = [];
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -629,33 +677,51 @@ class Entry {
             }
         })
     }
-    static async findSleepCalendarEntries(username){
+    static async findSleepCalendarEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 const calendarSleepEntries = [];
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 const entries = result.rows.map(r => new Entry(r))
-                console.log(entries[0].sleep_entry)
-                for(let i = 0; i < 28; i++) {
+                if(entries.length >= 28){
+                    for(let i = 0; i < 28; i++) {
                     if(entries[i].sleep_entry === false){
                         calendarSleepEntries[i] = 1;
-                        console.log(calendarSleepEntries[i])
                     }else if(entries[i].sleep_entry === true){
                         calendarSleepEntries[i] = 2;
                     }else{
                         calendarSleepEntries[i] = 0;
                     }
                 }
+                }if(entries.length < 28){
+                    for(let i = 0; i < entries.length; i++) {
+                        if(entries[i].sleep_entry === false){
+                            calendarSleepEntries[i] = 1;
+                        }else if(entries[i].sleep_entry === true){
+                            calendarSleepEntries[i] = 2;
+                        }else{
+                            calendarSleepEntries[i] = 0;
+                        }
+                    }
+                    for(let i = entries.length; i < 28; i++){
+                        calendarSleepEntries[i] = 0;
+                    }
+                }
+                
                 resolve (calendarSleepEntries);
             } catch (err) {
                 reject(`Error retrieving trackings: ${err}`)
             }
         })
     }
-    static async findExerciseCalendarEntries(username){
+    static async findExerciseCalendarEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 const calendarExerciseEntries = [];
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
@@ -664,7 +730,6 @@ class Entry {
                 for(let i = 0; i < 28; i++) {
                     if(entries[i].exercise_entry === false){
                         calendarExerciseEntries[i] = 1;
-                        console.log(calendarExerciseEntries[i])
                     }else if(entries[i].exercise_entry === true){
                         calendarExerciseEntries[i] = 2;
                     }else{
@@ -677,19 +742,19 @@ class Entry {
             }
         })
     }
-    static async findWaterCalendarEntries(username){
+    static async findWaterCalendarEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 const calendarWaterEntries = [];
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 const entries = result.rows.map(r => new Entry(r))
                 const goal = await db.query('SELECT water_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
-                console.log(entries[0].water_entry)
                 for(let i = 0; i < 28; i++) {
                     if(entries[i].water_entry > 0 && entries[i].water_entry < goal.rows[0].water_goal){
                         calendarWaterEntries[i] = 1;
-                        console.log(calendarWaterEntries[i])
                     }else if(entries[i].water_entry >= goal.rows[0].water_goal){
                         calendarWaterEntries[i] = 2;
                     }else{
@@ -703,19 +768,19 @@ class Entry {
             }
         })
     }
-    static async findSmokingCalendarEntries(username){
+    static async findSmokingCalendarEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 const calendarSmokingEntries = [];
                 let user = await User.findByUsername(username);
                 const result = await db.query('SELECT * FROM entries WHERE user_id = $1 ORDER BY (date_entry) DESC;', [user.id]);
                 const entries = result.rows.map(r => new Entry(r))
                 const goal = await db.query('SELECT smoking_goal, user_id FROM tracking WHERE user_id = $1', [ user.id ])
-                console.log(entries[0].smoking_entry)
                 for(let i = 0; i < 28; i++) {
                     if(entries[i].smoking_entry > goal.rows[0].smoking_goal){
                         calendarSmokingEntries[i] = 1;
-                        console.log(calendarSmokingEntries[i])
                     }else if(entries[i].smoking_entry > 0 && entries[i].smoking_entry <= goal.rows[0].smoking_goal){
                         calendarSmokingEntries[i] = 2;
                     }else{
@@ -729,9 +794,11 @@ class Entry {
             }
         })
     }
-    static async findAllCalendarEntries(username){
+    static async findAllCalendarEntries(token){
         return new Promise(async (resolve, reject) => {
             try {
+                const decoded = jwt_decode(token)
+                const username = decoded.username
                 //going to put all streak into this array and chose smallest
                 //add function that does for loop
                 let recentAllEntries = [];
@@ -803,7 +870,6 @@ class Entry {
                     }
                 }
                 const achievedHabits = recentAllEntries.map(element => Math.round((element / trackingNum)));
-                console.log(achievedHabits);
                 resolve(achievedHabits);
             } catch (err) {
                 reject(`Error retrieving trackings: ${err}`)
