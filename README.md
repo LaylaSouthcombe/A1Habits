@@ -20,7 +20,7 @@ It has the following functionality for users:
 
 ### Remote Hosting
 
-The site is hosted [here]() on Netlify
+The site is hosted [here](https://atomic-addicts.netlify.app/) on Netlify
 and our API is hosted [here]() on Heroku.
 
 # Installation and Usage
