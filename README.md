@@ -2,8 +2,7 @@
 
 ## Design
 
-
-![image](x.png)
+![image](client/pics/design.png)
 
 
 <!-- ABOUT THE PROJECT -->
