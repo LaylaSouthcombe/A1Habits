@@ -124,3 +124,7 @@ Project Link: [Project](https://github.com/LaylaSouthcombe/lap2project)
 - Social media integration e.g. Tweet your habits, Instagram and Facbook intergration
 
 - Display weather based on location
+
+- Customisation i.e. creating your own habits
+
+- Night more
