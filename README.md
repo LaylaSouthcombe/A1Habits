@@ -10,8 +10,9 @@ Login/Sign Up Page
 
 # Purpose of the App
 
-Atomic Habits is our LAP 2 Project. It is a habit it tracter app with the following functionalioty for users:
+Atomic Addicts is our LAP 2 Project. This app is for tracking, managing and cultivating habits. In-built are five key habits for you to choose from: `Sleeping, Exercise, Water Intake, Smoking, Savings`
 
+It has the following functionalioty for users:
 
 - Users should be able to login
 - Users should be able to choose a habit they want to track (e.g water, exercise, 8 hours of sleep) and choose the frequency at which they want to track the habit
