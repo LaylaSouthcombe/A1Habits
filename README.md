@@ -2,7 +2,7 @@
 
 ## Design
 Login/Sign Up Page
-
+![image](images/homepage.png)
 ![image](x.png)
 
 
@@ -13,9 +13,10 @@ Login/Sign Up Page
 Atomic Habits is our LAP 2 Project. It is a habit it tracter app with the following functionalioty for users:
 
 
-- Users are able to login
-- Users are able to track a habit and mark it as complete for the day
-..........
+- Users should be able to login
+- Users should be able to choose a habit they want to track (e.g water, exercise, 8 hours of sleep) and choose the frequency at which they want to track the habit
+- Users should be able to track a habit and mark it as complete for the day
+- Users should be able to see if they have completed a habit for the day and see their most recent completion streak
 
 
 ### Remote Hosting
@@ -43,8 +44,33 @@ and our API is hosted [here]() on Heroku.
 Do not run startDev and startTest simulanteously. 
 
 
----
 
+
+## Technologies
+
+- HTML/CSS
+- JavaScript
+  - Node.js
+  - Express
+  - Cors
+  - Jest
+  - Supertest
+  - Nodemon
+- Docker
+- PostgreSQL
+- Bcrypt
+- JSON Web Token
+
+
+## Process
+
+![image](images/homepage.png)
+![image](images/homepage.png)
+Listing all features and brainstorming a design.
+Morning meetings to set daily goals & short Zoom meeting throughout the day to follow up progeress.
+Good workflow within a team, working in pairs on front-end and back-end.
+Divide tasks and support each other.
+Final styling, debugging and testing.
 
 
 ### Test Coverage
@@ -57,7 +83,7 @@ Do not run startDev and startTest simulanteously.
 ### Challenges
 
 - Matteo: github not pulling the main branch
-- try pulling this
+- Try pulling this
 - Testing
 
 
@@ -70,10 +96,13 @@ Do not run startDev and startTest simulanteously.
 - <a href="https://github.com/buscaroli">Matteo Buscaroli</a>
 - <a href="https://github.com/Igormirowski">Igor Mirowski</a>
 
-
+Project Link: [Project](https://github.com/LaylaSouthcombe/lap2project)
 
 ### Future features
 
+- Social media integration e.g. Tweet your habits, Instagram and Facbook intergration
+
+- Display weather based on location
 
 
 
