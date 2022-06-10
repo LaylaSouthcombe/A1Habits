@@ -16,10 +16,10 @@ router.get('/decrease/smoking/', verifyToken, entriesController.decreaseSmokingN
 router.get('/increase/water/', verifyToken, entriesController.increaseWaterNum);
 router.get('/decrease/water/', verifyToken, entriesController.decreaseWaterNum);
 //complete/incomplete water/smoking routes
-router.get('/complete/sleep/', verifyToken, entriesController.completeSleep);
-router.get('/incomplete/sleep/', verifyToken, entriesController.incompleteSleep);
-router.get('/complete/exercise/', verifyToken, entriesController.completeExercise);
-router.get('/incomplete/exercise/', verifyToken, entriesController.incompleteExercise);
+router.get('/increase/sleep/', verifyToken, entriesController.completeSleep);
+router.get('/decrease/sleep/', verifyToken, entriesController.incompleteSleep);
+router.get('/increase/exercise/', verifyToken, entriesController.completeExercise);
+router.get('/decrease/exercise/', verifyToken, entriesController.incompleteExercise);
 //streak routes
 router.get('/streak/all/', verifyToken, entriesController.getAllHabitsStreak);
 router.get('/streak/sleep/', verifyToken, entriesController.getSleepStreak);
