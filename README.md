@@ -90,10 +90,10 @@ Do not run startDev and startTest simulanteously.
 
 - Client side: 33%
 
-- ![Client Side](test-client.png)
+![image](client/pics/test-client.png)
 - Server side: 12%
 
-- ![Server Side](server-client.png)
+![image](client/pics/test-server.png)
 
 ### Wins
 
