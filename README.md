@@ -4,6 +4,9 @@
 
 ![image](client/pics/design.png)
 
+
+![image](client/pics/login.png)
+
 <!-- ABOUT THE PROJECT -->
 
 # Purpose of the App
