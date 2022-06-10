@@ -2,7 +2,7 @@
 
 ## Design
 Login/Sign Up Page
-![image](images/homepage.png)
+
 ![image](x.png)
 
 
@@ -64,9 +64,21 @@ Do not run startDev and startTest simulanteously.
 
 ## Process
 
-![image](images/homepage.png)
-![image](images/homepage.png)
-Listing all features and brainstorming a design.
+### Database planning
+
+![image](client/pics/database.png)
+### GitHub project planning
+
+![image](client/pics/kanban.png)
+### Figma design
+
+![image](client/pics/figma.png)
+
+### Inspiration apps
+
+- [Snap Habit](https://snaphabit.app/)
+- [Strides](https://www.stridesapp.com/)
+
 Morning meetings to set daily goals & short Zoom meeting throughout the day to follow up progeress.
 Good workflow within a team, working in pairs on front-end and back-end.
 Divide tasks and support each other.
