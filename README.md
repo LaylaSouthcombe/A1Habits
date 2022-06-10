@@ -1,7 +1,7 @@
-# LAP 2 Project - Habit Tracker
+# LAP 2 Project - Atomic Addicts - Habit Tracker
 
 ## Design
-Login/Sign Up Page
+
 
 ![image](x.png)
 
