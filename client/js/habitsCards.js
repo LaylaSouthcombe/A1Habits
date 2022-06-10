@@ -159,7 +159,7 @@ function createAndAppendCards(data, targetElem) {
 
       const moneyCardTitle = document.createElement('div')
       moneyCardTitle.classList.add('habitsCardTitle', 'habitsMoneyCardTitle')
-      moneyCardTitle.textContent = 'Sleep'
+      moneyCardTitle.textContent = 'Money'
       moneyCard.append(moneyCardTitle)
 
       const moneyCardTarget = document.createElement('div')
