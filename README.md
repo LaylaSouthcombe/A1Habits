@@ -84,10 +84,6 @@ Do not run startDev and startTest simulanteously.
 - [Snap Habit](https://snaphabit.app/)
 - [Strides](https://www.stridesapp.com/)
 
-Morning meetings to set daily goals & short Zoom meeting throughout the day to follow up progeress.
-Good workflow within a team, working in pairs on front-end and back-end.
-Divide tasks and support each other.
-Final styling, debugging and testing.
 
 ### Test Coverage
 
