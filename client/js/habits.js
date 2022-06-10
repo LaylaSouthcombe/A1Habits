@@ -40,20 +40,20 @@ async function createHabitsWrapper() {
 
   // fetch Data
 
-  const username = 'igormirowski'
-  const userOneData = await getTrackingData(username)
+  const userData = await getTrackingData()
   // console.log('Tracking - userOneData -> ', userOneData)
 
   // create the habits cards
-  createAndAppendCards(userOneData, habitsTrackedList)
+  createAndAppendCards(userData, habitsTrackedList)
 
   // append the frame to the habits section (id=habits, habitspage)
-  habitspage.append(frame)
+
+  habits.append(frame)
 }
 
 // call the modal for managing the Habits
-function openHabitsModal() {
-  const url = `http://localhost:3000/trackings/`
+async function openHabitsModal() {
+  const url = `${baseUrl}trackings`
 
   // console.log('Inside openHabitsModal!')
   const habitsModal = document.querySelector('.habits-modal')
@@ -63,61 +63,104 @@ function openHabitsModal() {
 
   const habitsModalSubmitBtn = document.querySelector('#habits-submit-button')
   habitsModalSubmitBtn.addEventListener('click', async () => {
-    // dismiss modal
-    habitsModal.classList.add('disabled')
-
     console.log('modal should be disabled ', habitsModal)
     console.log('modal button ', habitsModalSubmitBtn)
-    console.log('use fetch to send POST request to the DB to save the data')
+    console.log('use fetch to send PUT request to the DB to save the data')
 
     const habitsData = {
-      trackSleep: document.querySelector('#checkbox-sleep').checked,
-      trackSleepHours: document.querySelector('#habits-form-sleep-hours').value,
-      trackExercise: document.querySelector('#checkbox-exercise').checked,
-      trackExerciseTimesPerWeek: document.querySelector(
-        '#habits-form-exercise-times'
-      ).value,
-      trackWater: document.querySelector('#checkbox-water').checked,
-      trackWaterDailyGlasses: document.querySelector(
-        '#habits-form-water-glasses'
-      ).value,
-      trackSmoking: document.querySelector('#checkbox-smoking').checked,
-      trackSmokingDailyCigarettes: document.querySelector(
-        '#habits-form-smoking-cigarettes'
-      ).value,
-      trackSavings: document.querySelector('#checkbox-savings').checked,
-      trackSavingsDaily: document.querySelector('#habits-form-money-daily')
-        .value,
+      sleep_track: document.querySelector('#checkbox-sleep').checked,
+      sleep_goal: document.querySelector('#habits-form-sleep-hours').value || 0,
+      exercise_track: document.querySelector('#checkbox-exercise').checked,
+      exercise_goal:
+        document.querySelector('#habits-form-exercise-times').value || 0,
+      water_track: document.querySelector('#checkbox-water').checked,
+      water_goal:
+        document.querySelector('#habits-form-water-glasses').value || 0,
+      smoking_track: document.querySelector('#checkbox-smoking').checked,
+      smoking_goal:
+        document.querySelector('#habits-form-smoking-cigarettes').value || 0,
+      money_track: document.querySelector('#checkbox-savings').checked,
+      money_goal: document.querySelector('#habits-form-money-daily').value || 0,
     }
 
     console.log(habitsData)
-    // POST REQUEST then UPDATE PAGE calling createHabitsWrapper()
+    // PUT REQUEST then UPDATE PAGE calling createHabitsWrapper()
 
-    const response = await fetch(url, {
-      method: 'PUT',
-      body: JSON.stringify(habitsData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    try {
+      const token = retrieveToken()
+      console.log('token: ', token)
 
-    const data = await response.json()
+      const response = await fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify(habitsData),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+      console.log('response ', response)
 
-    console.log(
-      'habits.js - response from sending the tracked data: possibly missing :username from the url of the route as using req.params serverside, however if implementing auth might not be needed anymore',
-      data
-    )
+      const data = await response.json()
+
+      console.log(
+        'habits.js - response from sending the tracked data: possibly missing :username from the url of the route as using req.params serverside, however if implementing auth might not be needed anymore - data2 ->',
+        data
+      )
+    } catch (err) {
+      console.log('habits.js - openHabitsModal Error -> ', err)
+    }
+    // dismiss modal
+    displayPage(habitspage)
+    habitsModal.classList.add('disabled')
   })
 }
 
 // fetch the data for the habits
-async function getTrackingData(username) {
-  const url = `http://localhost:3000/trackings/current/` + username
+async function getTrackingData() {
+  const url = `${baseUrl}trackings/current/`
+  const token = retrieveToken()
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: token,
+      },
+    })
+    console.log('response ====== ', response)
+    const data = await response.json()
+    console.log('data ======= ', data)
 
-  const response = await fetch(url)
-  const data = await response.json()
-  // during testing, get the first user's data
-  const dataFirstUser = data
-  // console.log('************** ', dataFirstUser)
-  return dataFirstUser
+    const dataFirstUser = data
+    console.log('habits.js - getTrackingData - ************** ', dataFirstUser)
+    return dataFirstUser
+  } catch (err) {
+    console.log('habits.js - getTrackingData Error: ', err)
+  }
+}
+
+async function populateTrackedHabitsOnModalOnLogin() {
+  const data = await getTrackingData()
+  console.log('============= ', data)
+
+  const sleep_track = document.querySelector('#checkbox-sleep')
+  const sleep_goal = document.querySelector('#habits-form-sleep-hours')
+  const exercise_track = document.querySelector('#checkbox-exercise')
+  const exercise_goal = document.querySelector('#habits-form-exercise-times')
+  const water_track = document.querySelector('#checkbox-water')
+  const water_goal = document.querySelector('#habits-form-water-glasses')
+  const smoking_track = document.querySelector('#checkbox-smoking')
+  const smoking_goal = document.querySelector('#habits-form-smoking-cigarettes')
+  const money_track = document.querySelector('#checkbox-savings')
+  const money_goal = document.querySelector('#habits-form-money-daily')
+
+  sleep_track.value = data.sleep_track || false
+  sleep_goal.value = data.sleep_goal || 0
+  exercise_track.value = data.exercise_track || false
+  exercise_goal.value = data.exercise_goal || 0
+  water_track.value = data.water_track || false
+  water_goal.value = data.water_goal || 0
+  smoking_track.value = data.smoking_track || false
+  smoking_goal.value = data.smoking_goal || 0
+  money_track.value = data.money_track || false
+  money_goal.value = data.money_goal || 0
 }

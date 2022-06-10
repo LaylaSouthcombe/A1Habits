@@ -90,7 +90,7 @@
       
               <div class="form-password-wrapper">
                 <label for="form-password-input" class="input-text form-password-label">password</label>
-                <input type="text" id="form-password-input">
+                <input type="password" id="form-password-input">
               </div>
       
               <input type="submit" id="form-button" value="Login">
@@ -116,7 +116,7 @@
       
               <div class="form-password-wrapper-signup">
                 <label for="form-password-input-signup" class="input-text form-password-label-signup">password</label>
-                <input type="text" id="form-password-input-signup">
+                <input type="password" id="form-password-input-signup">
               </div>
       
               <input type="submit" id="form-button-signup" value="Signup">
@@ -139,6 +139,7 @@
       
             </div>
             <div id="auth"><i class="fa-solid fa-user"></i></div>
+            <div id="authLogout" class="disabled"><i class="fa-solid fa-user-check "></i></div>
           </div>
       
         </nav>
@@ -147,21 +148,24 @@
           <section id="home" class="section1">
            
             <h3>HOME</h3>
-            Welcome to Atomic Habbits.
+            Welcome to Atomic Haddicts.
             Habits are essential to our health. They can make or break your chances of achieving and maintaining our lifestyle goals such as sticking to an eating plan, exercising regularly, and managing our finances, along with increasing quality of life and promoting longevity.
 
 
             This app is for tracking, managing and cultivating good habits. In-built are five key habits for you to choose from:
             <ul>
-              <li>Sleeping.</li>
+              <li>Sleeping</li>
               <li>Exercise</li>
-              <li>Water</li>
+              <li>Water Intake</li>
               <li>Smoking</li>
-              <li>Money</li>
+              <li>Savings</li>
             </ul>
             
             <p>All the motivation in the world isn't going to help you if you don't have a system or a collection of good habits to lean on. Systems keep you in check. Conversely, all the motivation in the world won't help you beat bad habits either.</p>
-            <img src="/client/pics/Dominoes.jpeg" alt="a man trying to push back a system">
+            <div id="imgWrapper">
+              <img src="/client/pics/Dominoes.jpeg" alt="a man trying to push back a system">
+            </div>
+            
             
             <p>Remember, it ain’t about the cheddar. It’s about the cheese. </p>
 
@@ -176,16 +180,19 @@
         </main>
       
         <footer class="footer">
-          <div class="selection" id="selection-1"> <a href="#" class="sel-btn"> <i class="fa-solid fa-house"></i> </a></div>
-          <div class="selection" id="selection-2"> <a href="#" class="sel-btn"> <i class="fa-solid fa-chart-line"></i> </a></div>
-          <div class="selection" id="selection-3"> <a href="#" class="sel-btn"> <i class="fa-solid fa-smoking"></i> </a></div>
+          <div class="selection" id="selection-1"> <a href="#" class="sel-btn"> <i class="fa-solid fa-house "></i> </a></div>
+          <div class="selection disabled" id="selection-2"> <a href="#" class="sel-btn"> <i class="fa-solid fa-chart-line"></i> </a></div>
+          <div class="selection disabled" id="selection-3"> <a href="#" class="sel-btn"> <i class="fa-solid fa-smoking"></i> </a></div>
           
         </footer>
       </div>  
       
   <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+  <script src='https://cdn.jsdelivr.net/npm/jwt-decode@1.5.1/build/jwt-decode.min.js'></script>"
+  
   <script src="./js/utils.js"></script>
   <script src="./js/habits.js"></script>
+  <script src="./js/auth.js"></script>
   <script src="./js/habitsCards.js"></script>
   <script src="./js/metrics.js"></script>
 </body>
