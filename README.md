@@ -87,6 +87,8 @@ Do not run startDev and startTest simulanteously.
 
 - [Snap Habit](https://snaphabit.app/)
 - [Strides](https://www.stridesapp.com/)
+- [MyFintessPal](https://www.myfitnesspal.com/)
+
 
 
 ### Test Coverage
