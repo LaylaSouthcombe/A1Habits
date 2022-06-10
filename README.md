@@ -88,8 +88,12 @@ Do not run startDev and startTest simulanteously.
 
 ### Test Coverage
 
-- API test coverage: x%
-- ![API-test-coverage](pic.png)
+- Client side: 33%
+
+- ![Client Side](test-client.png)
+- Server side: 12%
+
+- ![Server Side](server-client.png)
 
 ### Wins
 
