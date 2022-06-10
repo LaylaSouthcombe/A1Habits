@@ -5,7 +5,7 @@
 ![image](client/pics/design.png)
 
 
-![image](client/pics/login.png)
+![image](client/pics/login1.png)
 
 <!-- ABOUT THE PROJECT -->
 
