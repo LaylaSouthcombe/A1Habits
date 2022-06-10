@@ -64,6 +64,7 @@ Do not run startDev and startTest simulanteously.
 - PostgreSQL
 - Bcrypt
 - JSON Web Token
+- Chartist ( a Chart generator)
 
 ## Process
 
