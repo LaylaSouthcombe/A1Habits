@@ -1,4 +1,4 @@
-# LAP 2 Project - Atomic Addicts - Habit Tracker
+# LAP 2 Project - A1 Habits - Habit Tracker
 
 ## Design
 
@@ -11,19 +11,19 @@
 
 # Purpose of the App
 
-Atomic Addicts is our LAP 2 Project. This app is for tracking, managing and cultivating habits. In-built are five key habits for you to choose from: `Sleeping, Exercise, Water Intake, Smoking, Savings`
+A1 Habits is an app is for tracking, managing, and cultivating habits. In-built are five key habits for you to choose from: `sleeping, exercise, water intake, smoking, and savings`
 
 It has the following functionality for users:
 
-- Users should be able to login
-- Users should be able to logout
-- Users should be able to choose a habit they want to track (e.g water, exercise, 8 hours of sleep) and choose the frequency at which they want to track the habit
-- Users should be able to track a habit and mark it as complete for the day
-- Users should be able to see if they have completed a habit for the day and see their most recent completion streak
+- Users can login and logout
+- Users can choose a habit they want to track (e.g water, exercise, 8 hours of sleep) and choose the frequency at which they want to track the habit
+- Users can track a habit and mark it as complete for the day
+- Users can see if they have completed a habit for the day and see their most recent completion streak
+- Users can see the metrics for the last month for their habits
 
 ### Remote Hosting
 
-The site is hosted [here](https://atomic-addicts.netlify.app/) on Netlify
+The site is hosted [here](https://a1-habits.netlify.app/) on Netlify
 and our API is hosted [here]() on Heroku.
 
 # Installation and Usage
@@ -67,7 +67,7 @@ Do not run startDev and startTest simulanteously.
 - PostgreSQL
 - Bcrypt
 - JSON Web Token
-- Chartist ( a Chart generator)
+- Chartist (a Chart generator)
 
 ## Process
 
@@ -83,22 +83,15 @@ Do not run startDev and startTest simulanteously.
 
 ![image](client/pics/figma.png)
 
-### Inspiration apps
 
-- [Snap Habit](https://snaphabit.app/)
-- [Strides](https://www.stridesapp.com/)
-- [MyFintessPal](https://www.myfitnesspal.com/)
+<!--- ### Test Coverage --->
 
+<!--- - Client side: 33% --->
 
+<!--- ![image](client/pics/test-client.png) --->
+<!--- - Server side: 12% --->
 
-### Test Coverage
-
-- Client side: 33%
-
-![image](client/pics/test-client.png)
-- Server side: 12%
-
-![image](client/pics/test-server.png)
+<!--- ![image](client/pics/test-server.png) --->
 
 ### Wins
 
@@ -117,14 +110,10 @@ Do not run startDev and startTest simulanteously.
 - <a href="https://github.com/buscaroli">Matteo Buscaroli</a>
 - <a href="https://github.com/Igormirowski">Igor Mirowski</a>
 
-Project Link: [Project](https://github.com/LaylaSouthcombe/lap2project)
+Project Link: [Project](https://github.com/LaylaSouthcombe/A1Habits)
 
 ### Future features
 
-- Social media integration e.g. Tweet your habits, Instagram and Facbook intergration
-
-- Display weather based on location
+- Social media integration e.g. Twitter, Instagram, and Facbook intergration
 
 - Customisation i.e. creating your own habits
-
-- Night more
